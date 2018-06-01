@@ -8,7 +8,7 @@
 
 <div class="form-horizontal">
     <h4>Preventa</h4>
-
+    <br />
     <div class="form-group row">
         <label class="col-md-2">Cliente</label>
         <div class="col-md-4">
@@ -73,7 +73,9 @@
             </tr>
         </tfoot>
     </table>
-
+    <div class="text-center">
+        <button class="btn btn-lg btn-dark" onclick="GuardarPicking()">Guardar / Imprimir <i class="zmdi zmdi-print" style="margin-left:5px"></i></button>
+    </div>
 </div>
 
 
@@ -98,7 +100,7 @@
         var fila = $('<tr class="bubble"><td id="c' + n + '">' + codigo + '</td><td id="n' + n + '">' + nombre + '</td><td id="q' + n + '">' + cantidad + '</td><td id="p' + n + '">' + precio + '</td><td id="t' + n + '">' + subtotal + '</td></tr>');
         $('#tableDetail').append(fila);
         n = n + 1;
-        
+
         $("#Codigo").val("");
         $("#Nombre").val("");
         $("#Cantidad").val(1);
@@ -129,7 +131,7 @@
         });
 
     function ObtenerProducto(id) {
-        $.get("/api/Data/ObtenerProducto/" + id, function (data) {
+        $.get("/api/data/ObtenerProducto/" + id, function (data) {
             console.log(data);
             $("#Nombre").val(data.Nombre);
             $("#Precio").val(data.Precio);
@@ -148,12 +150,20 @@
         });
 
     function GuardarPicking() {
-        var cliente = $("#codigoCliente").val(); 
+        var cliente = $("#codigoCliente").val();
         var vendedor = $("#codigoVendedor").val();
-        var productos = [];
-
+        var productos = "";
         for (var i = 1; i < n; i++) {
-            var producto = {Codigo: $("#c" + i).text()}
+            var producto = $("#c" + i).text() + "," + $("#q" + i).text() + "," + $("#p" + i).text() + "!";
+            productos = productos + producto
         }
+        var picking = cliente + "," + vendedor + "!" + productos;
+        
+        $.post("/api/data/PostPreventa/" + picking,
+            function (result) {                
+                console.log(result);                
+            }          
+        );
+        document.location.href = "/Preventas";
     }
 </script>

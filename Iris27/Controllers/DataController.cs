@@ -5,10 +5,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace Iris27.Controllers
 {
     [RoutePrefix("api/data")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
 
     public class DataController : ApiController
     {
@@ -41,18 +43,55 @@ namespace Iris27.Controllers
         [Route("ObtenerProducto/{codigo}")]
         public Producto ObtenerProducto(int codigo)
         {
-            var producto = db.Productos.Find(codigo);
-            producto.PreventaDetalles = null;
-            producto.Proveedor = new Proveedor() { Codigo = producto.Proveedor.Codigo, Nombre = producto.Proveedor.Nombre, Productos=null };
-            producto.VentaDetalles = null;
+            var _producto = db.Productos.Find(codigo);
+            var producto = new Producto()
+            {
+                Codigo = _producto.Codigo,
+                Costo = _producto.Costo,
+                Existencia = _producto.Existencia,
+                Nombre = _producto.Nombre,
+                Precio = _producto.Precio,
+                ProveedorId = _producto.ProveedorId,
+                Proveedor = new Proveedor() { Codigo = _producto.Proveedor.Codigo, Nombre = _producto.Proveedor.Nombre }
+            };
             return producto;
         }
 
         [HttpPost]
-        [Route("GuardarPicking/{picking}")]
-        public string ObtenerProducto(dynamic picking)
+        [Route("PostPreventa/{data}")]
+        public Preventa PostPreventa(string data)
         {
-            return "Hecho";
+            var lines = data.Split('!');
+            var clientId = lines[0].Split(',')[0];
+            var vendedorId = lines[0].Split(',')[1];
+
+            var preventa = new Preventa()
+            {
+                CodigoCliente = clientId,
+                VendedorId = int.Parse(vendedorId),
+                Fecha = DateTime.Today,
+            };
+
+            db.Preventas.Add(preventa);
+            db.SaveChanges();
+
+            var preventaDetalles = new List<PreventaDetalle>();
+            for (int i = 1; i < lines.Length - 1; i++)
+            {
+                var preventaDetalle = new PreventaDetalle()
+                {
+                    PreventaId = preventa.Id,
+                    VendedorId = int.Parse(vendedorId),
+                    CodigoProducto = int.Parse(lines[i].Split(',')[0]),
+                    Cantidad = int.Parse(lines[i].Split(',')[1]),
+                    Precio = Convert.ToDecimal(lines[i].Split(',')[2]),
+                };
+                db.PreventaDetalles.Add(preventaDetalle);
+            }
+
+            db.SaveChanges();
+            return preventa;
         }
     }
+
 }
