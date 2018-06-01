@@ -1,24 +1,84 @@
-﻿<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
-        a broad range of clients, including browsers and mobile devices. ASP.NET Web API
-        is an ideal platform for building RESTful applications on the .NET Framework.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301870">Learn more &raquo;</a></p>
+﻿<div class="content__inner">
+    <header class="content__title">
+        <h1>IRIS 27</h1>
+        <small>Inspección y Registro de Inventario y Salidas</small>
+
+    </header>
+
+    <div class="row">
+        <div class="card-demo col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h4 class="card-title">PRODUCTOS</h4>
+                    <h6 class="card-subtitle">Mantenimiento de Productos</h6>
+
+                    <h1 class="zmdi zmdi-store" style="font-size:5em"></h1>
+                    <br />
+                    <a href="@Url.Action("Index","Productos")" class="btn btn-dark">Acceder</a>
+                </div>
+            </div>
+        </div>
+        <div class="card-demo col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h4 class="card-title">PROVEEDORES</h4>
+                    <h6 class="card-subtitle">Mantenimiento de Proveedores</h6>
+
+                    <h1 class="zmdi zmdi-account-circle" style="font-size:5em"></h1>
+                    <br />
+                    <a href="@Url.Action("Index","Proveedores")" class="btn btn-dark">Acceder</a>
+                </div>
+            </div>
+        </div>
+        <div class="card-demo col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h4 class="card-title">CLIENTES</h4>
+                    <h6 class="card-subtitle">Mantenimiento de Clientes</h6>
+
+                    <h1 class="zmdi zmdi-accounts" style="font-size:5em"></h1>
+                    <br />
+                    <a href="@Url.Action("Index","Clientes")" class="btn btn-dark">Acceder</a>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301871">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301872">Learn more &raquo;</a></p>
+    <div class="row">
+        <div class="card-demo col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h4 class="card-title">PICKING</h4>
+                    <h6 class="card-subtitle">Mantenimiento de Pedidos</h6>
+
+                    <h1 class="zmdi zmdi-shopping-cart" style="font-size:5em"></h1>
+                    <br />
+                    <a href="@Url.Action("Index","Preventas")" class="btn btn-dark">Acceder</a>
+                </div>
+            </div>
+        </div>
+        <div class="card-demo col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h4 class="card-title">VENTAS</h4>
+                    <h6 class="card-subtitle">Consolidación de Ventas</h6>
+
+                    <h1 class="zmdi zmdi-money" style="font-size:5em"></h1>
+                    <br />
+                    <a href="@Url.Action("Index","Ventas")" class="btn btn-dark">Acceder</a>
+                </div>
+            </div>
+        </div>
+        <div class="card-demo col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h4 class="card-title">REPORTES</h4>
+                    <h6 class="card-subtitle">Detalles de movimientos</h6>
+
+                    <h1 class="zmdi zmdi-chart" style="font-size:5em"></h1>
+                    <br />
+                    <a href="@Url.Action("Index","Reportes")" class="btn btn-dark">Acceder</a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

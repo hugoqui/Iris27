@@ -1,0 +1,693 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="disosadbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Clientes">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Nombre" Type="text" />
+          <Property Name="Direccion" Type="text" />
+        </EntityType>
+        <EntityType Name="GrupoVendedores">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="text" />
+        </EntityType>
+        <EntityType Name="PreventaDetalles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CodigoProducto" Type="int" />
+          <Property Name="Cantidad" Type="int" />
+          <Property Name="Precio" Type="money" />
+          <Property Name="PreventaId" Type="int" />
+          <Property Name="VendedorId" Type="int" />
+        </EntityType>
+        <EntityType Name="Preventas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Fecha" Type="date" />
+          <Property Name="CodigoCliente" Type="nchar" MaxLength="10" />
+          <Property Name="VendedorId" Type="int" />
+        </EntityType>
+        <EntityType Name="Productos">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="text" Nullable="false" />
+          <Property Name="Costo" Type="money" Nullable="false" />
+          <Property Name="Precio" Type="money" Nullable="false" />
+          <Property Name="Existencia" Type="int" Nullable="false" />
+          <Property Name="ProveedorId" Type="int" />
+        </EntityType>
+        <EntityType Name="Proveedores">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="text" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Vendedores">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="text" />
+          <Property Name="Grupo" Type="int" />
+        </EntityType>
+        <EntityType Name="VentaDetalles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CodigoProducto" Type="int" />
+          <Property Name="Cantidad" Type="int" />
+          <Property Name="Precio" Type="money" />
+          <Property Name="Utilidad" Type="money" />
+          <Property Name="VentaId" Type="int" />
+        </EntityType>
+        <EntityType Name="Ventas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Fecha" Type="date" />
+          <Property Name="Deposito" Type="text" />
+          <Property Name="VendedorId" Type="int" />
+          <Property Name="CodigoCliente" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <Association Name="FK__PreventaD__Codig__21B6055D">
+          <End Role="Productos" Type="Self.Productos" Multiplicity="0..1" />
+          <End Role="PreventaDetalles" Type="Self.PreventaDetalles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productos">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="PreventaDetalles">
+              <PropertyRef Name="CodigoProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PreventaD__Preve__22AA2996">
+          <End Role="Preventas" Type="Self.Preventas" Multiplicity="0..1" />
+          <End Role="PreventaDetalles" Type="Self.PreventaDetalles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Preventas">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PreventaDetalles">
+              <PropertyRef Name="PreventaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PreventaD__Vende__239E4DCF">
+          <End Role="Vendedores" Type="Self.Vendedores" Multiplicity="0..1" />
+          <End Role="PreventaDetalles" Type="Self.PreventaDetalles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendedores">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PreventaDetalles">
+              <PropertyRef Name="VendedorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Preventas__Codig__1A14E395">
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="0..1" />
+          <End Role="Preventas" Type="Self.Preventas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clientes">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Preventas">
+              <PropertyRef Name="CodigoCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Preventas__Vende__2A4B4B5E">
+          <End Role="Vendedores" Type="Self.Vendedores" Multiplicity="0..1" />
+          <End Role="Preventas" Type="Self.Preventas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendedores">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Preventas">
+              <PropertyRef Name="VendedorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Productos__Prove__1367E606">
+          <End Role="Proveedores" Type="Self.Proveedores" Multiplicity="0..1" />
+          <End Role="Productos" Type="Self.Productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedores">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Productos">
+              <PropertyRef Name="ProveedorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Vendedore__Grupo__1ED998B2">
+          <End Role="GrupoVendedores" Type="Self.GrupoVendedores" Multiplicity="0..1" />
+          <End Role="Vendedores" Type="Self.Vendedores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GrupoVendedores">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vendedores">
+              <PropertyRef Name="Grupo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VentaDeta__Codig__286302EC">
+          <End Role="Productos" Type="Self.Productos" Multiplicity="0..1" />
+          <End Role="VentaDetalles" Type="Self.VentaDetalles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productos">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="VentaDetalles">
+              <PropertyRef Name="CodigoProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VentaDeta__Venta__29572725">
+          <End Role="Ventas" Type="Self.Ventas" Multiplicity="0..1" />
+          <End Role="VentaDetalles" Type="Self.VentaDetalles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ventas">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VentaDetalles">
+              <PropertyRef Name="VentaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ventas__CodigoCl__2C3393D0">
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="0..1" />
+          <End Role="Ventas" Type="Self.Ventas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clientes">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Ventas">
+              <PropertyRef Name="CodigoCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ventas__Vendedor__2B3F6F97">
+          <End Role="Vendedores" Type="Self.Vendedores" Multiplicity="0..1" />
+          <End Role="Ventas" Type="Self.Ventas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendedores">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ventas">
+              <PropertyRef Name="VendedorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="disosadbModelStoreContainer">
+          <EntitySet Name="Clientes" EntityType="Self.Clientes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GrupoVendedores" EntityType="Self.GrupoVendedores" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PreventaDetalles" EntityType="Self.PreventaDetalles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Preventas" EntityType="Self.Preventas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Productos" EntityType="Self.Productos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Proveedores" EntityType="Self.Proveedores" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vendedores" EntityType="Self.Vendedores" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VentaDetalles" EntityType="Self.VentaDetalles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ventas" EntityType="Self.Ventas" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__PreventaD__Codig__21B6055D" Association="Self.FK__PreventaD__Codig__21B6055D">
+            <End Role="Productos" EntitySet="Productos" />
+            <End Role="PreventaDetalles" EntitySet="PreventaDetalles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PreventaD__Preve__22AA2996" Association="Self.FK__PreventaD__Preve__22AA2996">
+            <End Role="Preventas" EntitySet="Preventas" />
+            <End Role="PreventaDetalles" EntitySet="PreventaDetalles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PreventaD__Vende__239E4DCF" Association="Self.FK__PreventaD__Vende__239E4DCF">
+            <End Role="Vendedores" EntitySet="Vendedores" />
+            <End Role="PreventaDetalles" EntitySet="PreventaDetalles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Preventas__Codig__1A14E395" Association="Self.FK__Preventas__Codig__1A14E395">
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="Preventas" EntitySet="Preventas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Preventas__Vende__2A4B4B5E" Association="Self.FK__Preventas__Vende__2A4B4B5E">
+            <End Role="Vendedores" EntitySet="Vendedores" />
+            <End Role="Preventas" EntitySet="Preventas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Productos__Prove__1367E606" Association="Self.FK__Productos__Prove__1367E606">
+            <End Role="Proveedores" EntitySet="Proveedores" />
+            <End Role="Productos" EntitySet="Productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vendedore__Grupo__1ED998B2" Association="Self.FK__Vendedore__Grupo__1ED998B2">
+            <End Role="GrupoVendedores" EntitySet="GrupoVendedores" />
+            <End Role="Vendedores" EntitySet="Vendedores" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VentaDeta__Codig__286302EC" Association="Self.FK__VentaDeta__Codig__286302EC">
+            <End Role="Productos" EntitySet="Productos" />
+            <End Role="VentaDetalles" EntitySet="VentaDetalles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VentaDeta__Venta__29572725" Association="Self.FK__VentaDeta__Venta__29572725">
+            <End Role="Ventas" EntitySet="Ventas" />
+            <End Role="VentaDetalles" EntitySet="VentaDetalles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ventas__CodigoCl__2C3393D0" Association="Self.FK__Ventas__CodigoCl__2C3393D0">
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="Ventas" EntitySet="Ventas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ventas__Vendedor__2B3F6F97" Association="Self.FK__Ventas__Vendedor__2B3F6F97">
+            <End Role="Vendedores" EntitySet="Vendedores" />
+            <End Role="Ventas" EntitySet="Ventas" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="disosadbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Preventas" Relationship="Self.FK__Preventas__Codig__1A14E395" FromRole="Clientes" ToRole="Preventas" />
+          <NavigationProperty Name="Ventas" Relationship="Self.FK__Ventas__CodigoCl__2C3393D0" FromRole="Clientes" ToRole="Ventas" />
+        </EntityType>
+        <EntityType Name="GrupoVendedor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Vendedores" Relationship="Self.FK__Vendedore__Grupo__1ED998B2" FromRole="GrupoVendedores" ToRole="Vendedores" />
+        </EntityType>
+        <EntityType Name="PreventaDetalle">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CodigoProducto" Type="Int32" />
+          <Property Name="Cantidad" Type="Int32" />
+          <Property Name="Precio" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="PreventaId" Type="Int32" />
+          <Property Name="VendedorId" Type="Int32" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK__PreventaD__Codig__21B6055D" FromRole="PreventaDetalles" ToRole="Productos" />
+          <NavigationProperty Name="Preventa" Relationship="Self.FK__PreventaD__Preve__22AA2996" FromRole="PreventaDetalles" ToRole="Preventas" />
+          <NavigationProperty Name="Vendedor" Relationship="Self.FK__PreventaD__Vende__239E4DCF" FromRole="PreventaDetalles" ToRole="Vendedores" />
+        </EntityType>
+        <EntityType Name="Preventa">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Fecha" Type="DateTime" Precision="0" />
+          <Property Name="CodigoCliente" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="VendedorId" Type="Int32" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK__Preventas__Codig__1A14E395" FromRole="Preventas" ToRole="Clientes" />
+          <NavigationProperty Name="PreventaDetalles" Relationship="Self.FK__PreventaD__Preve__22AA2996" FromRole="Preventas" ToRole="PreventaDetalles" />
+          <NavigationProperty Name="Vendedor" Relationship="Self.FK__Preventas__Vende__2A4B4B5E" FromRole="Preventas" ToRole="Vendedores" />
+        </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Costo" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Precio" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Existencia" Type="Int32" Nullable="false" />
+          <Property Name="ProveedorId" Type="Int32" />
+          <NavigationProperty Name="PreventaDetalles" Relationship="Self.FK__PreventaD__Codig__21B6055D" FromRole="Productos" ToRole="PreventaDetalles" />
+          <NavigationProperty Name="Proveedor" Relationship="Self.FK__Productos__Prove__1367E606" FromRole="Productos" ToRole="Proveedores" />
+          <NavigationProperty Name="VentaDetalles" Relationship="Self.FK__VentaDeta__Codig__286302EC" FromRole="Productos" ToRole="VentaDetalles" />
+        </EntityType>
+        <EntityType Name="Proveedor">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Productos" Relationship="Self.FK__Productos__Prove__1367E606" FromRole="Proveedores" ToRole="Productos" />
+        </EntityType>
+        <EntityType Name="Vendedor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Grupo" Type="Int32" />
+          <NavigationProperty Name="GrupoVendedor" Relationship="Self.FK__Vendedore__Grupo__1ED998B2" FromRole="Vendedores" ToRole="GrupoVendedores" />
+          <NavigationProperty Name="PreventaDetalles" Relationship="Self.FK__PreventaD__Vende__239E4DCF" FromRole="Vendedores" ToRole="PreventaDetalles" />
+          <NavigationProperty Name="Preventas" Relationship="Self.FK__Preventas__Vende__2A4B4B5E" FromRole="Vendedores" ToRole="Preventas" />
+          <NavigationProperty Name="Ventas" Relationship="Self.FK__Ventas__Vendedor__2B3F6F97" FromRole="Vendedores" ToRole="Ventas" />
+        </EntityType>
+        <EntityType Name="VentaDetalle">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CodigoProducto" Type="Int32" />
+          <Property Name="Cantidad" Type="Int32" />
+          <Property Name="Precio" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Utilidad" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="VentaId" Type="Int32" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK__VentaDeta__Codig__286302EC" FromRole="VentaDetalles" ToRole="Productos" />
+          <NavigationProperty Name="Venta" Relationship="Self.FK__VentaDeta__Venta__29572725" FromRole="VentaDetalles" ToRole="Ventas" />
+        </EntityType>
+        <EntityType Name="Venta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Fecha" Type="DateTime" Precision="0" />
+          <Property Name="Deposito" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="VendedorId" Type="Int32" />
+          <Property Name="CodigoCliente" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK__Ventas__CodigoCl__2C3393D0" FromRole="Ventas" ToRole="Clientes" />
+          <NavigationProperty Name="Vendedor" Relationship="Self.FK__Ventas__Vendedor__2B3F6F97" FromRole="Ventas" ToRole="Vendedores" />
+          <NavigationProperty Name="VentaDetalles" Relationship="Self.FK__VentaDeta__Venta__29572725" FromRole="Ventas" ToRole="VentaDetalles" />
+        </EntityType>
+        <Association Name="FK__Preventas__Codig__1A14E395">
+          <End Role="Clientes" Type="Self.Cliente" Multiplicity="0..1" />
+          <End Role="Preventas" Type="Self.Preventa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clientes">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Preventas">
+              <PropertyRef Name="CodigoCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ventas__CodigoCl__2C3393D0">
+          <End Role="Clientes" Type="Self.Cliente" Multiplicity="0..1" />
+          <End Role="Ventas" Type="Self.Venta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clientes">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Ventas">
+              <PropertyRef Name="CodigoCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Vendedore__Grupo__1ED998B2">
+          <End Role="GrupoVendedores" Type="disosadbModel.GrupoVendedor" Multiplicity="0..1" />
+          <End Role="Vendedores" Type="disosadbModel.Vendedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GrupoVendedores">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vendedores">
+              <PropertyRef Name="Grupo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PreventaD__Codig__21B6055D">
+          <End Role="Productos" Type="Self.Producto" Multiplicity="0..1" />
+          <End Role="PreventaDetalles" Type="Self.PreventaDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productos">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="PreventaDetalles">
+              <PropertyRef Name="CodigoProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PreventaD__Preve__22AA2996">
+          <End Role="Preventas" Type="Self.Preventa" Multiplicity="0..1" />
+          <End Role="PreventaDetalles" Type="Self.PreventaDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Preventas">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PreventaDetalles">
+              <PropertyRef Name="PreventaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PreventaD__Vende__239E4DCF">
+          <End Role="Vendedores" Type="disosadbModel.Vendedor" Multiplicity="0..1" />
+          <End Role="PreventaDetalles" Type="Self.PreventaDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendedores">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PreventaDetalles">
+              <PropertyRef Name="VendedorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Preventas__Vende__2A4B4B5E">
+          <End Role="Vendedores" Type="disosadbModel.Vendedor" Multiplicity="0..1" />
+          <End Role="Preventas" Type="Self.Preventa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendedores">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Preventas">
+              <PropertyRef Name="VendedorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Productos__Prove__1367E606">
+          <End Role="Proveedores" Type="disosadbModel.Proveedor" Multiplicity="0..1" />
+          <End Role="Productos" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedores">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Productos">
+              <PropertyRef Name="ProveedorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VentaDeta__Codig__286302EC">
+          <End Role="Productos" Type="Self.Producto" Multiplicity="0..1" />
+          <End Role="VentaDetalles" Type="Self.VentaDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productos">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="VentaDetalles">
+              <PropertyRef Name="CodigoProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ventas__Vendedor__2B3F6F97">
+          <End Role="Vendedores" Type="disosadbModel.Vendedor" Multiplicity="0..1" />
+          <End Role="Ventas" Type="Self.Venta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendedores">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ventas">
+              <PropertyRef Name="VendedorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VentaDeta__Venta__29572725">
+          <End Role="Ventas" Type="Self.Venta" Multiplicity="0..1" />
+          <End Role="VentaDetalles" Type="Self.VentaDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ventas">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VentaDetalles">
+              <PropertyRef Name="VentaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="disosadbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clientes" EntityType="Self.Cliente" />
+          <EntitySet Name="GrupoVendedors" EntityType="disosadbModel.GrupoVendedor" />
+          <EntitySet Name="PreventaDetalles" EntityType="Self.PreventaDetalle" />
+          <EntitySet Name="Preventas" EntityType="Self.Preventa" />
+          <EntitySet Name="Productos" EntityType="Self.Producto" />
+          <EntitySet Name="Proveedors" EntityType="disosadbModel.Proveedor" />
+          <EntitySet Name="Vendedors" EntityType="disosadbModel.Vendedor" />
+          <EntitySet Name="VentaDetalles" EntityType="Self.VentaDetalle" />
+          <EntitySet Name="Ventas" EntityType="Self.Venta" />
+          <AssociationSet Name="FK__Preventas__Codig__1A14E395" Association="Self.FK__Preventas__Codig__1A14E395">
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="Preventas" EntitySet="Preventas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ventas__CodigoCl__2C3393D0" Association="Self.FK__Ventas__CodigoCl__2C3393D0">
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="Ventas" EntitySet="Ventas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vendedore__Grupo__1ED998B2" Association="Self.FK__Vendedore__Grupo__1ED998B2">
+            <End Role="GrupoVendedores" EntitySet="GrupoVendedors" />
+            <End Role="Vendedores" EntitySet="Vendedors" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PreventaD__Codig__21B6055D" Association="Self.FK__PreventaD__Codig__21B6055D">
+            <End Role="Productos" EntitySet="Productos" />
+            <End Role="PreventaDetalles" EntitySet="PreventaDetalles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PreventaD__Preve__22AA2996" Association="Self.FK__PreventaD__Preve__22AA2996">
+            <End Role="Preventas" EntitySet="Preventas" />
+            <End Role="PreventaDetalles" EntitySet="PreventaDetalles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PreventaD__Vende__239E4DCF" Association="Self.FK__PreventaD__Vende__239E4DCF">
+            <End Role="Vendedores" EntitySet="Vendedors" />
+            <End Role="PreventaDetalles" EntitySet="PreventaDetalles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Preventas__Vende__2A4B4B5E" Association="Self.FK__Preventas__Vende__2A4B4B5E">
+            <End Role="Vendedores" EntitySet="Vendedors" />
+            <End Role="Preventas" EntitySet="Preventas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Productos__Prove__1367E606" Association="Self.FK__Productos__Prove__1367E606">
+            <End Role="Proveedores" EntitySet="Proveedors" />
+            <End Role="Productos" EntitySet="Productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VentaDeta__Codig__286302EC" Association="Self.FK__VentaDeta__Codig__286302EC">
+            <End Role="Productos" EntitySet="Productos" />
+            <End Role="VentaDetalles" EntitySet="VentaDetalles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ventas__Vendedor__2B3F6F97" Association="Self.FK__Ventas__Vendedor__2B3F6F97">
+            <End Role="Vendedores" EntitySet="Vendedors" />
+            <End Role="Ventas" EntitySet="Ventas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VentaDeta__Venta__29572725" Association="Self.FK__VentaDeta__Venta__29572725">
+            <End Role="Ventas" EntitySet="Ventas" />
+            <End Role="VentaDetalles" EntitySet="VentaDetalles" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="disosadbModelStoreContainer" CdmEntityContainer="disosadbEntities">
+          <EntitySetMapping Name="Clientes">
+            <EntityTypeMapping TypeName="disosadbModel.Cliente">
+              <MappingFragment StoreEntitySet="Clientes">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GrupoVendedors">
+            <EntityTypeMapping TypeName="disosadbModel.GrupoVendedor">
+              <MappingFragment StoreEntitySet="GrupoVendedores">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PreventaDetalles">
+            <EntityTypeMapping TypeName="disosadbModel.PreventaDetalle">
+              <MappingFragment StoreEntitySet="PreventaDetalles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CodigoProducto" ColumnName="CodigoProducto" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="PreventaId" ColumnName="PreventaId" />
+                <ScalarProperty Name="VendedorId" ColumnName="VendedorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Preventas">
+            <EntityTypeMapping TypeName="disosadbModel.Preventa">
+              <MappingFragment StoreEntitySet="Preventas">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="CodigoCliente" ColumnName="CodigoCliente" />
+                <ScalarProperty Name="VendedorId" ColumnName="VendedorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Productos">
+            <EntityTypeMapping TypeName="disosadbModel.Producto">
+              <MappingFragment StoreEntitySet="Productos">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Costo" ColumnName="Costo" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Existencia" ColumnName="Existencia" />
+                <ScalarProperty Name="ProveedorId" ColumnName="ProveedorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Proveedors">
+            <EntityTypeMapping TypeName="disosadbModel.Proveedor">
+              <MappingFragment StoreEntitySet="Proveedores">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vendedors">
+            <EntityTypeMapping TypeName="disosadbModel.Vendedor">
+              <MappingFragment StoreEntitySet="Vendedores">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Grupo" ColumnName="Grupo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VentaDetalles">
+            <EntityTypeMapping TypeName="disosadbModel.VentaDetalle">
+              <MappingFragment StoreEntitySet="VentaDetalles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CodigoProducto" ColumnName="CodigoProducto" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Utilidad" ColumnName="Utilidad" />
+                <ScalarProperty Name="VentaId" ColumnName="VentaId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ventas">
+            <EntityTypeMapping TypeName="disosadbModel.Venta">
+              <MappingFragment StoreEntitySet="Ventas">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Deposito" ColumnName="Deposito" />
+                <ScalarProperty Name="VendedorId" ColumnName="VendedorId" />
+                <ScalarProperty Name="CodigoCliente" ColumnName="CodigoCliente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

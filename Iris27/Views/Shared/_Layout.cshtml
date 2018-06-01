@@ -1,41 +1,162 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Iris27</title>
+    <!-- Vendor styles -->
+    <link rel="stylesheet" href="~/vendors/bower_components/material-design-iconic-font/dist/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="~/vendors/bower_components/animate.css/animate.min.css">
+    <link rel="stylesheet" href="~/vendors/bower_components/jquery.scrollbar/jquery.scrollbar.css">
+    <link rel="stylesheet" href="~/vendors/bower_components/fullcalendar/dist/fullcalendar.min.css">
+    <!-- App styles -->
+    <link rel="stylesheet" href="~/css/app.min.css">
+    <link href="~/css/style.css" rel="stylesheet" />
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
-                </ul>
+
+
+<body data-sa-theme="1">
+    <main class="main">
+        <div class="page-loader">
+            <div class="page-loader__spinner">
+                <svg viewBox="25 25 50 50">
+                    <circle cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+                </svg>
             </div>
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
+        <header class="header">
+            <div class="navigation-trigger hidden-xl-up" data-sa-action="aside-open" data-sa-target=".sidebar">
+                <i class="zmdi zmdi-menu"></i>
+            </div>
+            <div class="logo hidden-sm-down">
+                <h1><a href="@Url.Action("Index","Home")">Iris 27 - <small>Store Edition</small></a></h1>
+            </div>
+            @*<form class="search">
+                    <div class="search__inner">
+                        <input type="text" class="search__text" placeholder="Search for people, files, documents...">
+                        <i class="zmdi zmdi-search search__helper" data-sa-action="search-close"></i>
+                    </div>
+                </form>*@
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+
+        </header>
+        <aside class="sidebar">
+            <div class="scrollbar-inner">
+                <div class="user">
+                    <div class="user__info" data-toggle="dropdown">
+                        <img class="user__img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRU1gJrTqXMz_DO0hDOyo2cMMJ76hmIfrTMA5mCalphghLhxkTj" alt="">
+                        <div>
+                            <div class="user__name">DISOSA GT</div>
+                            <div class="user__email">bagnerconta@gmail.com</div>
+                        </div>
+                    </div>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="">View Profile</a>
+                        <a class="dropdown-item" href="">Settings</a>
+                        <a class="dropdown-item" href="">Logout</a>
+                    </div>
+                </div>
+                <ul class="navigation">
+                    <li class="navigation__active"><a href="@Url.Action("Index","Home")"><i class="zmdi zmdi-home"></i> Inicio</a></li>
+                    <li class=""><a href="@Url.Action("Index","Productos")"><i class="zmdi zmdi-store"></i> Productos</a></li>
+                    <li class=""><a href="@Url.Action("Index","Proveedores")"><i class="zmdi zmdi-account-circle"></i> Proveedores</a></li>
+                    <li class=""><a href="@Url.Action("Index","Clientes")"><i class="zmdi zmdi-accounts"></i> Clientes</a></li>
+
+
+                    <li class="navigation__sub">
+                        <a onclick="$('#subMenuVendedores').slideToggle()" ><i class="zmdi zmdi-assignment-account"></i> Vendedores</a>
+                        <ul id="subMenuVendedores">
+                            <li class=""><a href="@Url.Action("Index","Vendedores")">Vendedores</a></li>
+                            <li class=""><a href="@Url.Action("Index","GrupoVendedores")">Rutas</a></li>
+                        </ul>
+                    </li>
+
+                    <li class=""><a href="@Url.Action("Index","Preventas")"><i class="zmdi zmdi-shopping-cart"></i> Picking</a></li>
+                    <li class=""><a href="@Url.Action("Index","Ventas")"><i class="zmdi zmdi-money"></i> Ventas</a></li>
+                    <li class=""><a href="@Url.Action("Index","Reportes")"><i class="zmdi zmdi-chart"></i> Reportes</a></li>
+
+                </ul>
+            </div>
+        </aside>
+
+        <section class="content">
+
+            @RenderBody()
+            <footer class="footer hidden-xs-down">
+
+                <p>© IRIS 27</p>
+                <ul class="nav footer__nav">
+                    <a class="nav-link" href="@Url.Action("Index","Home")">Inicio</a>
+                    <a class="nav-link" href="">Soporte</a>
+                </ul>
+            </footer>
+        </section>
+    </main>
+    <!-- Older IE warning message -->
+    <!--[if IE]>
+        <div class="ie-warning">
+            <h1>Warning!!</h1>
+            <p>You are using an outdated version of Internet Explorer, please upgrade to any of the following web browsers to access this website.</p>
+
+            <div class="ie-warning__downloads">
+                <a href="http://www.google.com/chrome">
+                    <img src="img/browsers/chrome.png" alt="">
+                </a>
+
+                <a href="https://www.mozilla.org/en-US/firefox/new">
+                    <img src="img/browsers/firefox.png" alt="">
+                </a>
+
+                <a href="http://www.opera.com">
+                    <img src="img/browsers/opera.png" alt="">
+                </a>
+
+                <a href="https://support.apple.com/downloads/safari">
+                    <img src="img/browsers/safari.png" alt="">
+                </a>
+
+                <a href="https://www.microsoft.com/en-us/windows/microsoft-edge">
+                    <img src="img/browsers/edge.png" alt="">
+                </a>
+
+                <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
+                    <img src="img/browsers/ie.png" alt="">
+                </a>
+            </div>
+            <p>Sorry for the inconvenience!</p>
+        </div>
+    <![endif]-->
+    <!-- Javascript -->
+    <!-- Vendors -->
+    <script src="~/vendors/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="~/vendors/bower_components/popper.js/dist/umd/popper.min.js"></script>
+    <script src="~/vendors/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/vendors/bower_components/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="~/vendors/bower_components/jquery-scrollLock/jquery-scrollLock.min.js"></script>
+    <script src="~/vendors/bower_components/salvattore/dist/salvattore.min.js"></script>
+    <script src="~/vendors/bower_components/flot/jquery.flot.js"></script>
+    <script src="~/vendors/bower_components/flot/jquery.flot.resize.js"></script>
+    <script src="~/vendors/bower_components/flot.curvedlines/curvedLines.js"></script>
+    <script src="~/vendors/bower_components/jqvmap/dist/jquery.vmap.min.js"></script>
+    <script src="~/vendors/bower_components/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+    <script src="~/vendors/bower_components/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js"></script>
+    <script src="~/vendors/bower_components/peity/jquery.peity.min.js"></script>
+    <script src="~/vendors/bower_components/moment/min/moment.min.js"></script>
+    <script src="~/vendors/bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
+    <!-- Charts and maps-->
+    <script src="~/demo/js/flot-charts/curved-line.js"></script>
+    <script src="~/demo/js/flot-charts/line.js"></script>
+    <script src="~/demo/js/flot-charts/dynamic.js"></script>
+    <script src="~/demo/js/flot-charts/chart-tooltips.js"></script>
+    <script src="~/demo/js/other-charts.js"></script>
+    <script src="~/demo/js/jqvmap.js"></script>
+    <!-- App functions and actions -->
+    <script src="~/js/app.min.js"></script>
 </body>
+
+
+
+
+
+
 </html>

@@ -1,0 +1,63 @@
+﻿@model PagedList.IPagedList<Iris27.Models.Cliente>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Productos";
+}
+
+<h2>Clientes</h2>
+
+<p>
+    @Html.ActionLink("Crear Nuevo", "Create")
+</p>
+
+<form class="search">
+    <div class="search__inner">
+        <input type="text" name="SearchString" class="search__text" placeholder="Buscar por nombre o dirección...">
+        <i class="zmdi zmdi-search search__helper" data-sa-action="search-close"></i>
+    </div>
+</form>
+<br />
+<table class="table">
+    <tr>
+        <th>
+            Codigo
+        </th>
+        <th>
+            Nombre
+        </th>
+        <th>
+            Dirección
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <th>
+                @Html.DisplayFor(modelItem => item.Codigo)
+            </th>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Direccion)
+            </td>
+            <td>
+                @Html.ActionLink("Modificar", "Edit", new { id = item.Codigo }) |
+                @Html.ActionLink("Eliminar", "Delete", new { id = item.Codigo })
+            </td>
+        </tr>
+    }
+
+</table>
+
+<br />
+<div class="text-center">
+    
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</div>
+

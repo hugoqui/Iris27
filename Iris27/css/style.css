@@ -1,0 +1,29 @@
+﻿body {
+}
+
+option {
+    color:#000;
+}
+
+.bubble {
+    animation: animateElement linear .5s;
+    animation-iteration-count: 1;    
+    
+}
+
+@keyframes animateElement {
+    0% {
+        opacity: 0;
+        transform: translate(0px,100px);
+    }
+
+    50% {
+        opacity: .9;
+        transform: translate(0px,-30px)
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(0px,0px);
+    }
+}
