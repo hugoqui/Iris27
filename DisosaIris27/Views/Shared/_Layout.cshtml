@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Iris27</title>
+    <!-- Vendor styles -->
+    <link rel="stylesheet" href="~/Content/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="~/Content/animate.min.css">
+    <link rel="stylesheet" href="~/Content/jquery.scrollbar.css">
+    <link rel="stylesheet" href="~/Content/fullcalendar.min.css">
+    <!-- App styles -->
+    <link rel="stylesheet" href="~/Content/app.min.css">
+    <link href="~/Content/style.css" rel="stylesheet" />
+</head>
+
+
+<body data-sa-theme="1">
+    <main class="main">
+        <div class="page-loader">
+            <div class="page-loader__spinner">
+                <svg viewBox="25 25 50 50">
+                    <circle cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+                </svg>
+            </div>
+        </div>
+        <header class="header">
+            <div class="navigation-trigger hidden-xl-up" data-sa-action="aside-open" data-sa-target=".sidebar">
+                <i class="zmdi zmdi-menu"></i>
+            </div>
+            <div class="logo hidden-sm-down">
+                <h1><a href="@Url.Action("Index","Home")">Iris 27 - <small>Store Edition</small></a></h1>
+            </div>
+            @*<form class="search">
+                    <div class="search__inner">
+                        <input type="text" class="search__text" placeholder="Search for people, files, documents...">
+                        <i class="zmdi zmdi-search search__helper" data-sa-action="search-close"></i>
+                    </div>
+                </form>*@
+
+
+        </header>
+        <aside class="sidebar">
+            <div class="scrollbar-inner">
+                <div class="user">
+                    <div class="user__info" data-toggle="dropdown">
+                        <img class="user__img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRU1gJrTqXMz_DO0hDOyo2cMMJ76hmIfrTMA5mCalphghLhxkTj" alt="">
+                        <div>
+                            <div class="user__name">DISOSA GT</div>
+                            <div class="user__email">bagnerconta@gmail.com</div>
+                        </div>
+                    </div>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="">View Profile</a>
+                        <a class="dropdown-item" href="">Settings</a>
+                        <a class="dropdown-item" href="">Logout</a>
+                    </div>
+                </div>
+                <ul class="navigation">
+                    <li class="navigation__active"><a href="@Url.Action("Index","Home")"><i class="zmdi zmdi-home"></i> Inicio</a></li>
+                    <li class=""><a href="@Url.Action("Index","Productos")"><i class="zmdi zmdi-store"></i> Productos</a></li>
+                    <li class=""><a href="@Url.Action("Index","Proveedores")"><i class="zmdi zmdi-account-circle"></i> Proveedores</a></li>
+                    <li class=""><a href="@Url.Action("Index","Clientes")"><i class="zmdi zmdi-accounts"></i> Clientes</a></li>
+
+
+                    <li class="navigation__sub">
+                        <a href=""><i class="zmdi zmdi-assignment-account"></i> Vendedores</a>
+                        <ul id="subMenuVendedores">
+                            <li class=""><a href="@Url.Action("Index","Vendedores")">Vendedores</a></li>
+                            <li class=""><a href="@Url.Action("Index","GrupoVendedores")">Rutas</a></li>
+                        </ul>
+                    </li>
+
+                    <li class=""><a href="@Url.Action("Index","Preventas")"><i class="zmdi zmdi-shopping-cart"></i> Picking</a></li>
+                    <li class=""><a href="@Url.Action("Index","Ventas")"><i class="zmdi zmdi-money"></i> Ventas</a></li>
+                    <li class=""><a href="@Url.Action("Index","Reportes")"><i class="zmdi zmdi-chart"></i> Reportes</a></li>
+
+                </ul>
+            </div>
+        </aside>
+
+        <section class="content">
+
+            @RenderBody()
+            <footer class="footer hidden-xs-down">
+
+                <p>© IRIS 27</p>
+                <ul class="nav footer__nav">
+                    <a class="nav-link" href="@Url.Action("Index","Home")">Inicio</a>
+                    <a class="nav-link" href="">Soporte</a>
+                </ul>
+            </footer>
+        </section>
+    </main>
+
+    <!-- Javascript -->
+    <!-- Vendors -->
+    <script src="~/Content/js/jquery.min.js"></script>
+    <script src="~/Content/js/popper.min.js"></script>
+    <script src="~/Content/js/bootstrap.min.js"></script>
+    <script src="~/Content/js/jquery.scrollbar.min.js"></script>
+    <script src="~/Content/js/jquery-scrollLock.min.js"></script>
+    <script src="~/Content/js/salvattore.min.js"></script>
+    <script src="~/Content/js/jquery.flot.js"></script>
+    <script src="~/Content/js/jquery.flot.resize.js"></script>
+    <script src="~/Content/js/curvedLines.js"></script>
+    <script src="~/Content/js/jquery.vmap.min.js"></script>
+    <script src="~/Content/js/jquery.vmap.world.js"></script>
+    <script src="~/Content/js/jquery.easypiechart.min.js"></script>
+    <script src="~/Content/js/jquery.peity.min.js"></script>
+    <script src="~/Content/js/moment.min.js"></script>
+    <script src="~/Content/js/fullcalendar.min.js"></script>
+    <!-- Charts and maps-->
+    @*<script src="~/demo/js/flot-charts/curved-line.js"></script>
+    <script src="~/demo/js/flot-charts/line.js"></script>
+    <script src="~/demo/js/flot-charts/dynamic.js"></script>
+    <script src="~/demo/js/flot-charts/chart-tooltips.js"></script>
+    <script src="~/demo/js/other-charts.js"></script>
+    <script src="~/demo/js/jqvmap.js"></script>*@
+    <!-- App functions and actions -->
+    <script src="~/Content/js/app.min.js"></script>
+</body>
+
+
+
+
+
+
+</html>

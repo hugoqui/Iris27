@@ -1,0 +1,414 @@
+﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0F429529-74FE-4CE3-879A-A02BB5C14D3B}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DisosaIris27</RootNamespace>
+    <AssemblyName>DisosaIris27</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.8.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.6\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.Cors, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.6\lib\net45\System.Web.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.6\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.6\lib\net45\System.Web.Http.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Web.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.3\lib\net45\System.Web.Webpages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Deployment">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.3\lib\net45\System.Web.Webpages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.3\lib\net45\System.Web.Webpages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\animate.min.css" />
+    <Content Include="Content\app.min.css" />
+    <Content Include="Content\fullcalendar.min.css" />
+    <Content Include="Content\jquery.scrollbar.css" />
+    <Content Include="Content\js\app.min.js" />
+    <Content Include="Content\js\bootstrap.min.js" />
+    <Content Include="Content\js\curvedLines.js" />
+    <Content Include="Content\js\fullcalendar.min.js" />
+    <Content Include="Content\js\jquery-scrollLock.min.js" />
+    <Content Include="Content\js\jquery.easypiechart.min.js" />
+    <Content Include="Content\js\jquery.flot.js" />
+    <Content Include="Content\js\jquery.flot.resize.js" />
+    <Content Include="Content\js\jquery.min.js" />
+    <Content Include="Content\js\jquery.peity.min.js" />
+    <Content Include="Content\js\jquery.scrollbar.min.js" />
+    <Content Include="Content\js\jquery.vmap.min.js" />
+    <Content Include="Content\js\jquery.vmap.world.js" />
+    <Content Include="Content\js\moment.min.js" />
+    <Content Include="Content\js\popper.min.js" />
+    <Content Include="Content\js\salvattore.min.js" />
+    <Content Include="Content\material-design-iconic-font.min.css" />
+    <Content Include="Content\PagedList.css" />
+    <Content Include="Content\style.css" />
+    <Content Include="fonts\nunito\nunito-bold.svg" />
+    <Content Include="fonts\nunito\nunito-regular.svg" />
+    <Content Include="fonts\nunito\nunito-semibold.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="img\bg\1.jpg" />
+    <Content Include="img\bg\10.jpg" />
+    <Content Include="img\bg\2.jpg" />
+    <Content Include="img\bg\3.jpg" />
+    <Content Include="img\bg\4.jpg" />
+    <Content Include="img\bg\5.jpg" />
+    <Content Include="img\bg\6.jpg" />
+    <Content Include="img\bg\7.jpg" />
+    <Content Include="img\bg\8.jpg" />
+    <Content Include="img\bg\9.jpg" />
+    <Content Include="img\browsers\chrome.png" />
+    <Content Include="img\browsers\edge.png" />
+    <Content Include="img\browsers\firefox.png" />
+    <Content Include="img\browsers\ie.png" />
+    <Content Include="img\browsers\index.htm" />
+    <Content Include="img\browsers\index_files\1.jpg" />
+    <Content Include="img\browsers\index_files\2.jpg" />
+    <Content Include="img\browsers\index_files\3.jpg" />
+    <Content Include="img\browsers\index_files\4.jpg" />
+    <Content Include="img\browsers\index_files\5.jpg" />
+    <Content Include="img\browsers\index_files\6.jpg" />
+    <Content Include="img\browsers\index_files\7.jpg" />
+    <Content Include="img\browsers\index_files\8.jpg" />
+    <Content Include="img\browsers\index_files\9.jpg" />
+    <Content Include="img\browsers\index_files\animate.min.css" />
+    <Content Include="img\browsers\index_files\app-default.min.css" />
+    <Content Include="img\browsers\index_files\app.min.js" />
+    <Content Include="img\browsers\index_files\Australia.png" />
+    <Content Include="img\browsers\index_files\bootstrap.min.js" />
+    <Content Include="img\browsers\index_files\Brazil.png" />
+    <Content Include="img\browsers\index_files\chart-tooltips.js" />
+    <Content Include="img\browsers\index_files\chrome.png" />
+    <Content Include="img\browsers\index_files\curved-line.js" />
+    <Content Include="img\browsers\index_files\curvedLines.js" />
+    <Content Include="img\browsers\index_files\edge.png" />
+    <Content Include="img\browsers\index_files\firefox.png" />
+    <Content Include="img\browsers\index_files\ie.png" />
+    <Content Include="img\browsers\index_files\Japan.png" />
+    <Content Include="img\browsers\index_files\jquery.easypiechart.min.js" />
+    <Content Include="img\browsers\index_files\jquery.flot.js" />
+    <Content Include="img\browsers\index_files\jquery.flot.resize.js" />
+    <Content Include="img\browsers\index_files\jquery.min.js" />
+    <Content Include="img\browsers\index_files\jquery.sparkline.min.js" />
+    <Content Include="img\browsers\index_files\jquery.vmap.min.js" />
+    <Content Include="img\browsers\index_files\jquery.vmap.world.js" />
+    <Content Include="img\browsers\index_files\jqvmap.js" />
+    <Content Include="img\browsers\index_files\line.js" />
+    <Content Include="img\browsers\index_files\material-design-iconic-font.min.css" />
+    <Content Include="img\browsers\index_files\note.png" />
+    <Content Include="img\browsers\index_files\opera.png" />
+    <Content Include="img\browsers\index_files\other-charts.js" />
+    <Content Include="img\browsers\index_files\safari.png" />
+    <Content Include="img\browsers\index_files\salvattore.min.js" />
+    <Content Include="img\browsers\index_files\South_Korea.png" />
+    <Content Include="img\browsers\index_files\tether.min.js" />
+    <Content Include="img\browsers\index_files\United_States_of_America.png" />
+    <Content Include="img\browsers\opera.png" />
+    <Content Include="img\browsers\safari.png" />
+    <Content Include="img\calendar\april.jpg" />
+    <Content Include="img\calendar\august.jpg" />
+    <Content Include="img\calendar\december.jpg" />
+    <Content Include="img\calendar\february.jpg" />
+    <Content Include="img\calendar\january.jpg" />
+    <Content Include="img\calendar\july.jpg" />
+    <Content Include="img\calendar\june.jpg" />
+    <Content Include="img\calendar\march.jpg" />
+    <Content Include="img\calendar\may.jpg" />
+    <Content Include="img\calendar\november.jpg" />
+    <Content Include="img\calendar\october.jpg" />
+    <Content Include="img\calendar\september.jpg" />
+    <Content Include="img\sidebar\sidebar-bg.jpg" />
+    <Content Include="img\sidebar\sidebar-bg.png" />
+    <Content Include="Models\disosaModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>disosaModel.Context.cs</LastGenOutput>
+      <DependentUpon>disosaModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\disosaModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>disosaModel.edmx</DependentUpon>
+      <LastGenOutput>disosaModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ClientesController.cs" />
+    <Compile Include="Controllers\DataController.cs" />
+    <Compile Include="Controllers\GrupoVendedoresController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PreventasController.cs" />
+    <Compile Include="Controllers\ProductosController.cs" />
+    <Compile Include="Controllers\ProveedoresController.cs" />
+    <Compile Include="Controllers\ReportesController.cs" />
+    <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\VendedoresController.cs" />
+    <Compile Include="Controllers\VentasController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Cliente.cs">
+      <DependentUpon>disosaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\disosaModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>disosaModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\disosaModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>disosaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\disosaModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>disosaModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GrupoVendedor.cs">
+      <DependentUpon>disosaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Preventa.cs">
+      <DependentUpon>disosaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PreventaDetalle.cs">
+      <DependentUpon>disosaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Producto.cs">
+      <DependentUpon>disosaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Proveedor.cs">
+      <DependentUpon>disosaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Vendedor.cs">
+      <DependentUpon>disosaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Venta.cs">
+      <DependentUpon>disosaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VentaDetalle.cs">
+      <DependentUpon>disosaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\web.config" />
+    <Content Include="fonts\nunito\nunito-bold.eot" />
+    <Content Include="fonts\nunito\nunito-bold.woff" />
+    <Content Include="fonts\nunito\nunito-bold.woff2" />
+    <Content Include="fonts\nunito\nunito-regular.eot" />
+    <Content Include="fonts\nunito\nunito-regular.woff" />
+    <Content Include="fonts\nunito\nunito-regular.woff2" />
+    <Content Include="fonts\nunito\nunito-semibold.eot" />
+    <Content Include="fonts\nunito\nunito-semibold.woff" />
+    <Content Include="fonts\nunito\nunito-semibold.woff2" />
+    <Content Include="fonts\Material-Design-Iconic-Font.woff2" />
+    <EntityDeploy Include="Models\disosaModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>disosaModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\disosaModel.edmx.diagram">
+      <DependentUpon>disosaModel.edmx</DependentUpon>
+    </Content>
+    <None Include="packages.config" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Clientes\Create.cshtml" />
+    <Content Include="Views\Clientes\Delete.cshtml" />
+    <Content Include="Views\Clientes\Details.cshtml" />
+    <Content Include="Views\Clientes\Edit.cshtml" />
+    <Content Include="Views\Clientes\Index.cshtml" />
+    <Content Include="Views\GrupoVendedores\Create.cshtml" />
+    <Content Include="Views\GrupoVendedores\Delete.cshtml" />
+    <Content Include="Views\GrupoVendedores\Details.cshtml" />
+    <Content Include="Views\GrupoVendedores\Edit.cshtml" />
+    <Content Include="Views\GrupoVendedores\Index.cshtml" />
+    <Content Include="Views\Preventas\Create.cshtml" />
+    <Content Include="Views\Preventas\Delete.cshtml" />
+    <Content Include="Views\Preventas\Details.cshtml" />
+    <Content Include="Views\Preventas\Edit.cshtml" />
+    <Content Include="Views\Preventas\Index.cshtml" />
+    <Content Include="Views\Productos\Create.cshtml" />
+    <Content Include="Views\Productos\Delete.cshtml" />
+    <Content Include="Views\Productos\Details.cshtml" />
+    <Content Include="Views\Productos\Edit.cshtml" />
+    <Content Include="Views\Productos\Index.cshtml" />
+    <Content Include="Views\Proveedores\Create.cshtml" />
+    <Content Include="Views\Proveedores\Delete.cshtml" />
+    <Content Include="Views\Proveedores\Details.cshtml" />
+    <Content Include="Views\Proveedores\Edit.cshtml" />
+    <Content Include="Views\Proveedores\Index.cshtml" />
+    <Content Include="Views\Reportes\Index.cshtml" />
+    <Content Include="Views\Vendedores\Create.cshtml" />
+    <Content Include="Views\Vendedores\Delete.cshtml" />
+    <Content Include="Views\Vendedores\Details.cshtml" />
+    <Content Include="Views\Vendedores\Edit.cshtml" />
+    <Content Include="Views\Vendedores\Index.cshtml" />
+    <Content Include="Views\Ventas\Create.cshtml" />
+    <Content Include="Views\Ventas\Delete.cshtml" />
+    <Content Include="Views\Ventas\Details.cshtml" />
+    <Content Include="Views\Ventas\Edit.cshtml" />
+    <Content Include="Views\Ventas\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>50744</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:50744/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

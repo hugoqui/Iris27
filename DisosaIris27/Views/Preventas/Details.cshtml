@@ -1,0 +1,63 @@
+﻿@model DisosaIris27.Models.Preventa
+
+@{
+    ViewBag.Title = "Details";
+    decimal? granTotal = 0;
+}
+
+<h2>Detalles</h2>
+
+<div>
+    <h4>Picking</h4>
+    <table class="table table-inverse">
+        <tr>
+            <td>No.</td>
+            <td>Fecha</td>
+            <td>Cliente</td>
+            <td>Vendedor</td>
+        </tr>
+        <tr>
+            <td>@Model.Id</td>
+            <td>@Model.Fecha.Value.ToShortDateString()</td>
+            <td>@Model.Cliente.Nombre</td>
+            <td>@Model.Vendedor.Nombre</td>
+        </tr>
+    </table>
+    <br /> <br />
+    <table class="table table-inverse table-bordered">
+        <thead>
+            <tr>
+                <td>Codigo</td>
+                <td>Nombre</td>
+                <td class="text-right">Cantidad</td>
+                <td class="text-right">Precio</td>
+                <td class="text-right">Total</td>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var elemento in Model.PreventaDetalles)
+            {
+                var total = elemento.Precio * elemento.Cantidad;
+                granTotal = granTotal + total;
+                <tr>
+                    <td>@elemento.CodigoProducto</td>
+                    <td>@elemento.Producto.Nombre</td>
+                    <td class="text-right">@elemento.Cantidad</td>
+                    <td class="text-right">@string.Format("{0:C}", elemento.Precio)</td>
+                    <td class="text-right">@string.Format("{0:C}", total)</td>
+                </tr>
+            }
+        </tbody>
+
+        <tfoot>
+            <tr>
+                <td colspan="4" align="right">TOTAL</td>
+                <td class="text-right">@string.Format("{0:C}", granTotal)</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+<p>
+    @Html.ActionLink("Regresar", "Index")
+</p>
