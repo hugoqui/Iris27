@@ -16,10 +16,14 @@ namespace DisosaIris27.Controllers
         private disosadbEntities db = new disosadbEntities();
 
         // GET: Ventas
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
             var ventas = db.Ventas.Include(v => v.Cliente).Include(v => v.Vendedor);
-            return View(ventas.ToList());
+            ventas = ventas.OrderByDescending(v => v.Id);
+
+            int pageSize = 10;
+            int pageNumber = (page ?? 1); //if null... set 1
+            return View(ventas.ToPagedList(pageNumber, pageSize));
         }
 
         public ActionResult Preventa()
@@ -67,12 +71,44 @@ namespace DisosaIris27.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Fecha,Deposito,VendedorId,CodigoCliente")] Venta venta)
+        //[ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "Id,Fecha,Deposito,VendedorId,CodigoCliente")] Venta venta, string devoluciones)
         {
+            int preventaId = int.Parse((TempData["Picking"]).ToString());
+            var listaDevoluciones = devoluciones.Split(',');
+
             if (ModelState.IsValid)
             {
                 db.Ventas.Add(venta);
+                db.SaveChanges();
+
+                Preventa preventa = db.Preventas.Find(preventaId);
+
+                var n = 0;
+                foreach (var item in preventa.PreventaDetalles)
+                {                    
+                    var devolucion = int.Parse(listaDevoluciones[n]);
+                    var cantidad = item.Cantidad - devolucion;
+                    var utitlidad = (item.Precio - item.Producto.Costo) * cantidad;
+
+                    var detalle = new VentaDetalle()
+                    {
+                        VentaId = venta.Id,
+                        Cantidad = cantidad,
+                        CodigoProducto = item.CodigoProducto,
+                        Precio = item.Precio,
+                        Utilidad = utitlidad,
+                    };
+                    db.VentaDetalles.Add(detalle);
+                    n++;
+
+                    if (devolucion>0)
+                    {
+                        var producto = item.Producto;
+                        producto.Existencia = producto.Existencia + devolucion;
+                        db.Entry(producto).State = EntityState.Modified;
+                    }
+                }
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

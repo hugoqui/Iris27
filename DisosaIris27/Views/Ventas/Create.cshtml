@@ -3,16 +3,17 @@
 @{
     ViewBag.Title = "Create";
     decimal? granTotal = ViewBag.GranTotal;
+
+    TempData["Picking"] = Model.Id;
 }
 
 <h2>Registrar Venta</h2>
 <br />
 
-<div class="card">
+<form method="post" action="/Ventas/Create" class="card">
     <div class="form-horizontal card-body">
         <h4>Picking # @Model.Id</h4>
         <hr />
-
         <div class="row">
             <div class="form-group col-md-3">
                 <label>Fecha</label>
@@ -21,14 +22,14 @@
 
             <div class="form-group col-md-3">
                 <label>Cliente</label>
-                <select class="form-control" disabled id="CodigoCliente" name="CodigoCliente">
+                <select class="form-control" id="CodigoCliente" name="CodigoCliente">
                     <option value="@Model.CodigoCliente">@Model.Cliente.Nombre</option>
                 </select>
             </div>
 
             <div class="form-group col-md-3">
                 <label>Vendedor</label>
-                <select class="form-control" disabled id="VendedorId" name="VendedorId">
+                <select class="form-control" id="VendedorId" name="VendedorId">
                     <option value="@Model.VendedorId">@Model.Vendedor.Nombre</option>
                 </select>
             </div>
@@ -78,32 +79,19 @@
 
                 }
             </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3" align="right">Número de Depósito</td>
+                    <td colspan="4"><input name="Deposito" class="form-control" required type="text" /> </td>
+                </tr>
+            </tfoot>
         </table>
         <div class="text-center">
-            <a class="btn btn-lg btn-dark" onclick="setTimeout(function () { $('#NoDeposito').focus() }, 500)" data-toggle="modal" data-target="#modalConfirmacion">Confirmar Venta</a>
+            <input type="hidden" id="devoluciones" name="devoluciones" value="" />
+            <input type="submit" class="btn btn-lg btn-light" value="Confirmar Venta" onclick="EnviarDetalles()" />
         </div>
-
-        <!-- Ignore backdrop click -->
-        <div class="modal fade" id="modalConfirmacion" data-backdrop="static" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title pull-left">Confirmar Venta</h5>
-                    </div>
-                    <div class="modal-body">
-                        <h3 class="GranTotal">@string.Format("{0:C}", ViewBag.GranTotal)</h3>
-                        <input type="text" id="NoDeposito" class="form-control" placeholder="número de depósito..." />
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-link">Confirmar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
-</div>
+</form>
 
 
 <div>
@@ -131,6 +119,13 @@
                 granTotal = granTotal + subtotal;
             }
             $(".GranTotal").text("Q" + granTotal).val("Q" + granTotal);
-
         });
+
+    function EnviarDetalles() {
+        var devoluciones = "";
+        for (var i = 1; i < $("#table tr").length - 1; i++) {
+            devoluciones = devoluciones + $("#d" + i).val() + ",";
+        }
+        $("#devoluciones").val(devoluciones);
+    }
 </script>

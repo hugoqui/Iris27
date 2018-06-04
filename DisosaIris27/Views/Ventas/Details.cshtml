@@ -2,49 +2,67 @@
 
 @{
     ViewBag.Title = "Details";
+    decimal? granTotal = 0;
+    decimal? utilidadTotal = 0;
 }
 
-<h2>Details</h2>
+<h2>Detalles de Venta</h2>
 
 <div>
-    <h4>Venta</h4>
+    <h4>Venta # @Model.Id</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Fecha)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Fecha)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Deposito)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Deposito)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Cliente.Nombre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Cliente.Nombre)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Vendedor.Nombre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Vendedor.Nombre)
-        </dd>
-
-    </dl>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <label>Fecha</label>
+                    <input type="text" class="form-control" value="@Model.Fecha.Value.ToShortDateString()" readonly />
+                </div>
+                <div class="col-md-3">
+                    <label>Cliente</label>
+                    <input type="text" class="form-control" value="@Model.Cliente.Nombre" readonly />
+                </div>
+                <div class="col-md-3">
+                    <label>Vendeodr</label>
+                    <input type="text" class="form-control" value="@Model.Vendedor.Nombre" readonly />
+                </div>                
+            </div>
+        </div>
+    </div>
 </div>
+
+<table class="table table-inverse table-bordered">
+    <tr>
+        <td>Codigo</td>
+        <td>Producto</td>
+        <td>Cantidad</td>
+        <td align="center">Precio</td>
+        <td align="center">Total</td>
+        <td align="center">Utilidad</td>
+    </tr>
+    @foreach (var item in Model.VentaDetalles)
+    {
+        var subtotal = item.Precio * item.Cantidad;
+        granTotal = granTotal + subtotal;
+        utilidadTotal = utilidadTotal + item.Utilidad;
+        <tr>
+            <td>@item.CodigoProducto</td>
+            <td>@item.Producto.Nombre</td>
+            <td>@item.Cantidad</td>
+            <td align="right">@string.Format("{0:C}", item.Precio)</td>
+            <td align="right">@string.Format("{0:C}", subtotal)</td>
+            <td align="right">@string.Format("{0:C}", item.Utilidad)</td>
+        </tr>
+        
+    }
+
+    <tr>
+        <td colspan="4" align="center">Total</td>
+        <td align="right">@string.Format("{0:C}", granTotal)</td>
+        <td align="right">@string.Format("{0:C}", utilidadTotal)</td>        
+    </tr>
+</table>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+
     @Html.ActionLink("Regresar", "Index")
 </p>
