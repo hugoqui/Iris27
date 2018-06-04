@@ -22,6 +22,14 @@ namespace DisosaIris27.Controllers
             return View(ventas.ToList());
         }
 
+        public ActionResult Preventa()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult GenerarVenta(int Id) => RedirectToAction("Create", new { id = Id });
+
         // GET: Ventas/Details/5
         public ActionResult Details(int? id)
         {
@@ -38,11 +46,21 @@ namespace DisosaIris27.Controllers
         }
 
         // GET: Ventas/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
-            ViewBag.CodigoCliente = new SelectList(db.Clientes, "Codigo", "Nombre");
-            ViewBag.VendedorId = new SelectList(db.Vendedors, "Id", "Nombre");
-            return View();
+            Preventa preventa = new Preventa();
+            if (id != null)
+            {
+                preventa = db.Preventas.Find(id);
+            }
+            decimal? grantotal = 0;
+            foreach (var item in preventa.PreventaDetalles)
+            {
+                grantotal = grantotal + (item.Cantidad * item.Precio);
+            }
+            ViewBag.GranTotal = grantotal;
+
+            return View(preventa);
         }
 
         // POST: Ventas/Create

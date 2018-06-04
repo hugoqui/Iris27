@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Preventa";
+}
+
+<h2>Preventa</h2>
+
+<form class="card" method="post" action="/Ventas/GenerarVenta">
+
+    <div class="row card-body">
+        <div class="col-md-6">
+            <input type="number" name="Id" class="form-control light" autofocus placeholder="Ingrese el número de Picking" required/>
+        </div>
+        <div class="col-md-6">
+            <button type="submit" class="btn btn-light">Confirmar</button>
+        </div>
+    </div>
+
+</form>

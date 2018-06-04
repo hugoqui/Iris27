@@ -1,60 +1,136 @@
-﻿@model DisosaIris27.Models.Venta
+﻿@model DisosaIris27.Models.Preventa
 
 @{
     ViewBag.Title = "Create";
+    decimal? granTotal = ViewBag.GranTotal;
 }
 
-<h2>Crear</h2>
+<h2>Registrar Venta</h2>
+<br />
 
-
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Venta</h4>
+<div class="card">
+    <div class="form-horizontal card-body">
+        <h4>Picking # @Model.Id</h4>
         <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Fecha, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Fecha, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Fecha, "", new { @class = "text-danger" })
+
+        <div class="row">
+            <div class="form-group col-md-3">
+                <label>Fecha</label>
+                <input type="text" name="Fecha" id="Fecha" class="form-control" value="@Model.Fecha.Value.ToShortDateString()" readonly />
+            </div>
+
+            <div class="form-group col-md-3">
+                <label>Cliente</label>
+                <select class="form-control" disabled id="CodigoCliente" name="CodigoCliente">
+                    <option value="@Model.CodigoCliente">@Model.Cliente.Nombre</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-3">
+                <label>Vendedor</label>
+                <select class="form-control" disabled id="VendedorId" name="VendedorId">
+                    <option value="@Model.VendedorId">@Model.Vendedor.Nombre</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-3">
+                <label>Gran Total</label>
+                <input type="text" name="GranTotal" id="GranTotal" class="form-control GranTotal" value="@string.Format("{0:C}", granTotal)" readonly />
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Deposito, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Deposito, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Deposito, "", new { @class = "text-danger" })
+        <br />
+
+        <table class="table" id="table">
+            <thead>
+                <tr>
+                    <td>Codigo</td>
+                    <td>Producto</td>
+                    <td>Precio</td>
+                    <td>Cantidad <br /> Pedido</td>
+                    <td>Devolución</td>
+                    <td>Cantidad <br /> Vendida</td>
+                    <td>Total</td>
+                </tr>
+            </thead>
+
+            <tbody>
+                @{ var n = 0;}
+                @foreach (var item in Model.PreventaDetalles)
+                {
+                    n++;
+                    var precioTag = "p" + n;
+                    var devolucionTag = "d" + n;
+                    var totalTag = "t" + n;
+                    var cantidadTag = "c" + n;
+                    var cantidadRealTag = "r" + n;
+                    var subTotal = item.Precio * item.Cantidad;
+
+                    <tr>
+                        <td>@item.CodigoProducto</td>
+                        <td>@item.Producto.Nombre</td>
+                        <td id="@precioTag">@string.Format("{0:C}", item.Precio)</td>
+                        <td id="@cantidadTag">@item.Cantidad</td>
+                        <td><input type="number" id="@devolucionTag" value="0" class="form-control" min="0" max="@item.Cantidad" /></td>
+                        <td id="@cantidadRealTag">@item.Cantidad</td>
+                        <td id="@totalTag">@string.Format("{0:C}", subTotal)</td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+        <div class="text-center">
+            <a class="btn btn-lg btn-dark" onclick="setTimeout(function () { $('#NoDeposito').focus() }, 500)" data-toggle="modal" data-target="#modalConfirmacion">Confirmar Venta</a>
+        </div>
+
+        <!-- Ignore backdrop click -->
+        <div class="modal fade" id="modalConfirmacion" data-backdrop="static" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title pull-left">Confirmar Venta</h5>
+                    </div>
+                    <div class="modal-body">
+                        <h3 class="GranTotal">@string.Format("{0:C}", ViewBag.GranTotal)</h3>
+                        <input type="text" id="NoDeposito" class="form-control" placeholder="número de depósito..." />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-link">Confirmar</button>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.VendedorId, "VendedorId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("VendedorId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.VendedorId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CodigoCliente, "CodigoCliente", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("CodigoCliente", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CodigoCliente, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Crear" class="btn btn-default" />
-            </div>
-        </div>
     </div>
-}
+</div>
+
 
 <div>
     @Html.ActionLink("Regresar", "Index")
 </div>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+
+<script>
+    $("#d1").focus();
+
+    $(':input[type="number"]').change(
+        function () {
+            var id = $(this).attr('id');
+            var granTotal = 0.00;
+            for (var i = 1; i < $("#table tr").length; i++) {
+                var cantidadOriginal = $("#c" + i).text();
+                var devolucion = $("#d" + i).val();
+                var cantidadFinal = cantidadOriginal - devolucion;
+
+                var precio = $("#p" + i).text().substring(1);
+                $("#r" + i).text(cantidadFinal);
+                var subtotal = precio * cantidadFinal;
+                $("#t" + i).text("Q" + subtotal);
+
+                granTotal = granTotal + subtotal;
+            }
+            $(".GranTotal").text("Q" + granTotal).val("Q" + granTotal);
+
+        });
+</script>
