@@ -17,16 +17,24 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nombre)
-        </td>
-        <td>
-            @Html.ActionLink("Modificar", "Edit", new { id=item.Codigo }) |            
-            @Html.ActionLink("Eliminar", "Delete", new { id=item.Codigo })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.ActionLink("Modificar", "Edit", new { id = item.Codigo }) |
+                @Html.ActionLink("Eliminar", "Delete", new { id = item.Codigo })
+            </td>
+        </tr>
+    }
 
 </table>
+
+
+<script src="~/Content/js/jquery.min.js"></script>
+<script>
+    $("li").removeClass("navigation__active");
+    $("#menu-proveedores").addClass("navigation__active");
+</script>

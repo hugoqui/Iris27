@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="disosadbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="disosadbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Clientes">
           <Key>
             <PropertyRef Name="Codigo" />
@@ -12,13 +12,7 @@
           <Property Name="Codigo" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="Nombre" Type="text" />
           <Property Name="Direccion" Type="text" />
-        </EntityType>
-        <EntityType Name="GrupoVendedores">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Nombre" Type="text" />
+          <Property Name="Ruta" Type="int" />
         </EntityType>
         <EntityType Name="PreventaDetalles">
           <Key>
@@ -58,13 +52,19 @@
           <Property Name="Codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nombre" Type="text" Nullable="false" />
         </EntityType>
+        <EntityType Name="Rutas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="text" />
+        </EntityType>
         <EntityType Name="Vendedores">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nombre" Type="text" />
-          <Property Name="Grupo" Type="int" />
         </EntityType>
         <EntityType Name="VentaDetalles">
           <Key>
@@ -87,6 +87,18 @@
           <Property Name="VendedorId" Type="int" />
           <Property Name="CodigoCliente" Type="nchar" MaxLength="10" />
         </EntityType>
+        <Association Name="FK__Clientes__Ruta__36B12243">
+          <End Role="Rutas" Type="Self.Rutas" Multiplicity="0..1" />
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rutas">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Clientes">
+              <PropertyRef Name="Ruta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__PreventaD__Codig__21B6055D">
           <End Role="Productos" Type="Self.Productos" Multiplicity="0..1" />
           <End Role="PreventaDetalles" Type="Self.PreventaDetalles" Multiplicity="*" />
@@ -159,18 +171,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Vendedore__Grupo__1ED998B2">
-          <End Role="GrupoVendedores" Type="Self.GrupoVendedores" Multiplicity="0..1" />
-          <End Role="Vendedores" Type="Self.Vendedores" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="GrupoVendedores">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Vendedores">
-              <PropertyRef Name="Grupo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__VentaDeta__Codig__286302EC">
           <End Role="Productos" Type="Self.Productos" Multiplicity="0..1" />
           <End Role="VentaDetalles" Type="Self.VentaDetalles" Multiplicity="*" />
@@ -221,14 +221,18 @@
         </Association>
         <EntityContainer Name="disosadbModelStoreContainer">
           <EntitySet Name="Clientes" EntityType="Self.Clientes" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="GrupoVendedores" EntityType="Self.GrupoVendedores" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PreventaDetalles" EntityType="Self.PreventaDetalles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Preventas" EntityType="Self.Preventas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Productos" EntityType="Self.Productos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Proveedores" EntityType="Self.Proveedores" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rutas" EntityType="Self.Rutas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Vendedores" EntityType="Self.Vendedores" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VentaDetalles" EntityType="Self.VentaDetalles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ventas" EntityType="Self.Ventas" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Clientes__Ruta__36B12243" Association="Self.FK__Clientes__Ruta__36B12243">
+            <End Role="Rutas" EntitySet="Rutas" />
+            <End Role="Clientes" EntitySet="Clientes" />
+          </AssociationSet>
           <AssociationSet Name="FK__PreventaD__Codig__21B6055D" Association="Self.FK__PreventaD__Codig__21B6055D">
             <End Role="Productos" EntitySet="Productos" />
             <End Role="PreventaDetalles" EntitySet="PreventaDetalles" />
@@ -253,10 +257,6 @@
             <End Role="Proveedores" EntitySet="Proveedores" />
             <End Role="Productos" EntitySet="Productos" />
           </AssociationSet>
-          <AssociationSet Name="FK__Vendedore__Grupo__1ED998B2" Association="Self.FK__Vendedore__Grupo__1ED998B2">
-            <End Role="GrupoVendedores" EntitySet="GrupoVendedores" />
-            <End Role="Vendedores" EntitySet="Vendedores" />
-          </AssociationSet>
           <AssociationSet Name="FK__VentaDeta__Codig__286302EC" Association="Self.FK__VentaDeta__Codig__286302EC">
             <End Role="Productos" EntitySet="Productos" />
             <End Role="VentaDetalles" EntitySet="VentaDetalles" />
@@ -274,8 +274,7 @@
             <End Role="Ventas" EntitySet="Ventas" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="disosadbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -288,14 +287,8 @@
           <Property Name="Direccion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Preventas" Relationship="Self.FK__Preventas__Codig__1A14E395" FromRole="Clientes" ToRole="Preventas" />
           <NavigationProperty Name="Ventas" Relationship="Self.FK__Ventas__CodigoCl__2C3393D0" FromRole="Clientes" ToRole="Ventas" />
-        </EntityType>
-        <EntityType Name="GrupoVendedor">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Vendedores" Relationship="Self.FK__Vendedore__Grupo__1ED998B2" FromRole="GrupoVendedores" ToRole="Vendedores" />
+          <Property Name="Ruta" Type="Int32" />
+          <NavigationProperty Name="Ruta1" Relationship="disosadbModel.FK__Clientes__Ruta__36B12243" FromRole="Cliente" ToRole="Ruta" />
         </EntityType>
         <EntityType Name="PreventaDetalle">
           <Key>
@@ -351,8 +344,6 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Grupo" Type="Int32" />
-          <NavigationProperty Name="GrupoVendedor" Relationship="Self.FK__Vendedore__Grupo__1ED998B2" FromRole="Vendedores" ToRole="GrupoVendedores" />
           <NavigationProperty Name="PreventaDetalles" Relationship="Self.FK__PreventaD__Vende__239E4DCF" FromRole="Vendedores" ToRole="PreventaDetalles" />
           <NavigationProperty Name="Preventas" Relationship="Self.FK__Preventas__Vende__2A4B4B5E" FromRole="Vendedores" ToRole="Preventas" />
           <NavigationProperty Name="Ventas" Relationship="Self.FK__Ventas__Vendedor__2B3F6F97" FromRole="Vendedores" ToRole="Ventas" />
@@ -404,18 +395,6 @@
             </Principal>
             <Dependent Role="Ventas">
               <PropertyRef Name="CodigoCliente" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Vendedore__Grupo__1ED998B2">
-          <End Role="GrupoVendedores" Type="disosadbModel.GrupoVendedor" Multiplicity="0..1" />
-          <End Role="Vendedores" Type="disosadbModel.Vendedor" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="GrupoVendedores">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Vendedores">
-              <PropertyRef Name="Grupo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -517,7 +496,6 @@
         </Association>
         <EntityContainer Name="disosadbEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Clientes" EntityType="Self.Cliente" />
-          <EntitySet Name="GrupoVendedors" EntityType="disosadbModel.GrupoVendedor" />
           <EntitySet Name="PreventaDetalles" EntityType="Self.PreventaDetalle" />
           <EntitySet Name="Preventas" EntityType="Self.Preventa" />
           <EntitySet Name="Productos" EntityType="Self.Producto" />
@@ -532,10 +510,6 @@
           <AssociationSet Name="FK__Ventas__CodigoCl__2C3393D0" Association="Self.FK__Ventas__CodigoCl__2C3393D0">
             <End Role="Clientes" EntitySet="Clientes" />
             <End Role="Ventas" EntitySet="Ventas" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Vendedore__Grupo__1ED998B2" Association="Self.FK__Vendedore__Grupo__1ED998B2">
-            <End Role="GrupoVendedores" EntitySet="GrupoVendedors" />
-            <End Role="Vendedores" EntitySet="Vendedors" />
           </AssociationSet>
           <AssociationSet Name="FK__PreventaD__Codig__21B6055D" Association="Self.FK__PreventaD__Codig__21B6055D">
             <End Role="Productos" EntitySet="Productos" />
@@ -569,7 +543,32 @@
             <End Role="Ventas" EntitySet="Ventas" />
             <End Role="VentaDetalles" EntitySet="VentaDetalles" />
           </AssociationSet>
+          <EntitySet Name="Rutas" EntityType="disosadbModel.Ruta" />
+          <AssociationSet Name="FK__Clientes__Ruta__36B12243" Association="disosadbModel.FK__Clientes__Ruta__36B12243">
+            <End Role="Ruta" EntitySet="Rutas" />
+            <End Role="Cliente" EntitySet="Clientes" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Ruta">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Clientes" Relationship="disosadbModel.FK__Clientes__Ruta__36B12243" FromRole="Ruta" ToRole="Cliente" />
+        </EntityType>
+        <Association Name="FK__Clientes__Ruta__36B12243">
+          <End Type="disosadbModel.Ruta" Role="Ruta" Multiplicity="0..1" />
+          <End Type="disosadbModel.Cliente" Role="Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ruta">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="Ruta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -579,17 +578,10 @@
           <EntitySetMapping Name="Clientes">
             <EntityTypeMapping TypeName="disosadbModel.Cliente">
               <MappingFragment StoreEntitySet="Clientes">
+                <ScalarProperty Name="Ruta" ColumnName="Ruta" />
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Direccion" ColumnName="Direccion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="GrupoVendedors">
-            <EntityTypeMapping TypeName="disosadbModel.GrupoVendedor">
-              <MappingFragment StoreEntitySet="GrupoVendedores">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -640,7 +632,6 @@
               <MappingFragment StoreEntitySet="Vendedores">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Grupo" ColumnName="Grupo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -664,6 +655,14 @@
                 <ScalarProperty Name="Deposito" ColumnName="Deposito" />
                 <ScalarProperty Name="VendedorId" ColumnName="VendedorId" />
                 <ScalarProperty Name="CodigoCliente" ColumnName="CodigoCliente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rutas">
+            <EntityTypeMapping TypeName="disosadbModel.Ruta">
+              <MappingFragment StoreEntitySet="Rutas">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

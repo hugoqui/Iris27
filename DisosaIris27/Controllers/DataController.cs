@@ -59,44 +59,42 @@ namespace DisosaIris27.Controllers
         }
 
         [HttpPost]
-        [Route("PostPreventa/{data}")]
-        public string PostPreventa(string data)
+        [Route("PostPreventa/{cliente}/{vendedor}")]
+        public string PostPreventa(string cliente, int vendedor, [FromBody] ListaPreventas listaPreventas)
         {
-            var lines = data.Split('!');
-            var clientId = lines[0].Split(',')[0];
-            var vendedorId = lines[0].Split(',')[1];
-
             var preventa = new Preventa()
             {
-                CodigoCliente = clientId,
-                VendedorId = int.Parse(vendedorId),
+                CodigoCliente = cliente.Trim(),
+                VendedorId = vendedor,
                 Fecha = DateTime.Today,
             };
-
             db.Preventas.Add(preventa);
             db.SaveChanges();
-
-            var preventaDetalles = new List<PreventaDetalle>();
-            for (int i = 1; i < lines.Length - 1; i++)
+           
+            var pedidos = listaPreventas.Listado; //array con productos
+            foreach (PreventaDetalle pedido in pedidos)
             {
                 var preventaDetalle = new PreventaDetalle()
                 {
                     PreventaId = preventa.Id,
-                    VendedorId = int.Parse(vendedorId),
-                    CodigoProducto = int.Parse(lines[i].Split(',')[0]),
-                    Cantidad = int.Parse(lines[i].Split(',')[1]),
-                    Precio = Convert.ToDecimal(lines[i].Split(',')[2]),
+                    VendedorId = vendedor,
+                    CodigoProducto = pedido.CodigoProducto,
+                    Cantidad = pedido.Cantidad,
+                    Precio = pedido.Precio,
                 };
-
                 var producto = db.Productos.Find(preventaDetalle.CodigoProducto);
                 producto.Existencia = producto.Existencia - int.Parse(preventaDetalle.Cantidad.ToString());
+
                 db.Entry(producto).State = System.Data.Entity.EntityState.Modified;
                 db.PreventaDetalles.Add(preventaDetalle);
-            }
-
+            }         
             db.SaveChanges();
             return preventa.Id.ToString();
         }
     }
 
+    public class ListaPreventas
+    {
+        public PreventaDetalle[] Listado { get; set; }
+    }
 }

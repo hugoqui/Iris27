@@ -50,7 +50,8 @@ namespace DisosaIris27.Controllers
 
         // GET: Clientes/Create
         public ActionResult Create()
-        {
+        {            
+            ViewBag.Rutas = db.Rutas.ToList();
             return View();
         }
 
@@ -59,7 +60,7 @@ namespace DisosaIris27.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Codigo,Nombre,Direccion")] Cliente cliente)
+        public ActionResult Create([Bind(Include = "Codigo,Nombre,Direccion,Ruta")] Cliente cliente)
         {
             if (ModelState.IsValid)
             {
@@ -83,6 +84,7 @@ namespace DisosaIris27.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.Rutas = db.Rutas.ToList();
             return View(cliente);
         }
 
@@ -91,7 +93,7 @@ namespace DisosaIris27.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Codigo,Nombre,Direccion")] Cliente cliente)
+        public ActionResult Edit([Bind(Include = "Codigo,Nombre,Direccion,Ruta")] Cliente cliente)
         {
             if (ModelState.IsValid)
             {

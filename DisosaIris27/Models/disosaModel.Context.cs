@@ -26,7 +26,6 @@ namespace DisosaIris27.Models
         }
     
         public virtual DbSet<Cliente> Clientes { get; set; }
-        public virtual DbSet<GrupoVendedor> GrupoVendedors { get; set; }
         public virtual DbSet<PreventaDetalle> PreventaDetalles { get; set; }
         public virtual DbSet<Preventa> Preventas { get; set; }
         public virtual DbSet<Producto> Productos { get; set; }
@@ -34,5 +33,6 @@ namespace DisosaIris27.Models
         public virtual DbSet<Vendedor> Vendedors { get; set; }
         public virtual DbSet<VentaDetalle> VentaDetalles { get; set; }
         public virtual DbSet<Venta> Ventas { get; set; }
+        public virtual DbSet<Ruta> Rutas { get; set; }
     }
 }

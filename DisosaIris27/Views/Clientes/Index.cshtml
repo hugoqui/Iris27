@@ -30,6 +30,9 @@
         <th>
             Dirección
         </th>
+        <th>
+            Ruta
+        </th>
         <th></th>
     </tr>
 
@@ -46,8 +49,11 @@
                 @Html.DisplayFor(modelItem => item.Direccion)
             </td>
             <td>
-                @Html.ActionLink("Modificar", "Edit", new { id = item.Codigo }) |
-                @Html.ActionLink("Eliminar", "Delete", new { id = item.Codigo })
+                @Html.DisplayFor(modelItem => item.Ruta1.Nombre)
+            </td>
+            <td>
+                @Html.ActionLink("Modificar", "Edit", new { id = item.Codigo.Trim() }) |
+                @Html.ActionLink("Eliminar", "Delete", new { id = item.Codigo.Trim() })
             </td>
         </tr>
     }
@@ -56,8 +62,13 @@
 
 <br />
 <div class="text-center">
-    
+
     @Html.PagedListPager(Model, page => Url.Action("Index",
-        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+            new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 </div>
 
+<script src="~/Content/js/jquery.min.js"></script>
+<script>
+    $("li").removeClass("navigation__active");
+    $("#menu-clientes").addClass("navigation__active");    
+</script>

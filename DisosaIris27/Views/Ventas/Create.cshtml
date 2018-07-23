@@ -12,7 +12,7 @@
 
 <form method="post" action="/Ventas/Create" class="card">
     <div class="form-horizontal card-body">
-        <h4>Picking # @Model.Id</h4>
+        <h4>Pedido # @Model.Id</h4>
         <hr />
         <div class="row">
             <div class="form-group col-md-3">
@@ -128,4 +128,11 @@
         }
         $("#devoluciones").val(devoluciones);
     }
+</script>
+
+
+<script src="~/Content/js/jquery.min.js"></script>
+<script>
+    $("li").removeClass("navigation__active");
+    $("#menu-ventas").addClass("navigation__active");
 </script>

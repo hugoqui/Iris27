@@ -10,7 +10,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Proveedor</h4>
         <hr />
@@ -36,3 +36,10 @@
 <div>
     @Html.ActionLink("Regresar", "Index")
 </div>
+
+
+<script src="~/Content/js/jquery.min.js"></script>
+<script>
+    $("li").removeClass("navigation__active");
+    $("#menu-proveedores").addClass("navigation__active");
+</script>

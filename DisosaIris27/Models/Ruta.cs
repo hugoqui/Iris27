@@ -12,18 +12,18 @@ namespace DisosaIris27.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class GrupoVendedor
+    public partial class Ruta
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public GrupoVendedor()
+        public Ruta()
         {
-            this.Vendedores = new HashSet<Vendedor>();
+            this.Clientes = new HashSet<Cliente>();
         }
     
         public int Id { get; set; }
         public string Nombre { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Vendedor> Vendedores { get; set; }
+        public virtual ICollection<Cliente> Clientes { get; set; }
     }
 }

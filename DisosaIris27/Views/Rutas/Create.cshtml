@@ -1,4 +1,4 @@
-﻿@model DisosaIris27.Models.GrupoVendedor
+﻿@model DisosaIris27.Models.Ruta
 
 @{
     ViewBag.Title = "Create";
@@ -6,11 +6,10 @@
 
 <h2>Crear</h2>
 
-
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Ruta</h4>
         <hr />
@@ -32,5 +31,12 @@
 }
 
 <div>
-    @Html.ActionLink("Regresar", "Index")
+    @Html.ActionLink("Back to List", "Index")
 </div>
+
+
+<script src="~/Content/js/jquery.min.js"></script>
+<script>
+    $("li").removeClass("navigation__active");
+    $("#menu-clientes").addClass("navigation__active");
+</script>

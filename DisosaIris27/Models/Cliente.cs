@@ -24,10 +24,12 @@ namespace DisosaIris27.Models
         public string Codigo { get; set; }
         public string Nombre { get; set; }
         public string Direccion { get; set; }
+        public Nullable<int> Ruta { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Preventa> Preventas { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Venta> Ventas { get; set; }
+        public virtual Ruta Ruta1 { get; set; }
     }
 }

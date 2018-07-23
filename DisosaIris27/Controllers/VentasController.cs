@@ -109,6 +109,8 @@ namespace DisosaIris27.Controllers
                         db.Entry(producto).State = EntityState.Modified;
                     }
                 }
+
+                db.Preventas.Remove(preventa); // Eliminar Preventa
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

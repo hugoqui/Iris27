@@ -18,7 +18,7 @@ namespace DisosaIris27.Controllers
         // GET: Vendedores
         public ActionResult Index()
         {
-            var vendedors = db.Vendedors.Include(v => v.GrupoVendedor);
+            var vendedors = db.Vendedors;
             return View(vendedors.ToList());
         }
 
@@ -39,8 +39,7 @@ namespace DisosaIris27.Controllers
 
         // GET: Vendedores/Create
         public ActionResult Create()
-        {
-            ViewBag.Grupo = new SelectList(db.GrupoVendedors, "Id", "Nombre");
+        {            
             return View();
         }
 
@@ -49,7 +48,7 @@ namespace DisosaIris27.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Nombre,Grupo")] Vendedor vendedor)
+        public ActionResult Create([Bind(Include = "Id,Nombre")] Vendedor vendedor)
         {
             if (ModelState.IsValid)
             {
@@ -57,8 +56,7 @@ namespace DisosaIris27.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.Grupo = new SelectList(db.GrupoVendedors, "Id", "Nombre", vendedor.Grupo);
+            
             return View(vendedor);
         }
 
@@ -73,8 +71,7 @@ namespace DisosaIris27.Controllers
             if (vendedor == null)
             {
                 return HttpNotFound();
-            }
-            ViewBag.Grupo = new SelectList(db.GrupoVendedors, "Id", "Nombre", vendedor.Grupo);
+            }            
             return View(vendedor);
         }
 
@@ -83,15 +80,14 @@ namespace DisosaIris27.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Nombre,Grupo")] Vendedor vendedor)
+        public ActionResult Edit([Bind(Include = "Id,Nombre")] Vendedor vendedor)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(vendedor).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
-            }
-            ViewBag.Grupo = new SelectList(db.GrupoVendedors, "Id", "Nombre", vendedor.Grupo);
+            }            
             return View(vendedor);
         }
 

@@ -11,107 +11,116 @@ using PagedList;
 
 namespace DisosaIris27.Controllers
 {
-    public class GrupoVendedoresController : Controller
+    public class RutasController : Controller
     {
         private disosadbEntities db = new disosadbEntities();
 
-        // GET: GrupoVendedores
+        // GET: Rutas
         public ActionResult Index()
         {
-            return View(db.GrupoVendedors.ToList());
+            return View(db.Rutas.ToList());
         }
 
-        // GET: GrupoVendedores/Details/5
-        public ActionResult Details(int? id)
+        // GET: Rutas/Details/5
+        public ActionResult Details(int? id, int? page)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            GrupoVendedor grupoVendedor = db.GrupoVendedors.Find(id);
-            if (grupoVendedor == null)
+            Ruta ruta = db.Rutas.Find(id);
+            if (ruta == null)
             {
                 return HttpNotFound();
             }
-            return View(grupoVendedor);
+            //return View(ruta);
+                        
+            var clientes = from c in ruta.Clientes select c;
+            clientes = clientes.OrderBy(c => c.Codigo);
+
+            int pageSize = 10;
+            int pageNumber = (page ?? 1); //if null... set 1
+            ViewBag.Ruta = ruta.Nombre;
+            ViewBag.NoClientes = clientes.Count();
+            return View(ruta.Clientes.ToPagedList(pageNumber, pageSize));
         }
 
-        // GET: GrupoVendedores/Create
+        // GET: Rutas/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: GrupoVendedores/Create
+        // POST: Rutas/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Nombre")] GrupoVendedor grupoVendedor)
+        public ActionResult Create([Bind(Include = "Id,Nombre")] Ruta ruta)
         {
             if (ModelState.IsValid)
             {
-                db.GrupoVendedors.Add(grupoVendedor);
+                db.Rutas.Add(ruta);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(grupoVendedor);
+            return View(ruta);
         }
 
-        // GET: GrupoVendedores/Edit/5
+        // GET: Rutas/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            GrupoVendedor grupoVendedor = db.GrupoVendedors.Find(id);
-            if (grupoVendedor == null)
+            Ruta ruta = db.Rutas.Find(id);
+            if (ruta == null)
             {
                 return HttpNotFound();
             }
-            return View(grupoVendedor);
+            return View(ruta);
         }
 
-        // POST: GrupoVendedores/Edit/5
+        // POST: Rutas/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Nombre")] GrupoVendedor grupoVendedor)
+        public ActionResult Edit([Bind(Include = "Id,Nombre")] Ruta ruta)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(grupoVendedor).State = EntityState.Modified;
+                db.Entry(ruta).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(grupoVendedor);
+            return View(ruta);
         }
 
-        // GET: GrupoVendedores/Delete/5
+        // GET: Rutas/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            GrupoVendedor grupoVendedor = db.GrupoVendedors.Find(id);
-            if (grupoVendedor == null)
+            Ruta ruta = db.Rutas.Find(id);
+            if (ruta == null)
             {
                 return HttpNotFound();
             }
-            return View(grupoVendedor);
+            return View(ruta);
         }
 
-        // POST: GrupoVendedores/Delete/5
+        // POST: Rutas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            GrupoVendedor grupoVendedor = db.GrupoVendedors.Find(id);
-            db.GrupoVendedors.Remove(grupoVendedor);
+            Ruta ruta = db.Rutas.Find(id);
+            db.Rutas.Remove(ruta);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

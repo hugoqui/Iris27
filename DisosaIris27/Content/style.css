@@ -2,13 +2,18 @@
 }
 
 option {
-    color:#000;
+    color: #000;
 }
 
 .bubble {
     animation: animateElement linear .5s;
-    animation-iteration-count: 1;    
-    
+    animation-iteration-count: 1;
+}
+
+select {
+    -webkit-appearance: menulist-button !important;
+    -moz-appearance: menulist-button !important;
+    appearance: menulist-button !important;
 }
 
 @keyframes animateElement {
@@ -25,5 +30,39 @@ option {
     100% {
         opacity: 1;
         transform: translate(0px,0px);
+    }
+}
+
+
+select:focus, input:focus {
+    box-shadow: 0px 0px 2px #fff !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+button:focus {
+    box-shadow: 0px 0px 10px #fff !important;
+    transform: scale(1.15);
+}
+
+
+@media print {
+
+    @page {size:portrait; margin-left:20px; margin-right:20px}
+
+    table {
+        border: solid 1px gray !important;
+        color: #000 !important;
+    }
+
+    td {
+        padding: 4px !important;
+        color: #717171;
+        border-bottom: solid 1px gray !important;
+        border-top: solid 1px gray !important;
+    }
+
+    thead {
+        font-weight: bold;
+        background-color: #000 !important;
     }
 }

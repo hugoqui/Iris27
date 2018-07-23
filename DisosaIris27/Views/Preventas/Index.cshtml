@@ -5,7 +5,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Picking</h2>
+<h2>Pedidos</h2>
 
 <p>
     @Html.ActionLink("+ Crear Nuevo", "Create")
@@ -50,5 +50,12 @@
 <div class="text-center">
 
     @Html.PagedListPager(Model, page => Url.Action("Index",
-                new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+                    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 </div>
+
+
+<script src="~/Content/js/jquery.min.js"></script>
+<script>
+    $("li").removeClass("navigation__active");
+    $("#menu-pedidos").addClass("navigation__active");
+</script>

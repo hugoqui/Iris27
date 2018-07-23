@@ -1,0 +1,55 @@
+﻿@*@model DisosaIris27.Models.Ruta*@
+@model PagedList.IPagedList<DisosaIris27.Models.Cliente>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalles</h2>
+
+<div>
+    <div class="row">
+        <div class="col-md-6"><h4><small>Ruta: </small><br />  @ViewBag.Ruta </h4></div>
+        <div class="col-md-6"><h5 class="text-secondary">Número de Clientes: <strong style="left:10px; position:relative"> @ViewBag.NoClientes</strong></h5></div>
+    </div>
+    <hr />
+
+    @foreach (var item in Model)
+    {
+        <div class="listview listview--bordered listview--hover">
+            <a class="listview__item" href="">
+                <div class="listview__content">
+                    <div class="listview__heading">
+                        <strong>@item.Nombre</strong>
+                    </div>
+                    <p>
+                        @item.Direccion
+                    </p>
+                </div>
+            </a>
+            <hr />
+        </div>
+    }
+
+
+</div>
+<p>
+    @Html.ActionLink("Regresar", "Index")
+</p>
+
+<br />
+<div class="text-center">
+
+    @Html.PagedListPager(Model, page => Url.Action("Details",
+                                    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</div>
+
+
+
+<script src="~/Content/js/jquery.min.js"></script>
+<script>
+    $("li").removeClass("navigation__active");
+    $("#menu-clientes").addClass("navigation__active");
+</script>

@@ -25,7 +25,7 @@
                 <div class="col-md-3">
                     <label>Vendeodr</label>
                     <input type="text" class="form-control" value="@Model.Vendedor.Nombre" readonly />
-                </div>                
+                </div>
             </div>
         </div>
     </div>
@@ -53,16 +53,24 @@
             <td align="right">@string.Format("{0:C}", subtotal)</td>
             <td align="right">@string.Format("{0:C}", item.Utilidad)</td>
         </tr>
-        
+
     }
 
     <tr>
         <td colspan="4" align="center">Total</td>
         <td align="right">@string.Format("{0:C}", granTotal)</td>
-        <td align="right">@string.Format("{0:C}", utilidadTotal)</td>        
+        <td align="right">@string.Format("{0:C}", utilidadTotal)</td>
     </tr>
 </table>
 <p>
 
     @Html.ActionLink("Regresar", "Index")
 </p>
+
+
+
+<script src="~/Content/js/jquery.min.js"></script>
+<script>
+    $("li").removeClass("navigation__active");
+    $("#menu-ventas").addClass("navigation__active");
+</script>

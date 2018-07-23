@@ -57,23 +57,26 @@
                     </div>
                 </div>
                 <ul class="navigation">
-                    <li class="navigation__active"><a href="@Url.Action("Index","Home")"><i class="zmdi zmdi-home"></i> Inicio</a></li>
-                    <li class=""><a href="@Url.Action("Index","Productos")"><i class="zmdi zmdi-store"></i> Productos</a></li>
-                    <li class=""><a href="@Url.Action("Index","Proveedores")"><i class="zmdi zmdi-account-circle"></i> Proveedores</a></li>
-                    <li class=""><a href="@Url.Action("Index","Clientes")"><i class="zmdi zmdi-accounts"></i> Clientes</a></li>
+                    <li class="" id="menu-inicio"><a href="@Url.Action("Index","Home")"><i class="zmdi zmdi-home"></i> Inicio</a></li>
+                    <li class="" id="menu-productos"><a href="@Url.Action("Index","Productos")"><i class="zmdi zmdi-store"></i> Productos</a></li>
+                    <li class="" id="menu-proveedores"><a href="@Url.Action("Index","Proveedores")"><i class="zmdi zmdi-account-circle"></i> Proveedores</a></li>
 
 
-                    <li class="navigation__sub">
-                        <a href=""><i class="zmdi zmdi-assignment-account"></i> Vendedores</a>
-                        <ul id="subMenuVendedores">
-                            <li class=""><a href="@Url.Action("Index","Vendedores")">Vendedores</a></li>
-                            <li class=""><a href="@Url.Action("Index","GrupoVendedores")">Rutas</a></li>
+                    <li class="navigation__sub" id="menu-clientes">
+                        <a href="">
+                            <i class="zmdi zmdi-accounts"></i> Clientes
+                        </a>
+                        <ul id="subMenuClientes">
+                            <li class=""><a href="@Url.Action("Index","Clientes")">Clientes</a></li>
+                            <li class=""><a href="@Url.Action("Index","Rutas")">Rutas</a></li>
                         </ul>
                     </li>
-
-                    <li class=""><a href="@Url.Action("Index","Preventas")"><i class="zmdi zmdi-shopping-cart"></i> Picking</a></li>
-                    <li class=""><a href="@Url.Action("Index","Ventas")"><i class="zmdi zmdi-money"></i> Ventas</a></li>
-                    <li class=""><a href="@Url.Action("Index","Reportes")"><i class="zmdi zmdi-chart"></i> Reportes</a></li>
+                    
+                    <li class="" id="menu-vendedores"><a href="@Url.Action("Index","Vendedores")"><i class="zmdi zmdi-assignment-account"></i> Vendedores</a></li>
+                    <li class="" id="menu-pedidos"><a href="@Url.Action("Index","Preventas")"><i class="zmdi zmdi-shopping-cart"></i> Pedidos</a></li>
+                    <li class="" id="menu-ventas"><a href="@Url.Action("Index","Ventas")"><i class="zmdi zmdi-money"></i> Ventas</a></li>
+                    <li class="" id="menu-picking"><a href="@Url.Action("Index","Picking")"><i class="zmdi zmdi-assignment"></i> Picking</a></li>
+                    <li class="" id="menu-reportes"><a href="@Url.Action("Index","Reportes")"><i class="zmdi zmdi-chart"></i> Reportes</a></li>
 
                 </ul>
             </div>
@@ -94,7 +97,7 @@
     </main>
 
     <!-- Javascript -->
-    <!-- Vendors -->
+    <!-- Vendors -->  
     <script src="~/Content/js/jquery.min.js"></script>
     <script src="~/Content/js/popper.min.js"></script>
     <script src="~/Content/js/bootstrap.min.js"></script>
@@ -112,13 +115,14 @@
     <script src="~/Content/js/fullcalendar.min.js"></script>
     <!-- Charts and maps-->
     @*<script src="~/demo/js/flot-charts/curved-line.js"></script>
-    <script src="~/demo/js/flot-charts/line.js"></script>
-    <script src="~/demo/js/flot-charts/dynamic.js"></script>
-    <script src="~/demo/js/flot-charts/chart-tooltips.js"></script>
-    <script src="~/demo/js/other-charts.js"></script>
-    <script src="~/demo/js/jqvmap.js"></script>*@
+        <script src="~/demo/js/flot-charts/line.js"></script>
+        <script src="~/demo/js/flot-charts/dynamic.js"></script>
+        <script src="~/demo/js/flot-charts/chart-tooltips.js"></script>
+        <script src="~/demo/js/other-charts.js"></script>
+        <script src="~/demo/js/jqvmap.js"></script>*@
     <!-- App functions and actions -->
     <script src="~/Content/js/app.min.js"></script>
+    
 </body>
 
 

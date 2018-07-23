@@ -1,0 +1,65 @@
+﻿@model List<DisosaIris27.Models.Preventa>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Picking</h2>
+<br />
+<form class="row d-print-none">
+    <div class="col-md-4">
+        <label class="control-label">Ruta:</label>
+        <select class="form-control" name="ruta">
+            @foreach (var item in ViewBag.Rutas)
+            {
+                <option value="@item.Id">@item.Nombre</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-4">
+        <br />
+        <button type="submit" class="btn btn-dark">Generar Picking</button>
+    </div>
+</form>
+<br />
+
+<h3 style="margin-top:20px">Detalles de Ruta @ViewBag.NombreRuta</h3>
+<table class="table table-hover table-bordered table-sm">
+    <thead class="btn-dark">
+        <tr>
+            <td># Pedido</td>
+            <td colspan="2">Productos</td>
+            <td>Cantidad</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var pedido in Model)
+        {
+            <tr>
+                <td width="100">@pedido.Id</td>
+                <td colspan="3">@pedido.Cliente.Nombre</td>
+
+            </tr>
+            foreach (var producto in pedido.PreventaDetalles)
+            {
+                <tr>
+                    <td></td>
+                    <td width="100">@producto.CodigoProducto</td>
+                    <td>@producto.Producto.Nombre</td>
+                    <td>@producto.Cantidad</td>
+                </tr>
+            }
+
+        }
+    </tbody>
+
+</table>
+
+<a class="btn btn-dark" href="@Url.Action("Details","Picking", new { ruta = ViewBag.Ruta })">
+    Generar Resumen >>
+</a>
+
+<script src="~/Content/js/jquery.min.js"></script>
+<script>
+    $("li").removeClass("navigation__active");
+    $("#menu-picking").addClass("navigation__active");
+</script>

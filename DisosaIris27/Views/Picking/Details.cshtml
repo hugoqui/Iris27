@@ -1,0 +1,56 @@
+﻿@model List<DisosaIris27.Models.PreventaDetalle>
+@{
+    ViewBag.Title = "Details";
+}
+
+<h3>Detalles de Picking</h3>
+<h1 class="text-secondary">RUTA : @ViewBag.Ruta - @ViewBag.NombreRuta</h1>
+<hr />
+<br />
+
+<table class="table table-inverse">
+    <thead>
+        <tr class="btn-dark">
+            <td>Codigo Producto</td>
+            <td>Nombre</td>
+            <td align="center">Cantidad Despacho</td>
+            <td>Total</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.CodigoProducto </td>
+                <td>@item.Producto.Nombre </td>
+                <td align="center">@item.Cantidad </td>
+                <td>@string.Format("{0:C}", item.Precio)</td>
+            </tr>
+        }
+        <tr class="btn-dark">
+            <td colspan="3" align="right">
+                TOTAL
+            </td>
+            <td>
+                @string.Format("{0:C}", ViewBag.Total)
+            </td>
+
+        </tr>
+    </tbody>
+</table>
+<p class="text-right" style="padding-right:20px">
+    @DateTime.Now.ToLongDateString() - @DateTime.Now.ToShortTimeString()
+</p>
+
+<div class="text-right d-print-none">
+    <a href="#" class="btn btn-dark" style="margin-right:20px" onclick="window.print()">
+        Imprimir <i class="zmdi zmdi-print zmdi-hc-fw"></i>
+    </a>
+</div>
+
+
+<script src="~/Content/js/jquery.min.js"></script>
+<script>
+    $("li").removeClass("navigation__active");
+    $("#menu-picking").addClass("navigation__active");
+</script>
