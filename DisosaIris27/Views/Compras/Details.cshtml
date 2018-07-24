@@ -2,40 +2,30 @@
 
 @{
     ViewBag.Title = "Details";
+    decimal? total = 0;
 }
 
-<h2>Details</h2>
-
 <div>
-    <h4>Compra</h4>
+    <h4>Detalles de Compra # @Model.Id</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Fecha)
-        </dt>
+    <div class="row">
+        <div class="col-md-3">
+            @Html.DisplayNameFor(model => model.Fecha) <br />
+            @Model.Fecha.Value.ToShortDateString()
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Fecha)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Comentario)
-        </dt>
-
-        <dd>
+        <div class="col-md-3">
+            @Html.DisplayNameFor(model => model.Comentario) <br />
             @Html.DisplayFor(model => model.Comentario)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Proveedor.Nombre)
-        </dt>
-
-        <dd>
+        </div>
+            
+        <div class="col-md-3">
+            Proveedor <br />
             @Html.DisplayFor(model => model.Proveedor.Nombre)
-        </dd>
-
-    </dl>
+        </div>
+    </div>
 </div>
+<div style="margin-top:20px"></div>
 
 <table class="table table-bordered">
     <tr>
@@ -50,11 +40,16 @@
         <tr>
             <td>@item.CodigoProducto</td>
             <td>@item.Producto.Nombre</td>
-            <td>@string.Format("{0:2}", item.Costo)</td>
+            <td>@string.Format("{0:C}", item.Costo)</td>
             <td>@item.Cantidad</td>
-            <td>@string.Format("{0:2}", (item.Costo * item.Cantidad))</td>
+            <td>@string.Format("{0:C}", (item.Costo * item.Cantidad))</td>
         </tr>
+        total = total + ( item.Costo * item.Cantidad);
     }
+    <tr>
+        <td colspan="4" align="right" style="padding-right:10px">TOTAL</td>
+        <td>@string.Format("{0:C}", total)</td>
+    </tr>
 </table>
 
 <p>

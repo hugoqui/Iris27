@@ -119,9 +119,6 @@
         }).fail(function () {
             $("#NombreProducto").val("No encontrado");
         });
-
-
-        ;
     }
 
     $("#CodigoProducto")
@@ -174,7 +171,7 @@
             var c = $("#c" + i).text();
             var q = $("#q" + i).text();
             var p = $("#p" + i).text();
-            var compra = { CodigoProducto: c, Cantidad: q, Precio: p };
+            var compra = { CodigoProducto: c, Cantidad: q, Costo: p };
             compras.push(compra);
         }
 

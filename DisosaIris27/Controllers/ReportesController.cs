@@ -17,8 +17,10 @@ namespace DisosaIris27.Controllers
             return View();
         }
 
-        public ActionResult Ventas(string cliente, DateTime? fechaInicio, DateTime? fechaFinal, int? page)
+        public ActionResult Ventas(string cliente, int? vendedor, DateTime? fechaInicio, DateTime? fechaFinal, int? page)
         {
+            ViewBag.NombreCliente = " * todos";
+            ViewBag.NombreVendedor = " * todos";
             var ventas = new List<Venta>();
 
             if (fechaInicio == null) { ViewBag.FechaInicio = DateTime.Now.ToString("yyyy-MM-dd"); }
@@ -27,17 +29,29 @@ namespace DisosaIris27.Controllers
             if (fechaFinal == null) { ViewBag.FechaFinal = DateTime.Now.ToString("yyyy-MM-dd"); }
             else { ViewBag.FechaFinal = fechaFinal.Value.ToString("yyyy-MM-dd"); }
 
-            ViewBag.Cliente = cliente;
-
-            if (cliente != null && fechaInicio != null && fechaFinal != null)
+            if (cliente != null && vendedor!=null && fechaInicio != null && fechaFinal != null)
             {
                 ventas = db.Ventas.Where(v => (v.Fecha >= fechaInicio && v.Fecha <= fechaFinal)).ToList();
                 if (cliente != "*") // 0 significa que son todos los clientes
                 {
+                    ViewBag.NombreCliente = db.Clientes.Find(cliente.Trim()).Nombre ;
+                    
                     ventas = ventas.Where(v => v.CodigoCliente == cliente).ToList();
                 }
+                if (vendedor > 0)
+                {
+                    ViewBag.NombreVendedor = db.Vendedors.Find(vendedor).Nombre;
+                    ventas = ventas.Where(v => v.VendedorId == vendedor).ToList();
+                }
             }
+            
+            ViewBag.Cliente = cliente;
             ViewBag.Clientes = db.Clientes.ToList();
+            ViewBag.Vendedor = vendedor;
+            ViewBag.Vendedores = db.Vendedors.ToList();
+            ViewBag.Conteo = ventas.Count;
+
+            ViewBag.Total = ventas.Sum(v => (v.VentaDetalles.Sum(d => d.Precio * d.Cantidad)));
 
             int pageSize = 20;
             int pageNumber = (page ?? 1); //if null... set 1
@@ -67,7 +81,7 @@ namespace DisosaIris27.Controllers
                 }
             }
             ViewBag.Proveedores = db.Proveedors.ToList();
-            
+
             int pageSize = 20;
             int pageNumber = (page ?? 1); //if null... set 1
             compras = compras.OrderByDescending(c => c.Id).ToList();

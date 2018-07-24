@@ -11,7 +11,7 @@
 <hr />
 
 <form class="row">
-    <div class="col-md-4">
+    <div class="col-md-3">
         <label class="label-control">Clientes</label>
         <select class="form-control" name="cliente" id="cliente">
             <option selected value="*"> * todos</option>
@@ -23,11 +23,22 @@
     </div>
 
     <div class="col-md-3">
+        <label class="label-control">Vendedores</label>
+        <select class="form-control" name="vendedor" id="vendedor">
+            <option selected value="0"> * todos</option>
+            @foreach (var item in ViewBag.Vendedores)
+            {
+                <option value="@item.Id">@item.Nombre</option>
+            }
+        </select>
+    </div>
+
+    <div class="col-md-2">
         <label class="label-control">Fecha Inicial </label>
         <input class="form-control" type="date" name="fechaInicio" value="@ViewBag.FechaInicio" />
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-2">
         <label class="label-control">Fecha Final</label>
         <input class="form-control" type="date" name="fechaFinal" value="@ViewBag.FechaFinal" />
     </div>
@@ -38,6 +49,17 @@
     </div>
 </form>
 <br />
+
+
+<table class="table table-bordered table-inverse">
+    <tr>
+        <td>Cliente: @ViewBag.NombreCliente</td>
+        <td>Vendedor: @ViewBag.NombreVendedor</td>
+        <td>Número de Registros: @ViewBag.Conteo</td>
+        <td>Total en Ventas: @string.Format("{0:C}", ViewBag.Total)</td>
+    </tr>
+</table>
+
 <hr />
 <br />
 
@@ -71,7 +93,7 @@
 <br />
 <div class="text-center">
     @Html.PagedListPager(Model, page => Url.Action("Ventas",
-                        new { cliente = ViewBag.Cliente, fechaInicio = ViewBag.FechaInicio, fechaFinal = ViewBag.FechaFinal, page }))
+                        new { cliente = ViewBag.Cliente, vendedor = ViewBag.Vendedor, fechaInicio = ViewBag.FechaInicio, fechaFinal = ViewBag.FechaFinal, page }))
 </div>
 
 <script src="~/Content/js/jquery.min.js"></script>
