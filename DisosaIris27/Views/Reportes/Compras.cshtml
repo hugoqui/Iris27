@@ -1,0 +1,78 @@
+﻿@model PagedList.IPagedList<DisosaIris27.Models.Compra>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Compras";
+}
+
+<h2>Reporte de Compras</h2>
+
+<hr />
+
+<form class="row">
+    <div class="col-md-4">
+        <label class="label-control">Clientes</label>
+        <select class="form-control" name="proveedor">
+            <option selected value="0"> * todos</option>
+            @foreach (var item in ViewBag.Proveedores)
+            {
+                <option value="@item.Codigo">@item.Nombre</option>
+            }
+        </select>
+    </div>
+
+    <div class="col-md-3">
+        <label class="label-control">Fecha Inicial </label>
+        <input class="form-control" type="date" name="fechaInicio" value="@ViewBag.FechaInicio" />
+    </div>
+
+    <div class="col-md-3">
+        <label class="label-control">Fecha Final</label>
+        <input class="form-control" type="date" name="fechaFinal" value="@ViewBag.FechaFinal" />
+    </div>
+
+    <div class="col-md-2">
+        <br />
+        <input class="btn btn-dark" type="submit" value="Mostrar" />
+    </div>
+</form>
+<br />
+<hr />
+<br />
+
+<table class="table table-hover table-bordered table-sm table-inverse">
+    <thead class="thead-dark">
+        <tr>
+            <td>#</td>
+            <td>Fecha</td>
+            <td>Proveedor</td>            
+            <td align="right">Total</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Fecha.Value.ToShortDateString()</td>
+                <td>@item.Proveedor.Nombre</td>                
+                <td align="right"> @string.Format("{0:C}", item.CompraDetalles.Sum(c => (c.Cantidad * c.Costo)))</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<br />
+<div class="text-center">
+    @Html.PagedListPager(Model, page => Url.Action("Ventas",
+                            new { cliente = ViewBag.Proveedor, fechaInicio = ViewBag.FechaInicio, fechaFinal = ViewBag.FechaFinal, page }))
+</div>
+
+<script src="~/Content/js/jquery.min.js"></script>
+<script>
+    $("li").removeClass("navigation__active");
+    $("#menu-reportes").addClass("navigation__active");
+
+</script>

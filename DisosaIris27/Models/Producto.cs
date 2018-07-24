@@ -19,6 +19,7 @@ namespace DisosaIris27.Models
         {
             this.PreventaDetalles = new HashSet<PreventaDetalle>();
             this.VentaDetalles = new HashSet<VentaDetalle>();
+            this.CompraDetalles = new HashSet<CompraDetalle>();
         }
     
         public int Codigo { get; set; }
@@ -33,5 +34,7 @@ namespace DisosaIris27.Models
         public virtual Proveedor Proveedor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VentaDetalle> VentaDetalles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CompraDetalle> CompraDetalles { get; set; }
     }
 }

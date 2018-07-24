@@ -54,7 +54,7 @@
 
 </table>
 
-<a class="btn btn-dark" href="@Url.Action("Details","Picking", new { ruta = ViewBag.Ruta })">
+<a id="btn-resumen" class="btn btn-dark" href="@Url.Action("Details","Picking", new { ruta = ViewBag.Ruta })" style="display:none">
     Generar Resumen >>
 </a>
 
@@ -62,4 +62,7 @@
 <script>
     $("li").removeClass("navigation__active");
     $("#menu-picking").addClass("navigation__active");
+    if ($("table tr").length > 1) {
+        $("#btn-resumen").show("slow");
+    }
 </script>

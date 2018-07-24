@@ -239,6 +239,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
+    <Compile Include="Controllers\ComprasController.cs" />
     <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PickingController.cs" />
@@ -254,6 +255,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Cliente.cs">
+      <DependentUpon>disosaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Compra.cs">
+      <DependentUpon>disosaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CompraDetalle.cs">
       <DependentUpon>disosaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\disosaModel.Context.cs">
@@ -361,6 +368,13 @@
     <Content Include="Views\Rutas\Index.cshtml" />
     <Content Include="Views\Picking\Index.cshtml" />
     <Content Include="Views\Picking\Details.cshtml" />
+    <Content Include="Views\Compras\Create.cshtml" />
+    <Content Include="Views\Compras\Delete.cshtml" />
+    <Content Include="Views\Compras\Details.cshtml" />
+    <Content Include="Views\Compras\Edit.cshtml" />
+    <Content Include="Views\Compras\Index.cshtml" />
+    <Content Include="Views\Reportes\Ventas.cshtml" />
+    <Content Include="Views\Reportes\Compras.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

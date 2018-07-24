@@ -1,0 +1,191 @@
+﻿@model DisosaIris27.Models.Compra
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Registrar</h2>
+
+<form id="form">
+
+
+    <div class="form-horizontal">
+        <h4>Compra</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row">
+            <div class="form-group col-md-6">
+                @Html.LabelFor(model => model.CodigoProveedor, "Proveedor", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-8">
+                    @Html.DropDownList("CodigoProveedor", null, htmlAttributes: new { @class = "form-control", @autofocus = "autofocus" })
+                    @Html.ValidationMessageFor(model => model.CodigoProveedor, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group col-md-6">
+                @Html.LabelFor(model => model.Fecha, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.Fecha, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                    @Html.ValidationMessageFor(model => model.Fecha, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Comentario, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Comentario, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Comentario, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2">
+                <label class="control-label">Codigo</label>
+                <input type="number" class="form-control" id="CodigoProducto" />
+            </div>
+            <div class="col-md-3">
+                <label class="control-label">Nombre</label>
+                <input type="text" class="form-control" disabled id="NombreProducto" />
+            </div>
+            <div class="col-md-2">
+                <label class="control-label">Costo</label>
+                <input type="number" class="form-control" id="Costo" disabled onchange="CalcularSubTotal()" />
+            </div>
+            <div class="col-md-1">
+                <label class="control-label">Cantidad</label>
+                <input type="number" class="form-control" id="Cantidad" min="1" value="1" onchange="CalcularSubTotal()" />
+            </div>
+            <div class="col-md-2">
+                <label class="control-label">Total</label>
+                <input type="text" class="form-control" id="Total" disabled />
+            </div>
+            <div class="col-md-2">
+                <br />
+                <button type="button" class="btn btn-dark" onclick="AgregarItems()" id="BtnAgregar">+ Agregar</button>
+            </div>
+        </div>
+
+        <br />
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <td>Codigo</td>
+                    <td>Nombre</td>
+                    <td>Cantidad</td>
+                    <td>Costo</td>
+                    <td>Total</td>
+                </tr>
+            </thead>
+            <tbody id="tableDetail"></tbody>
+            <tfoot>
+                <tr style="font-weight:bold">
+                    <td colspan="4">Total</td>
+                    <td id="TotalGlobal">0</td>
+                </tr>
+            </tfoot>
+        </table>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="button" class="btn btn-dark" onclick="GuardarPedido()">Crear</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    @Html.ActionLink("Regresar", "Index")
+</div>
+
+
+<script src="~/Content/js/jquery.min.js"></script>
+<script>
+    $("li").removeClass("navigation__active");
+    $("#menu-compras").addClass("navigation__active");
+</script>
+<script>
+    $("li").removeClass("navigation__active");
+    $("#menu-inicio").addClass("navigation__active");
+
+    document.getElementById('Fecha').valueAsDate = new Date();
+
+    function ObtenerProducto(id) {
+        $.get("/api/data/ObtenerProducto/" + id, function (data) {
+            $("#NombreProducto").val(data.Nombre);
+            $("#Costo").val(data.Costo);
+            CalcularSubTotal();
+        }).fail(function () {
+            $("#NombreProducto").val("No encontrado");
+        });
+
+
+        ;
+    }
+
+    $("#CodigoProducto")
+        .keypress(function (e) {
+            if (e.which == 13 || e.which == 9) {
+                ObtenerProducto($("#CodigoProducto").val())
+            }
+        })
+        .focusout(function () {
+            ObtenerProducto($("#CodigoProducto").val())
+        });
+
+
+    var n = 1; // Número de filas en la tala
+    function AgregarItems() {
+        var codigo = $("#CodigoProducto").val();
+        var nombre = $("#NombreProducto").val();
+        var cantidad = $("#Cantidad").val();
+        var precio = $("#Costo").val();
+        var subtotal = $("#Total").val();
+        var total = $("#TotalGlobal").text();
+        total = Number(total) + Number(subtotal);
+        $("#TotalGlobal").text(total);
+
+        var fila = $('<tr class="bubble"><td id="c' + n + '">' + codigo + '</td><td id="n' + n + '">' + nombre + '</td><td id="q' + n + '">' + cantidad + '</td><td id="p' + n + '">' + precio + '</td><td id="t' + n + '">' + subtotal + '</td></tr>');
+        $('#tableDetail').append(fila);
+        n = n + 1; // conteo de filas en tabla
+
+        $("#CodigoProducto").val("");
+        $("#NombreProducto").val("");
+        $("#Cantidad").val(1);
+        $("#Costo").val(0);
+        $("#Total").val(0);
+        $("#CodigoProducto").focus();
+    }
+
+    function CalcularSubTotal() {
+        var cantidad = $("#Cantidad").val();
+        var precio = $("#Costo").val();
+        $("#Total").val(precio * cantidad);
+    }
+
+    function GuardarPedido() {
+        var proveedor = $("#CodigoProveedor").val().trim();
+        var comentario = $("#Comentario").val().trim();
+        var fecha = $("#Fecha").val();
+        var compras = [];
+
+        for (var i = 1; i < n; i++) {  // n = conteo de filas en tabla
+            var c = $("#c" + i).text();
+            var q = $("#q" + i).text();
+            var p = $("#p" + i).text();
+            var compra = { CodigoProducto: c, Cantidad: q, Precio: p };
+            compras.push(compra);
+        }
+
+        var listaCompras = { Listado: compras };
+        $(".page-loader").fadeToggle();
+        var url = "/api/data/PostCompra/" + proveedor + "/-" + comentario + "-/" + fecha + "/";
+
+        $.post(url, listaCompras)
+            .done(function (result) {
+                alert('Compra # ' + result);
+                document.location.href = "/Compras";
+            });
+    }
+</script>

@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Iris27</title>
+    <link rel="icon" type="image/png" href="https://png.icons8.com/color/260/pos-terminal.png" />
     <!-- Vendor styles -->
     <link rel="stylesheet" href="~/Content/material-design-iconic-font.min.css">
     <link rel="stylesheet" href="~/Content/animate.min.css">
@@ -59,8 +60,8 @@
                 <ul class="navigation">
                     <li class="" id="menu-inicio"><a href="@Url.Action("Index","Home")"><i class="zmdi zmdi-home"></i> Inicio</a></li>
                     <li class="" id="menu-productos"><a href="@Url.Action("Index","Productos")"><i class="zmdi zmdi-store"></i> Productos</a></li>
+                    <li class="" id="menu-compras"><a href="@Url.Action("Index","Compras")"><i class="zmdi zmdi-shopping-cart-plus"></i> Compras</a></li>
                     <li class="" id="menu-proveedores"><a href="@Url.Action("Index","Proveedores")"><i class="zmdi zmdi-account-circle"></i> Proveedores</a></li>
-
 
                     <li class="navigation__sub" id="menu-clientes">
                         <a href="">
@@ -71,13 +72,21 @@
                             <li class=""><a href="@Url.Action("Index","Rutas")">Rutas</a></li>
                         </ul>
                     </li>
-                    
+
                     <li class="" id="menu-vendedores"><a href="@Url.Action("Index","Vendedores")"><i class="zmdi zmdi-assignment-account"></i> Vendedores</a></li>
                     <li class="" id="menu-pedidos"><a href="@Url.Action("Index","Preventas")"><i class="zmdi zmdi-shopping-cart"></i> Pedidos</a></li>
                     <li class="" id="menu-ventas"><a href="@Url.Action("Index","Ventas")"><i class="zmdi zmdi-money"></i> Ventas</a></li>
                     <li class="" id="menu-picking"><a href="@Url.Action("Index","Picking")"><i class="zmdi zmdi-assignment"></i> Picking</a></li>
-                    <li class="" id="menu-reportes"><a href="@Url.Action("Index","Reportes")"><i class="zmdi zmdi-chart"></i> Reportes</a></li>
 
+                    <li class="navigation__sub" id="menu-reportes">
+                        <a href="">
+                            <i class="zmdi zmdi-chart"></i> Reportes
+                        </a>
+                        <ul id="subMenuReportes">
+                            <li class=""><a href="@Url.Action("Ventas","Reportes")">Ventas</a></li>                            
+                            <li class=""><a href="@Url.Action("Compras","Reportes")">Compras</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </aside>
@@ -97,7 +106,7 @@
     </main>
 
     <!-- Javascript -->
-    <!-- Vendors -->  
+    <!-- Vendors -->
     <script src="~/Content/js/jquery.min.js"></script>
     <script src="~/Content/js/popper.min.js"></script>
     <script src="~/Content/js/bootstrap.min.js"></script>
@@ -122,7 +131,7 @@
         <script src="~/demo/js/jqvmap.js"></script>*@
     <!-- App functions and actions -->
     <script src="~/Content/js/app.min.js"></script>
-    
+
 </body>
 
 

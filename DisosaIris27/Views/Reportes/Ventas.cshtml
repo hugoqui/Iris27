@@ -1,0 +1,82 @@
+﻿@model PagedList.IPagedList<DisosaIris27.Models.Venta>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Ventas";
+}
+
+<h2>Reporte de Ventas</h2>
+
+<hr />
+
+<form class="row">
+    <div class="col-md-4">
+        <label class="label-control">Clientes</label>
+        <select class="form-control" name="cliente" id="cliente">
+            <option selected value="*"> * todos</option>
+            @foreach (var item in ViewBag.Clientes)
+            {
+                <option value="@item.Codigo">@item.Nombre</option>
+            }
+        </select>
+    </div>
+
+    <div class="col-md-3">
+        <label class="label-control">Fecha Inicial </label>
+        <input class="form-control" type="date" name="fechaInicio" value="@ViewBag.FechaInicio" />
+    </div>
+
+    <div class="col-md-3">
+        <label class="label-control">Fecha Final</label>
+        <input class="form-control" type="date" name="fechaFinal" value="@ViewBag.FechaFinal" />
+    </div>
+
+    <div class="col-md-2">
+        <br />
+        <input class="btn btn-dark" type="submit" value="Mostrar" />
+    </div>
+</form>
+<br />
+<hr />
+<br />
+
+<table class="table table-hover table-bordered table-sm table-inverse">
+    <thead class="thead-dark">
+        <tr>
+            <td>#</td>
+            <td>Fecha</td>
+            <td>Cliente</td>
+            <td>Ruta</td>
+            <td>Vendedor</td>
+            <td align="right">Total</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Fecha.Value.ToShortDateString()</td>
+                <td>@item.Cliente.Nombre</td>
+                <td>@item.Cliente.Ruta1.Nombre</td>
+                <td>@item.Vendedor.Nombre</td>
+                <td align="right"> @string.Format("{0:C}",item.VentaDetalles.Sum(v => (v.Precio * v.Cantidad)))</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<br />
+<div class="text-center">
+    @Html.PagedListPager(Model, page => Url.Action("Ventas",
+                        new { cliente = ViewBag.Cliente, fechaInicio = ViewBag.FechaInicio, fechaFinal = ViewBag.FechaFinal, page }))
+</div>
+
+<script src="~/Content/js/jquery.min.js"></script>
+<script>
+    $("li").removeClass("navigation__active");
+    $("#menu-reportes").addClass("navigation__active");
+    
+</script>

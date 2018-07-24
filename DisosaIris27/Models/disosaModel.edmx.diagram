@@ -25,6 +25,11 @@
         <AssociationConnector Association="disosadbModel.FK__VentaDeta__Venta__29572725" ManuallyRouted="false" />
         <EntityTypeShape EntityType="disosadbModel.Ruta" Width="1.5" PointX="0.75" PointY="1.375" />
         <AssociationConnector Association="disosadbModel.FK__Clientes__Ruta__36B12243" />
+        <EntityTypeShape EntityType="disosadbModel.CompraDetalle" Width="1.5" PointX="7.5" PointY="13" />
+        <EntityTypeShape EntityType="disosadbModel.Compra" Width="1.5" PointX="5.25" PointY="12.875" />
+        <AssociationConnector Association="disosadbModel.FK__CompraDet__Compr__3F466844" />
+        <AssociationConnector Association="disosadbModel.FK__Compras__CodigoP__3C69FB99" />
+        <AssociationConnector Association="disosadbModel.FK__CompraDet__Codig__403A8C7D" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -34,5 +34,7 @@ namespace DisosaIris27.Models
         public virtual DbSet<VentaDetalle> VentaDetalles { get; set; }
         public virtual DbSet<Venta> Ventas { get; set; }
         public virtual DbSet<Ruta> Rutas { get; set; }
+        public virtual DbSet<CompraDetalle> CompraDetalles { get; set; }
+        public virtual DbSet<Compra> Compras { get; set; }
     }
 }

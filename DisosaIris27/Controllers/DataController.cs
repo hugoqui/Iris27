@@ -70,7 +70,7 @@ namespace DisosaIris27.Controllers
             };
             db.Preventas.Add(preventa);
             db.SaveChanges();
-           
+
             var pedidos = listaPreventas.Listado; //array con productos
             foreach (PreventaDetalle pedido in pedidos)
             {
@@ -87,14 +87,39 @@ namespace DisosaIris27.Controllers
 
                 db.Entry(producto).State = System.Data.Entity.EntityState.Modified;
                 db.PreventaDetalles.Add(preventaDetalle);
-            }         
+            }
             db.SaveChanges();
             return preventa.Id.ToString();
+        }
+
+        [HttpPost]
+        [Route("PostCompra/{proveedor}/{comentario}/{fecha}")]
+        public string PostCompra(int proveedor, string comentario, DateTime fecha, [FromBody] ListaCompras listaCompras)
+        {
+            var compraNueva = new Compra() { CodigoProveedor = proveedor, Comentario = comentario, Fecha = fecha };
+            db.Compras.Add(compraNueva);
+            db.SaveChanges();
+            var compras = listaCompras.Listado; //array con productos
+            foreach (CompraDetalle compra in compras)
+            {
+                var compraDetalle = new CompraDetalle() { CompraId = compraNueva.Id, CodigoProducto = compra.CodigoProducto, Cantidad = compra.Cantidad, Costo = compra.Costo };
+                var producto = db.Productos.Find(compraDetalle.CodigoProducto);
+                producto.Existencia = producto.Existencia + int.Parse(compraDetalle.Cantidad.ToString());
+                db.Entry(producto).State = System.Data.Entity.EntityState.Modified;
+                db.CompraDetalles.Add(compraDetalle);
+            }
+            db.SaveChanges();
+            return compraNueva.Id.ToString();
         }
     }
 
     public class ListaPreventas
     {
         public PreventaDetalle[] Listado { get; set; }
+    }
+
+    public class ListaCompras
+    {
+        public CompraDetalle[] Listado { get; set; }
     }
 }
