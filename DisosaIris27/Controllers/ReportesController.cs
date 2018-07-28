@@ -29,13 +29,13 @@ namespace DisosaIris27.Controllers
             if (fechaFinal == null) { ViewBag.FechaFinal = DateTime.Now.ToString("yyyy-MM-dd"); }
             else { ViewBag.FechaFinal = fechaFinal.Value.ToString("yyyy-MM-dd"); }
 
-            if (cliente != null && vendedor!=null && fechaInicio != null && fechaFinal != null)
+            if (cliente != null && vendedor != null && fechaInicio != null && fechaFinal != null)
             {
                 ventas = db.Ventas.Where(v => (v.Fecha >= fechaInicio && v.Fecha <= fechaFinal)).ToList();
                 if (cliente != "*") // 0 significa que son todos los clientes
                 {
-                    ViewBag.NombreCliente = db.Clientes.Find(cliente.Trim()).Nombre ;
-                    
+                    ViewBag.NombreCliente = db.Clientes.Find(cliente.Trim()).Nombre;
+
                     ventas = ventas.Where(v => v.CodigoCliente == cliente).ToList();
                 }
                 if (vendedor > 0)
@@ -44,7 +44,7 @@ namespace DisosaIris27.Controllers
                     ventas = ventas.Where(v => v.VendedorId == vendedor).ToList();
                 }
             }
-            
+
             ViewBag.Cliente = cliente;
             ViewBag.Clientes = db.Clientes.ToList();
             ViewBag.Vendedor = vendedor;
@@ -59,6 +59,45 @@ namespace DisosaIris27.Controllers
             return View(ventas.ToPagedList(pageNumber, pageSize));
         }
 
+        public ActionResult VentasPorDia(int? vendedor, DateTime? fechaInicio, DateTime? fechaFinal)
+        {
+            ViewBag.NombreVendedor = " * todos";
+            ViewBag.finalList ="";
+            var ventas = new List<Venta>();
+
+            if (fechaInicio == null) { ViewBag.FechaInicio = DateTime.Now.ToString("yyyy-MM-dd"); }
+            else { ViewBag.FechaInicio = fechaInicio.Value.ToString("yyyy-MM-dd"); }
+
+            if (fechaFinal == null) { ViewBag.FechaFinal = DateTime.Now.ToString("yyyy-MM-dd"); }
+            else { ViewBag.FechaFinal = fechaFinal.Value.ToString("yyyy-MM-dd"); }
+
+            var ListaFinal = new List<VentaPorDia>(); 
+            if (vendedor != null && fechaInicio != null && fechaFinal != null)
+            {
+                ventas = db.Ventas.Where(v => (v.Fecha >= fechaInicio && v.Fecha <= fechaFinal)).ToList();
+                if (vendedor > 0)
+                {
+                    ViewBag.NombreVendedor = db.Vendedors.Find(vendedor).Nombre;
+                    ventas = ventas.Where(v => v.VendedorId == vendedor).ToList();
+                    var listaPorFechas = ventas.GroupBy(v => v.Fecha)
+                        .Select(group => new
+                        {
+                            Fecha = group.Key,
+                            Total = group.Sum(v => v.VentaDetalles.Sum(vd => vd.Precio * vd.Cantidad))
+                        }).OrderBy(v => v.Fecha);
+                    foreach (var item in listaPorFechas)
+                    {
+                        var venta = new VentaPorDia() { Fecha = item.Fecha.Value, Vendedor = ViewBag.NombreVendedor, Total = item.Total};
+                        ListaFinal.Add(venta);
+                    }
+                }
+            }
+                        
+            ViewBag.Vendedor = vendedor;
+            ViewBag.Vendedores = db.Vendedors.ToList();           
+            ViewBag.Total = ListaFinal.Sum(v=> v.Total);
+            return View(ListaFinal);
+        }
 
         public ActionResult Compras(int? proveedor, DateTime? fechaInicio, DateTime? fechaFinal, int? page)
         {
@@ -87,6 +126,7 @@ namespace DisosaIris27.Controllers
             compras = compras.OrderByDescending(c => c.Id).ToList();
             return View(compras.ToPagedList(pageNumber, pageSize));
         }
+
 
 
     }

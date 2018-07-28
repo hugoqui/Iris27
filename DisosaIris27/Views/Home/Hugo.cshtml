@@ -1,0 +1,18 @@
+﻿@model List<string>
+@{
+    ViewBag.Title = "Hugo";
+}
+
+<h2>Hugo</h2>
+
+<form>
+    <input type="text" name="nombre" value="" />
+    <input type="submit" value="Agregar" />
+</form>
+
+<ul>
+    @foreach (var item in Model)
+    {
+        <li>@item</li>
+    }
+</ul>

@@ -46,9 +46,11 @@ button:focus {
 
 
 @media print {
-
+   
     @page {size:portrait; margin-left:20px; margin-right:20px}
-
+    
+    p {color:#151515}
+    p > strong { text-decoration:underline}
     table {
         border: solid 1px gray !important;
         color: #000 !important;

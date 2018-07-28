@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Iris27</title>
-    <link rel="icon" type="image/png" href="https://png.icons8.com/color/260/pos-terminal.png" />
+    <link rel="icon" type="image/png" href="~/img/logo.png" />
     <!-- Vendor styles -->
     <link rel="stylesheet" href="~/Content/material-design-iconic-font.min.css">
     <link rel="stylesheet" href="~/Content/animate.min.css">
@@ -45,7 +45,7 @@
             <div class="scrollbar-inner">
                 <div class="user">
                     <div class="user__info" data-toggle="dropdown">
-                        <img class="user__img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRU1gJrTqXMz_DO0hDOyo2cMMJ76hmIfrTMA5mCalphghLhxkTj" alt="">
+                        <img class="user__img" src="~/img/logo.jpg" alt="">
                         <div>
                             <div class="user__name">DISOSA GT</div>
                             <div class="user__email">bagnerconta@gmail.com</div>
@@ -82,9 +82,10 @@
                         <a href="">
                             <i class="zmdi zmdi-chart"></i> Reportes
                         </a>
-                        <ul id="subMenuReportes">
-                            <li class=""><a href="@Url.Action("Ventas","Reportes")">Ventas</a></li>                            
-                            <li class=""><a href="@Url.Action("Compras","Reportes")">Compras</a></li>
+                        <ul>
+                            <li class="" id="menu-reporte-ventas"><a href="@Url.Action("Ventas","Reportes")">Ventas</a></li>                            
+                            <li class="" id="menu-reporte-ventas-dia"><a href="@Url.Action("VentasPorDia","Reportes")">Ventas por Día</a></li>                            
+                            <li class="" id="menu-reporte-compras"><a href="@Url.Action("Compras","Reportes")">Compras</a></li>
                         </ul>
                     </li>
                 </ul>

@@ -13,5 +13,16 @@ namespace DisosaIris27.Controllers
         {
             return View();
         }
+
+        static List<string> miLista = new List<string>();
+        public ActionResult Hugo( string nombre)
+        {
+            miLista.Add(nombre);
+            if (nombre == "")
+            {
+                miLista = new List<string>();
+            }
+            return View(miLista);
+        }
     }
 }

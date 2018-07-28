@@ -38,7 +38,7 @@
         <td>Cantidad</td>
         <td align="center">Precio</td>
         <td align="center">Total</td>
-        <td align="center">Utilidad</td>
+        @*<td align="center">Utilidad</td>*@
     </tr>
     @foreach (var item in Model.VentaDetalles)
     {
@@ -51,15 +51,15 @@
             <td>@item.Cantidad</td>
             <td align="right">@string.Format("{0:C}", item.Precio)</td>
             <td align="right">@string.Format("{0:C}", subtotal)</td>
-            <td align="right">@string.Format("{0:C}", item.Utilidad)</td>
+            @*<td align="right">@string.Format("{0:C}", item.Utilidad)</td>*@
         </tr>
 
     }
 
     <tr>
-        <td colspan="4" align="center">Total</td>
+        <td colspan="4" align="center">T O T A L</td>
         <td align="right">@string.Format("{0:C}", granTotal)</td>
-        <td align="right">@string.Format("{0:C}", utilidadTotal)</td>
+        @*<td align="right">@string.Format("{0:C}", utilidadTotal)</td>*@
     </tr>
 </table>
 <p>

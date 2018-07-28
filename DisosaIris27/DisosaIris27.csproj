@@ -221,6 +221,8 @@
     <Content Include="img\calendar\november.jpg" />
     <Content Include="img\calendar\october.jpg" />
     <Content Include="img\calendar\september.jpg" />
+    <Content Include="img\logo.jpg" />
+    <Content Include="img\logo.png" />
     <Content Include="img\sidebar\sidebar-bg.jpg" />
     <Content Include="img\sidebar\sidebar-bg.png" />
     <Content Include="Models\disosaModel.Context.tt">
@@ -302,6 +304,7 @@
     <Compile Include="Models\VentaDetalle.cs">
       <DependentUpon>disosaModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\VentaPorDia.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -348,7 +351,6 @@
     <Content Include="Views\Proveedores\Details.cshtml" />
     <Content Include="Views\Proveedores\Edit.cshtml" />
     <Content Include="Views\Proveedores\Index.cshtml" />
-    <Content Include="Views\Reportes\Index.cshtml" />
     <Content Include="Views\Vendedores\Create.cshtml" />
     <Content Include="Views\Vendedores\Delete.cshtml" />
     <Content Include="Views\Vendedores\Details.cshtml" />
@@ -375,6 +377,8 @@
     <Content Include="Views\Compras\Index.cshtml" />
     <Content Include="Views\Reportes\Ventas.cshtml" />
     <Content Include="Views\Reportes\Compras.cshtml" />
+    <Content Include="Views\Reportes\VentasPorDia.cshtml" />
+    <Content Include="Views\Home\Hugo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,0 +1,69 @@
+﻿@model List<DisosaIris27.Models.VentaPorDia>
+
+@{
+    ViewBag.Title = "VentasPorDia";
+}
+
+<h2>Reporte de Ventas diarias</h2>
+<form class="row d-print-none">
+    <div class="col-md-3">
+        <label class="label-control">Vendedores</label>
+        <select class="form-control" name="vendedor" id="vendedor">
+            <option selected value="0"> * seleccionar vendedor</option>
+            @foreach (var item in ViewBag.Vendedores)
+            {
+                <option value="@item.Id">@item.Nombre</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label class="label-control">Fecha Inicial </label>
+        <input class="form-control" type="date" name="fechaInicio" value="@ViewBag.FechaInicio" />
+    </div>
+    <div class="col-md-2">
+        <label class="label-control">Fecha Final</label>
+        <input class="form-control" type="date" name="fechaFinal" value="@ViewBag.FechaFinal" />
+    </div>
+    <div class="col-md-2">
+        <br />
+        <input class="btn btn-dark" type="submit" value="Mostrar" />
+    </div>
+</form>
+<hr />
+<br />
+<p class="d-none d-print-block">
+    Vendedor: <strong>@ViewBag.NombreVendedor</strong> - Del: <strong>@ViewBag.FechaInicio</strong> al: <strong>@ViewBag.FechaFinal</strong>
+</p>
+
+<table class="table table-hover table-bordered table-sm table-inverse">
+    <thead class="thead-dark">
+        <tr>
+            <td>Fecha</td>
+            <td>Vendedor</td>
+            <td align="right">Total</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Fecha.ToShortDateString()</td>
+                <td>@item.Vendedor</td>
+                <td align="right"> @string.Format("{0:C}", item.Total)</td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="2" class="text-right">TOTAL</td>
+            <td align="right">@string.Format("{0:C}", ViewBag.Total)</td>
+        </tr>
+    </tfoot>
+</table>
+
+<script src="~/Content/js/jquery.min.js"></script>
+<script>
+    $("li").removeClass("navigation__active");
+    $("#menu-reportes").addClass("navigation__active").children("ul").slideDown();
+    $("#menu-reporte-ventas-dia").addClass("navigation__active");
+</script>
