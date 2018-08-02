@@ -15,9 +15,9 @@ namespace DisosaIris27.Controllers
         }
 
         static List<string> miLista = new List<string>();
-        public ActionResult Hugo( string nombre)
+        public ActionResult Hugo(string nombre, string miTexto)
         {
-            miLista.Add(nombre);
+            miLista.Add(nombre + " - " + miTexto);
             if (nombre == "")
             {
                 miLista = new List<string>();

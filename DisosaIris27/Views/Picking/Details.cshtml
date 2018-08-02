@@ -4,7 +4,14 @@
 }
 
 <h3>Detalles de Picking</h3>
-<h1 class="text-secondary">RUTA : @ViewBag.Ruta - @ViewBag.NombreRuta</h1>
+<h1 class="text-secondary">
+    RUTAS : @foreach (var item in ViewBag.NombreRutas)
+    {
+        <small style="border:solid 1px; padding:1px 4px; margin: 4px">
+            @item
+        </small>
+    }
+</h1>
 <hr />
 <br />
 

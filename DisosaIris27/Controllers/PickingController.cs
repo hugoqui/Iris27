@@ -11,25 +11,41 @@ namespace DisosaIris27.Controllers
     {
         // GET: Picking
         private disosadbEntities db = new disosadbEntities();
-        public ActionResult Index(int? ruta)
+        public ActionResult Index(string rutas)
         {
-            List<Preventa> preventas = new List<Preventa>();
-            if (ruta != null)
-                preventas = db.Preventas.Where(p => p.Cliente.Ruta == ruta).ToList();
+            var preventas = new List<Preventa>(); ;
+            var nombreRutas = new List<string>();
 
+            if (rutas != null && rutas != "")
+            {
+                var listaRutas = rutas.Split(',');
+                for (int i = 0; i < listaRutas.Length - 1; i++)
+                {
+                    var rt = int.Parse(listaRutas[i]);
+                    preventas.AddRange(db.Preventas.Where(p => p.Cliente.Ruta == rt).ToList());
+                    nombreRutas.Add(db.Rutas.Find(rt).Nombre);
+                }
+            }
+
+            ViewBag.ListaRutas = rutas;
             ViewBag.Rutas = db.Rutas.ToList();
-            ViewBag.NombreRuta = "";
-            ViewBag.Ruta = ruta;
-            if (ruta != null)
-                ViewBag.NombreRuta = db.Rutas.Find(ruta).Nombre;
-
+            ViewBag.NombreRutas = nombreRutas;
+            preventas = preventas.OrderBy(p => p.Id).ToList();
             return View(preventas);
         }
 
-        public ActionResult Details(int ruta)
+        public ActionResult Details(string rutas)
         {
             List<Preventa> pedidos = new List<Preventa>();
-            pedidos = db.Preventas.Where(p => p.Cliente.Ruta == ruta).ToList();
+            var nombreRutas = new List<string>();
+            var listaRutas = rutas.Split(',');
+            for (int i = 0; i < listaRutas.Length - 1; i++)
+            {
+                var rt = int.Parse(listaRutas[i]);
+                nombreRutas.Add(db.Rutas.Find(rt).Nombre);
+                pedidos.AddRange(db.Preventas.Where(p => p.Cliente.Ruta == rt).ToList());
+            }
+                        
             var lista = new List<PreventaDetalle>();
             foreach (var pedido in pedidos)
             {
@@ -64,10 +80,9 @@ namespace DisosaIris27.Controllers
                 ViewBag.Total += line.Total;
                 ls.Add(p);
             }
-
-            ViewBag.NombreRuta = "";
-            ViewBag.Ruta = ruta;
-            ViewBag.NombreRuta = db.Rutas.Find(ruta).Nombre;
+            
+            ViewBag.Rutas = rutas;
+            ViewBag.NombreRutas = nombreRutas;
 
             return View(ls);
         }

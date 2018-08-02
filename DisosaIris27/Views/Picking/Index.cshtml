@@ -8,21 +8,36 @@
 <form class="row d-print-none">
     <div class="col-md-4">
         <label class="control-label">Ruta:</label>
-        <select class="form-control" name="ruta">
+        <select class="form-control" name="ruta" id="ruta">
             @foreach (var item in ViewBag.Rutas)
             {
                 <option value="@item.Id">@item.Nombre</option>
             }
         </select>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-1">
         <br />
+        <button type="button" class="btn btn-dark btn-block" onclick="addToList()">+</button>
+    </div>
+    <div class="col-md-2">
+        <br />
+        <input name="rutas" id="rutas" hidden />
         <button type="submit" class="btn btn-dark">Generar Picking</button>
     </div>
+
 </form>
+<div class="row">
+    <ul class="col-md-12 bubble" id="listOfRoutes" style="margin-top:30px"></ul>
+</div>
 <br />
 
-<h3 style="margin-top:20px">Detalles de Ruta @ViewBag.NombreRuta</h3>
+<h3 style="margin-top:20px">
+    Detalles de Rutas @foreach (var item in ViewBag.NombreRutas)
+    {
+        <small style="border:solid 1px; padding: 4px; margin:4px">@item</small>
+    }
+</h3>
+<br />
 <table class="table table-hover table-bordered table-sm">
     <thead class="btn-dark">
         <tr>
@@ -54,7 +69,7 @@
 
 </table>
 
-<a id="btn-resumen" class="btn btn-dark" href="@Url.Action("Details","Picking", new { ruta = ViewBag.Ruta })" style="display:none">
+<a id="btn-resumen" class="btn btn-dark" href="@Url.Action("Details","Picking", new { rutas = ViewBag.ListaRutas })" style="display:none">
     Generar Resumen >>
 </a>
 
@@ -64,5 +79,12 @@
     $("#menu-picking").addClass("navigation__active");
     if ($("table tr").length > 1) {
         $("#btn-resumen").show("slow");
+    }
+
+    function addToList() {
+        var item = '<li style="display:inline; padding:10px; border:solid; margin: 8px">' + $("#ruta option:selected").text() + '</li>';
+        var rutas = $("#rutas").val();
+        $("#rutas").val(rutas + $("#ruta option:selected").val() + ",");
+        $("#listOfRoutes").append(item);
     }
 </script>

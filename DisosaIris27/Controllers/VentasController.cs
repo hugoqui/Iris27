@@ -28,6 +28,7 @@ namespace DisosaIris27.Controllers
 
         public ActionResult Preventa()
         {
+            ViewBag.Rutas = db.Rutas.ToList();
             return View();
         }
 
@@ -50,21 +51,26 @@ namespace DisosaIris27.Controllers
         }
 
         // GET: Ventas/Create
-        public ActionResult Create(int? id)
+        public ActionResult Create(string rutas)
         {
-            Preventa preventa = new Preventa();
-            if (id != null)
+            var listaRutas = rutas.Split(',');
+            var preventas = new List<Preventa>();
+            for (int i = 0; i < listaRutas.Length - 1; i++)
             {
-                preventa = db.Preventas.Find(id);
+                var rt = int.Parse(listaRutas[i]);
+                preventas.AddRange(db.Preventas.Where(p => p.Cliente.Ruta == rt).ToList());
             }
             decimal? grantotal = 0;
-            foreach (var item in preventa.PreventaDetalles)
+            foreach (var preventa in preventas)
             {
-                grantotal = grantotal + (item.Cantidad * item.Precio);
+                foreach (var item in preventa.PreventaDetalles)
+                {
+                    grantotal = grantotal + (item.Cantidad * item.Precio);
+                }
             }
+            preventas = preventas.OrderBy(p => p.Id).ToList();
             ViewBag.GranTotal = grantotal;
-
-            return View(preventa);
+            return View(preventas);
         }
 
         // POST: Ventas/Create
@@ -72,25 +78,40 @@ namespace DisosaIris27.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Fecha,Deposito,VendedorId,CodigoCliente")] Venta venta, string devoluciones)
+        public ActionResult Create(string deposito, string clientes, string vendedores, string devoluciones, string pedidos)
         {
-            int preventaId = int.Parse((TempData["Picking"]).ToString());
-            var listaDevoluciones = devoluciones.Split(',');
+            var listaPedidos = pedidos.Split(',');
+            var listaClientes = clientes.Split(',');
+            var listaVendedores = vendedores.Split(',');
 
-            if (ModelState.IsValid)
+            var ventas = new List<Venta>();
+            for (int i = 0; i < listaPedidos.Length - 1; i++)
             {
+                var venta = new Venta()
+                {
+                    CodigoCliente = listaClientes[i],
+                    Fecha = DateTime.Now,
+                    Deposito = deposito,
+                    VendedorId = int.Parse(listaVendedores[i])
+                };
+
                 db.Ventas.Add(venta);
                 db.SaveChanges();
 
-                Preventa preventa = db.Preventas.Find(preventaId);
+                ventas.Add(venta);
+            }
 
-                var n = 0;
+            var listaDevoluciones = devoluciones.Split(',');
+            var dIndex = 0; //un índice para las devoluciones
+            var pIndex = 0; //un índice para los pedidos
+            foreach (var venta in ventas)
+            {
+                Preventa preventa = db.Preventas.Find(int.Parse(listaPedidos[pIndex]));
                 foreach (var item in preventa.PreventaDetalles)
-                {                    
-                    var devolucion = int.Parse(listaDevoluciones[n]);
+                {
+                    var devolucion = int.Parse(listaDevoluciones[dIndex]);
                     var cantidad = item.Cantidad - devolucion;
                     var utitlidad = (item.Precio - item.Producto.Costo) * cantidad;
-
                     var detalle = new VentaDetalle()
                     {
                         VentaId = venta.Id,
@@ -99,25 +120,27 @@ namespace DisosaIris27.Controllers
                         Precio = item.Precio,
                         Utilidad = utitlidad,
                     };
-                    db.VentaDetalles.Add(detalle);
-                    n++;
+                    db.VentaDetalles.Add(detalle);                    
 
-                    if (devolucion>0)
+                    if (devolucion > 0)
                     {
                         var producto = item.Producto;
                         producto.Existencia = producto.Existencia + devolucion;
                         db.Entry(producto).State = EntityState.Modified;
                     }
+
+                    dIndex++;
                 }
-
                 db.Preventas.Remove(preventa); // Eliminar Preventa
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                pIndex++;
             }
+            db.SaveChanges();
+            return RedirectToAction("Index");
 
-            ViewBag.CodigoCliente = new SelectList(db.Clientes, "Codigo", "Nombre", venta.CodigoCliente);
-            ViewBag.VendedorId = new SelectList(db.Vendedors, "Id", "Nombre", venta.VendedorId);
-            return View(venta);
+            //ViewBag.CodigoCliente = new SelectList(db.Clientes, "Codigo", "Nombre", venta.CodigoCliente);
+            //ViewBag.VendedorId = new SelectList(db.Vendedors, "Id", "Nombre", venta.VendedorId);
+            //return View();
+            //return View(venta);
         }
 
         // GET: Ventas/Edit/5

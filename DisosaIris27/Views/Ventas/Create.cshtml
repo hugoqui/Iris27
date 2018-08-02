@@ -1,10 +1,9 @@
-﻿@model DisosaIris27.Models.Preventa
+﻿@model List<DisosaIris27.Models.Preventa>
 
 @{
     ViewBag.Title = "Create";
     decimal? granTotal = ViewBag.GranTotal;
 
-    TempData["Picking"] = Model.Id;
 }
 
 <h2>Registrar Venta</h2>
@@ -12,39 +11,10 @@
 
 <form method="post" action="/Ventas/Create" class="card">
     <div class="form-horizontal card-body">
-        <h4>Pedido # @Model.Id</h4>
-        <hr />
-        <div class="row">
-            <div class="form-group col-md-3">
-                <label>Fecha</label>
-                <input type="text" name="Fecha" id="Fecha" class="form-control" value="@Model.Fecha.Value.ToShortDateString()" readonly />
-            </div>
-
-            <div class="form-group col-md-3">
-                <label>Cliente</label>
-                <select class="form-control" id="CodigoCliente" name="CodigoCliente">
-                    <option value="@Model.CodigoCliente">@Model.Cliente.Nombre</option>
-                </select>
-            </div>
-
-            <div class="form-group col-md-3">
-                <label>Vendedor</label>
-                <select class="form-control" id="VendedorId" name="VendedorId">
-                    <option value="@Model.VendedorId">@Model.Vendedor.Nombre</option>
-                </select>
-            </div>
-
-            <div class="form-group col-md-3">
-                <label>Gran Total</label>
-                <input type="text" name="GranTotal" id="GranTotal" class="form-control GranTotal" value="@string.Format("{0:C}", granTotal)" readonly />
-            </div>
-        </div>
-
-        <br />
-
         <table class="table" id="table">
             <thead>
                 <tr>
+                    <td>PEDIDO #</td>
                     <td>Codigo</td>
                     <td>Producto</td>
                     <td>Precio</td>
@@ -57,37 +27,57 @@
 
             <tbody>
                 @{ var n = 0;}
-                @foreach (var item in Model.PreventaDetalles)
+
+                @foreach (var preventa in Model)
                 {
-                    n++;
-                    var precioTag = "p" + n;
-                    var devolucionTag = "d" + n;
-                    var totalTag = "t" + n;
-                    var cantidadTag = "c" + n;
-                    var cantidadRealTag = "r" + n;
-                    var subTotal = item.Precio * item.Cantidad;
-
                     <tr>
-                        <td>@item.CodigoProducto</td>
-                        <td>@item.Producto.Nombre</td>
-                        <td id="@precioTag">@string.Format("{0:C}", item.Precio)</td>
-                        <td id="@cantidadTag">@item.Cantidad</td>
-                        <td><input type="number" id="@devolucionTag" value="0" class="form-control" min="0" max="@item.Cantidad" /></td>
-                        <td id="@cantidadRealTag">@item.Cantidad</td>
-                        <td id="@totalTag">@string.Format("{0:C}", subTotal)</td>
-                    </tr>
+                        @{
+                            var preventaTag = "id" + n;
+                            var vendedorTag = "v" + n;
+                            var clienteTag = "cl" + n;
+                        }
 
+                        <td id="@preventaTag" class="btn-light pedido" colspan="8">@preventa.Id</td>
+                        <td hidden id="@vendedorTag">@preventa.VendedorId</td>
+                        <td hidden id="@clienteTag">@preventa.CodigoCliente</td>
+                    </tr>
+                    foreach (var item in preventa.PreventaDetalles)
+                    {
+                        n++;
+                        var precioTag = "p" + n;
+                        var devolucionTag = "d" + n;
+                        var totalTag = "t" + n;
+                        var cantidadTag = "c" + n;
+                        var cantidadRealTag = "r" + n;
+                        var subTotal = item.Precio * item.Cantidad;
+
+                        <tr class="detallePedido">
+                            <td></td>
+                            <td>@item.CodigoProducto</td>
+                            <td>@item.Producto.Nombre</td>
+                            <td id="@precioTag">@string.Format("{0:C}", item.Precio)</td>
+                            <td id="@cantidadTag">@item.Cantidad</td>
+                            <td><input type="number" id="@devolucionTag" value="0" class="form-control" min="0" max="@item.Cantidad" /></td>
+                            <td id="@cantidadRealTag">@item.Cantidad</td>
+                            <td id="@totalTag">@string.Format("{0:C}", subTotal)</td>
+                        </tr>
+
+                    }
                 }
             </tbody>
             <tfoot>
                 <tr>
                     <td colspan="3" align="right">Número de Depósito</td>
                     <td colspan="4"><input name="Deposito" class="form-control" required type="text" /> </td>
+                    <td class="GranTotal">@string.Format("{0:C}", ViewBag.GranTotal)</td>
                 </tr>
             </tfoot>
         </table>
         <div class="text-center">
             <input type="hidden" id="devoluciones" name="devoluciones" value="" />
+            <input type="hidden" id="clientes" name="clientes" value="" />
+            <input type="hidden" id="vendedores" name="vendedores" value="" />
+            <input type="hidden" id="pedidos" name="pedidos" value="" />
             <input type="submit" class="btn btn-lg btn-light" value="Confirmar Venta" onclick="EnviarDetalles()" />
         </div>
     </div>
@@ -106,7 +96,8 @@
         function () {
             var id = $(this).attr('id');
             var granTotal = 0.00;
-            for (var i = 1; i < $("#table tr").length; i++) {
+
+            for (var i = 1; i < $(".detallePedido").length + 1; i++) {
                 var cantidadOriginal = $("#c" + i).text();
                 var devolucion = $("#d" + i).val();
                 var cantidadFinal = cantidadOriginal - devolucion;
@@ -118,15 +109,29 @@
 
                 granTotal = granTotal + subtotal;
             }
-            $(".GranTotal").text("Q" + granTotal).val("Q" + granTotal);
+            $(".GranTotal").text("Q" + granTotal.toFixed(2)).val("Q" + granTotal);
         });
 
     function EnviarDetalles() {
         var devoluciones = "";
-        for (var i = 1; i < $("#table tr").length - 1; i++) {
+        for (var i = 1; i < $(".detallePedido").length + 1; i++) {
             devoluciones = devoluciones + $("#d" + i).val() + ",";
         }
+        var pedidos = "";
+        var clientes = "";
+        var vendedores = "";
+        for (var i = 0; i < $(".pedido").length + 1; i++) {
+            if ($("#id" + i).text() != '') {
+                pedidos = pedidos + $("#id" + i).text() + ",";
+                vendedores = vendedores + $("#v" + i).text() + ",";
+                clientes = clientes + $("#cl" + i).text().trim() + ",";
+            }
+        }
+    
+        $("#vendedores").val(vendedores);
+        $("#clientes").val(clientes);
         $("#devoluciones").val(devoluciones);
+        $("#pedidos").val(pedidos);
     }
 </script>
 
