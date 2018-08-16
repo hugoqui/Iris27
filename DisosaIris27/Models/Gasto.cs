@@ -12,22 +12,18 @@ namespace DisosaIris27.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Compra
+    public partial class Gasto
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Compra()
+        public Gasto()
         {
-            this.CompraDetalles = new HashSet<CompraDetalle>();
+            this.DetalleGastos = new HashSet<DetalleGasto>();
         }
     
-        public int Id { get; set; }
-        public Nullable<int> CodigoProveedor { get; set; }
-        public Nullable<System.DateTime> Fecha { get; set; }
-        public string Comentario { get; set; }
-        public Nullable<bool> Credito { get; set; }
+        public int Codigo { get; set; }
+        public string Nombre { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CompraDetalle> CompraDetalles { get; set; }
-        public virtual Proveedor Proveedor { get; set; }
+        public virtual ICollection<DetalleGasto> DetalleGastos { get; set; }
     }
 }

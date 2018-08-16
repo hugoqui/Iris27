@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "Registrar";
+}
+
+<h2>Registrar Gasto</h2>
+
+<form method="post" action="Registrar">
+    <div class="row">
+        <div class="col-md-4">
+            <label class="control-label">Rubro</label>
+            <select class="form-control" name="gastoId" autofocus>
+                @foreach (var item in ViewBag.Gastos)
+                {
+                    <option value="@item.Codigo">@item.Nombre</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-8"></div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-4">
+            <input name="comentario" class="form-control" placeholder="Comentario" required />
+        </div>
+        <div class="col-md-3">
+            <input type="date" name="fecha" class="form-control" placeholder="Comentario" required />
+        </div>
+        <div class="col-md-2">
+            <input type="number" name="monto" class="form-control" placeholder="monto" required />
+        </div>
+        <div class="col-md-2">
+            <input type="submit" class="btn btn-dark" value="Registrar" />
+        </div>
+    </div>
+</form>
+
+<br />
+<h4>@ViewBag.Message</h4>
+
+<script src="~/Content/js/jquery.min.js"></script>
+<script>
+    $("li").removeClass("navigation__active");
+    $("#menu-gastos").addClass("navigation__active").children("ul").slideDown();
+    $("#menu-gastos-registrar").addClass("navigation__active");
+</script>

@@ -2,26 +2,54 @@
 
 @{
     ViewBag.Title = "Details";
+    decimal saldo = 0;
 }
 
-<h2>Details</h2>
+<h2>Detalles</h2>
 
-<div>
-    <h4>Proveedor</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Nombre)
-        </dd>
-
-    </dl>
+<div class="row">
+    <div class="col-md-10">
+        <h4><small>Proveedor</small> @Model.Nombre</h4>
+    </div>
+    <div class="col-md-2">
+        <a href="@Url.Action("Payment", new { id = Model.Codigo })" class="btn btn-dark">Registrar Abono <i style="font-size:16px; margin-left:5px" class="zmdi zmdi-card"></i></a>
+    </div>    
 </div>
+<hr />
+<table class="table table-inverse table-bordered">
+    <tr>
+        <td>Fecha</td>
+        <td>Créditos</td>
+        <td>Abonos</td>
+        <td>Referencia</td>
+        <td>Balance</td>
+    </tr>
+    @foreach (var item in Model.ProveedoresDetalles)
+    {
+        if (item.Credito == null) { item.Credito = 0; }
+        if (item.Abono == null) { item.Abono = 0; }
+        saldo = saldo + item.Credito.Value - item.Abono.Value;
+        <tr>
+            <td>@item.Fecha.Value.ToShortDateString()</td>
+            <td>
+                @if (item.Credito > 0)
+                {
+                    <span>  @string.Format("{0:C}", item.Credito)</span>
+                }
+            </td>
+            <td>
+                @if (item.Abono > 0)
+                {
+                    <span>  @string.Format("{0:C}", item.Abono)</span>
+                }
+            </td>
+            <td>@item.Referencia</td>
+            <td>@string.Format("{0:C}", saldo)</td>
+        </tr>
+    }
+</table>
+
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Codigo }) |
     @Html.ActionLink("Regresar", "Index")
 </p>
 

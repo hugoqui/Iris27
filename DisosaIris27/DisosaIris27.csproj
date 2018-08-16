@@ -243,6 +243,7 @@
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\ComprasController.cs" />
     <Compile Include="Controllers\DataController.cs" />
+    <Compile Include="Controllers\GastosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PickingController.cs" />
     <Compile Include="Controllers\PreventasController.cs" />
@@ -265,6 +266,9 @@
     <Compile Include="Models\CompraDetalle.cs">
       <DependentUpon>disosaModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DetalleGasto.cs">
+      <DependentUpon>disosaModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\disosaModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -280,6 +284,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>disosaModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Gasto.cs">
+      <DependentUpon>disosaModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Preventa.cs">
       <DependentUpon>disosaModel.tt</DependentUpon>
     </Compile>
@@ -290,6 +297,9 @@
       <DependentUpon>disosaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Proveedor.cs">
+      <DependentUpon>disosaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProveedoresDetalle.cs">
       <DependentUpon>disosaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Ruta.cs">
@@ -379,6 +389,14 @@
     <Content Include="Views\Reportes\Compras.cshtml" />
     <Content Include="Views\Reportes\VentasPorDia.cshtml" />
     <Content Include="Views\Home\Hugo.cshtml" />
+    <Content Include="Views\Proveedores\Payment.cshtml" />
+    <Content Include="Views\Gastos\Create.cshtml" />
+    <Content Include="Views\Gastos\Delete.cshtml" />
+    <Content Include="Views\Gastos\Details.cshtml" />
+    <Content Include="Views\Gastos\Edit.cshtml" />
+    <Content Include="Views\Gastos\Index.cshtml" />
+    <Content Include="Views\Gastos\Registrar.cshtml" />
+    <Content Include="Views\Reportes\Gastos.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -127,7 +127,40 @@ namespace DisosaIris27.Controllers
             return View(compras.ToPagedList(pageNumber, pageSize));
         }
 
+        public ActionResult Gastos(DateTime? fechaInicio, DateTime? fechaFinal)
+        {
+            var gastos = new List<DetalleGasto>();
 
+            if (fechaInicio == null) { ViewBag.FechaInicio = DateTime.Now.ToString("yyyy-MM-dd"); }
+            else { ViewBag.FechaInicio = fechaInicio.Value.ToString("yyyy-MM-dd"); }
+
+            if (fechaFinal == null) { ViewBag.FechaFinal = DateTime.Now.ToString("yyyy-MM-dd"); }
+            else { ViewBag.FechaFinal = fechaFinal.Value.ToString("yyyy-MM-dd"); }
+            
+            if (fechaInicio != null && fechaFinal != null)
+            {
+                gastos = db.DetalleGastos.Where(d => (d.Fecha >= fechaInicio && d.Fecha <= fechaFinal)).ToList();
+                //if (vendedor > 0)
+                //{
+                //    ViewBag.NombreVendedor = db.Vendedors.Find(vendedor).Nombre;
+                //    ventas = ventas.Where(v => v.VendedorId == vendedor).ToList();
+                //    var listaPorFechas = ventas.GroupBy(v => v.Fecha)
+                //        .Select(group => new
+                //        {
+                //            Fecha = group.Key,
+                //            Total = group.Sum(v => v.VentaDetalles.Sum(vd => vd.Precio * vd.Cantidad))
+                //        }).OrderBy(v => v.Fecha);
+                //    foreach (var item in listaPorFechas)
+                //    {
+                //        var venta = new VentaPorDia() { Fecha = item.Fecha.Value, Vendedor = ViewBag.NombreVendedor, Total = item.Total };
+                //        ListaFinal.Add(venta);
+                //    }
+                //}
+            }
+            
+            ViewBag.Total = gastos.Sum(d => d.Monto);
+            return View(gastos);
+        }
 
     }
 }

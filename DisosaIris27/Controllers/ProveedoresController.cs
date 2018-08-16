@@ -21,6 +21,26 @@ namespace DisosaIris27.Controllers
             return View(db.Proveedors.ToList());
         }
 
+        public ActionResult Payment(int id)
+        {
+            ViewBag.Proveedor = db.Proveedors.Find(id);
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Payment(int proveedorId, decimal monto, string referencia, DateTime fecha)
+        {
+            var abono = new ProveedoresDetalle() { Abono=monto, ProveedorId= proveedorId,  Fecha = fecha, Referencia = referencia };
+            db.ProveedoresDetalles.Add(abono);
+            var proveedor = db.Proveedors.Find(abono.ProveedorId);
+            proveedor.Saldo = Convert.ToDecimal(proveedor.Saldo) - abono.Abono;
+            db.Entry(proveedor).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+
+        }
+
+
         // GET: Proveedores/Details/5
         public ActionResult Details(int? id)
         {
@@ -47,7 +67,8 @@ namespace DisosaIris27.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Codigo,Nombre")] Proveedor proveedor)
+        //public ActionResult Create([Bind(Include = "Codigo,Nombre,Contacto,Telefono,Saldo")] Proveedor proveedor)
+        public ActionResult Create(Proveedor proveedor)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +100,7 @@ namespace DisosaIris27.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Codigo,Nombre")] Proveedor proveedor)
+        public ActionResult Edit([Bind(Include = "Codigo,Nombre,Contacto,Telefono,Saldo")] Proveedor proveedor)
         {
             if (ModelState.IsValid)
             {

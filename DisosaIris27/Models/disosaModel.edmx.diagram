@@ -9,7 +9,6 @@
         <EntityTypeShape EntityType="disosadbModel.PreventaDetalle" Width="1.5" PointX="5.25" PointY="4.625" IsExpanded="true" />
         <EntityTypeShape EntityType="disosadbModel.Preventa" Width="1.5" PointX="8.25" PointY="4.875" IsExpanded="true" />
         <EntityTypeShape EntityType="disosadbModel.Producto" Width="1.5" PointX="5.25" PointY="8.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="disosadbModel.Proveedor" Width="1.5" PointX="3" PointY="9.125" IsExpanded="true" />
         <EntityTypeShape EntityType="disosadbModel.Vendedor" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
         <EntityTypeShape EntityType="disosadbModel.VentaDetalle" Width="1.5" PointX="7.5" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="disosadbModel.Venta" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
@@ -19,7 +18,6 @@
         <AssociationConnector Association="disosadbModel.FK__PreventaD__Preve__22AA2996" ManuallyRouted="false" />
         <AssociationConnector Association="disosadbModel.FK__PreventaD__Vende__239E4DCF" ManuallyRouted="false" />
         <AssociationConnector Association="disosadbModel.FK__Preventas__Vende__2A4B4B5E" ManuallyRouted="false" />
-        <AssociationConnector Association="disosadbModel.FK__Productos__Prove__1367E606" ManuallyRouted="false" />
         <AssociationConnector Association="disosadbModel.FK__VentaDeta__Codig__286302EC" ManuallyRouted="false" />
         <AssociationConnector Association="disosadbModel.FK__Ventas__Vendedor__2B3F6F97" ManuallyRouted="false" />
         <AssociationConnector Association="disosadbModel.FK__VentaDeta__Venta__29572725" ManuallyRouted="false" />
@@ -28,8 +26,15 @@
         <EntityTypeShape EntityType="disosadbModel.CompraDetalle" Width="1.5" PointX="7.5" PointY="13" />
         <EntityTypeShape EntityType="disosadbModel.Compra" Width="1.5" PointX="5.25" PointY="12.875" />
         <AssociationConnector Association="disosadbModel.FK__CompraDet__Compr__3F466844" />
-        <AssociationConnector Association="disosadbModel.FK__Compras__CodigoP__3C69FB99" />
         <AssociationConnector Association="disosadbModel.FK__CompraDet__Codig__403A8C7D" />
+        <EntityTypeShape EntityType="disosadbModel.ProveedoresDetalle" Width="1.5" PointX="5.25" PointY="16.375" />
+        <EntityTypeShape EntityType="disosadbModel.Proveedor" Width="1.5" PointX="3" PointY="12.25" />
+        <AssociationConnector Association="disosadbModel.FK__Compras__CodigoP__5070F446" />
+        <AssociationConnector Association="disosadbModel.FK__Productos__Prove__4F7CD00D" />
+        <AssociationConnector Association="disosadbModel.FK__Proveedor__Prove__5165187F" />
+        <EntityTypeShape EntityType="disosadbModel.DetalleGasto" Width="1.5" PointX="9.625" PointY="8.875" />
+        <EntityTypeShape EntityType="disosadbModel.Gasto" Width="1.5" PointX="7.375" PointY="9.25" />
+        <AssociationConnector Association="disosadbModel.FK__DetalleGa__Gasto__5812160E" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

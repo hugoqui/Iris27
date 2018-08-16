@@ -26,15 +26,16 @@
             </thead>
 
             <tbody>
-                @{ var n = 0;}
+                @{ var n = 0; var pn = 0;}
 
                 @foreach (var preventa in Model)
                 {
                     <tr>
-                        @{
-                            var preventaTag = "id" + n;
-                            var vendedorTag = "v" + n;
-                            var clienteTag = "cl" + n;
+                        @{                             
+                            var preventaTag = "id" + pn;
+                            var vendedorTag = "v" + pn;
+                            var clienteTag = "cl" + pn;
+                            pn++;
                         }
 
                         <td id="@preventaTag" class="btn-light pedido" colspan="8">@preventa.Id</td>
@@ -74,10 +75,10 @@
             </tfoot>
         </table>
         <div class="text-center">
-            <input type="hidden" id="devoluciones" name="devoluciones" value="" />
-            <input type="hidden" id="clientes" name="clientes" value="" />
-            <input type="hidden" id="vendedores" name="vendedores" value="" />
-            <input type="hidden" id="pedidos" name="pedidos" value="" />
+            <input type="hidden" id="devoluciones" name="devoluciones" value="" placeholder="devoluciones" />
+            <input type="hidden" id="clientes" name="clientes" value="" placeholder="clientes"/>
+            <input type="hidden" id="vendedores" name="vendedores" value="" placeholder="vendedores"/>
+            <input type="hidden" id="pedidos" name="pedidos" value=""  placeholder="pedidos"/>
             <input type="submit" class="btn btn-lg btn-light" value="Confirmar Venta" onclick="EnviarDetalles()" />
         </div>
     </div>
@@ -114,7 +115,7 @@
 
     function EnviarDetalles() {
         var devoluciones = "";
-        for (var i = 1; i < $(".detallePedido").length + 1; i++) {
+        for (var i = 1; i < $(".detallePedido").length + 1; i++) { //detalles de ventas
             devoluciones = devoluciones + $("#d" + i).val() + ",";
         }
         var pedidos = "";

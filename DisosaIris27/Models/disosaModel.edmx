@@ -32,6 +32,24 @@
           <Property Name="CodigoProveedor" Type="int" />
           <Property Name="Fecha" Type="date" />
           <Property Name="Comentario" Type="text" />
+          <Property Name="Credito" Type="bit" />
+        </EntityType>
+        <EntityType Name="DetalleGastos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GastoId" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" />
+          <Property Name="Monto" Type="money" />
+          <Property Name="Comentario" Type="text" />
+        </EntityType>
+        <EntityType Name="Gastos">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="text" />
         </EntityType>
         <EntityType Name="PreventaDetalles">
           <Key>
@@ -68,14 +86,28 @@
           <Key>
             <PropertyRef Name="Codigo" />
           </Key>
-          <Property Name="Codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Codigo" Type="int" Nullable="false" />
           <Property Name="Nombre" Type="text" Nullable="false" />
+          <Property Name="Contacto" Type="text" />
+          <Property Name="Telefono" Type="nchar" MaxLength="25" />
+          <Property Name="Saldo" Type="money" />
+        </EntityType>
+        <EntityType Name="ProveedoresDetalles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProveedorId" Type="int" Nullable="false" />
+          <Property Name="Abono" Type="money" />
+          <Property Name="Credito" Type="money" />
+          <Property Name="Fecha" Type="datetime" />
+          <Property Name="Referencia" Type="text" />
         </EntityType>
         <EntityType Name="Rutas">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Nombre" Type="text" />
         </EntityType>
         <EntityType Name="Vendedores">
@@ -106,7 +138,7 @@
           <Property Name="VendedorId" Type="int" />
           <Property Name="CodigoCliente" Type="nchar" MaxLength="10" />
         </EntityType>
-        <Association Name="FK__Clientes__Ruta__36B12243">
+        <Association Name="FK__Clientes__Ruta__49C3F6B7">
           <End Role="Rutas" Type="Self.Rutas" Multiplicity="0..1" />
           <End Role="Clientes" Type="Self.Clientes" Multiplicity="*" />
           <ReferentialConstraint>
@@ -142,7 +174,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Compras__CodigoP__3C69FB99">
+        <Association Name="FK__Compras__CodigoP__5070F446">
           <End Role="Proveedores" Type="Self.Proveedores" Multiplicity="0..1" />
           <End Role="Compras" Type="Self.Compras" Multiplicity="*" />
           <ReferentialConstraint>
@@ -151,6 +183,18 @@
             </Principal>
             <Dependent Role="Compras">
               <PropertyRef Name="CodigoProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetalleGa__Gasto__5812160E">
+          <End Role="Gastos" Type="Self.Gastos" Multiplicity="1" />
+          <End Role="DetalleGastos" Type="Self.DetalleGastos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gastos">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="DetalleGastos">
+              <PropertyRef Name="GastoId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -214,7 +258,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Productos__Prove__1367E606">
+        <Association Name="FK__Productos__Prove__4F7CD00D">
           <End Role="Proveedores" Type="Self.Proveedores" Multiplicity="0..1" />
           <End Role="Productos" Type="Self.Productos" Multiplicity="*" />
           <ReferentialConstraint>
@@ -222,6 +266,18 @@
               <PropertyRef Name="Codigo" />
             </Principal>
             <Dependent Role="Productos">
+              <PropertyRef Name="ProveedorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Proveedor__Prove__5165187F">
+          <End Role="Proveedores" Type="Self.Proveedores" Multiplicity="1" />
+          <End Role="ProveedoresDetalles" Type="Self.ProveedoresDetalles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedores">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="ProveedoresDetalles">
               <PropertyRef Name="ProveedorId" />
             </Dependent>
           </ReferentialConstraint>
@@ -278,15 +334,18 @@
           <EntitySet Name="Clientes" EntityType="Self.Clientes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CompraDetalles" EntityType="Self.CompraDetalles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Compras" EntityType="Self.Compras" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DetalleGastos" EntityType="Self.DetalleGastos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Gastos" EntityType="Self.Gastos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PreventaDetalles" EntityType="Self.PreventaDetalles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Preventas" EntityType="Self.Preventas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Productos" EntityType="Self.Productos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Proveedores" EntityType="Self.Proveedores" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProveedoresDetalles" EntityType="Self.ProveedoresDetalles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rutas" EntityType="Self.Rutas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Vendedores" EntityType="Self.Vendedores" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VentaDetalles" EntityType="Self.VentaDetalles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ventas" EntityType="Self.Ventas" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Clientes__Ruta__36B12243" Association="Self.FK__Clientes__Ruta__36B12243">
+          <AssociationSet Name="FK__Clientes__Ruta__49C3F6B7" Association="Self.FK__Clientes__Ruta__49C3F6B7">
             <End Role="Rutas" EntitySet="Rutas" />
             <End Role="Clientes" EntitySet="Clientes" />
           </AssociationSet>
@@ -298,9 +357,13 @@
             <End Role="Compras" EntitySet="Compras" />
             <End Role="CompraDetalles" EntitySet="CompraDetalles" />
           </AssociationSet>
-          <AssociationSet Name="FK__Compras__CodigoP__3C69FB99" Association="Self.FK__Compras__CodigoP__3C69FB99">
+          <AssociationSet Name="FK__Compras__CodigoP__5070F446" Association="Self.FK__Compras__CodigoP__5070F446">
             <End Role="Proveedores" EntitySet="Proveedores" />
             <End Role="Compras" EntitySet="Compras" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetalleGa__Gasto__5812160E" Association="Self.FK__DetalleGa__Gasto__5812160E">
+            <End Role="Gastos" EntitySet="Gastos" />
+            <End Role="DetalleGastos" EntitySet="DetalleGastos" />
           </AssociationSet>
           <AssociationSet Name="FK__PreventaD__Codig__21B6055D" Association="Self.FK__PreventaD__Codig__21B6055D">
             <End Role="Productos" EntitySet="Productos" />
@@ -322,9 +385,13 @@
             <End Role="Vendedores" EntitySet="Vendedores" />
             <End Role="Preventas" EntitySet="Preventas" />
           </AssociationSet>
-          <AssociationSet Name="FK__Productos__Prove__1367E606" Association="Self.FK__Productos__Prove__1367E606">
+          <AssociationSet Name="FK__Productos__Prove__4F7CD00D" Association="Self.FK__Productos__Prove__4F7CD00D">
             <End Role="Proveedores" EntitySet="Proveedores" />
             <End Role="Productos" EntitySet="Productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Proveedor__Prove__5165187F" Association="Self.FK__Proveedor__Prove__5165187F">
+            <End Role="Proveedores" EntitySet="Proveedores" />
+            <End Role="ProveedoresDetalles" EntitySet="ProveedoresDetalles" />
           </AssociationSet>
           <AssociationSet Name="FK__VentaDeta__Codig__286302EC" Association="Self.FK__VentaDeta__Codig__286302EC">
             <End Role="Productos" EntitySet="Productos" />
@@ -396,18 +463,9 @@
           <Property Name="Existencia" Type="Int32" Nullable="false" />
           <Property Name="ProveedorId" Type="Int32" />
           <NavigationProperty Name="PreventaDetalles" Relationship="Self.FK__PreventaD__Codig__21B6055D" FromRole="Productos" ToRole="PreventaDetalles" />
-          <NavigationProperty Name="Proveedor" Relationship="Self.FK__Productos__Prove__1367E606" FromRole="Productos" ToRole="Proveedores" />
           <NavigationProperty Name="VentaDetalles" Relationship="Self.FK__VentaDeta__Codig__286302EC" FromRole="Productos" ToRole="VentaDetalles" />
           <NavigationProperty Name="CompraDetalles" Relationship="disosadbModel.FK__CompraDet__Codig__403A8C7D" FromRole="Producto" ToRole="CompraDetalle" />
-        </EntityType>
-        <EntityType Name="Proveedor">
-          <Key>
-            <PropertyRef Name="Codigo" />
-          </Key>
-          <Property Name="Codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Productos" Relationship="Self.FK__Productos__Prove__1367E606" FromRole="Proveedores" ToRole="Productos" />
-          <NavigationProperty Name="Compras" Relationship="disosadbModel.FK__Compras__CodigoP__3C69FB99" FromRole="Proveedor" ToRole="Compra" />
+          <NavigationProperty Name="Proveedor" Relationship="disosadbModel.FK__Productos__Prove__4F7CD00D" FromRole="Producto" ToRole="Proveedore" />
         </EntityType>
         <EntityType Name="Vendedor">
           <Key>
@@ -517,18 +575,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Productos__Prove__1367E606">
-          <End Role="Proveedores" Type="disosadbModel.Proveedor" Multiplicity="0..1" />
-          <End Role="Productos" Type="Self.Producto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Proveedores">
-              <PropertyRef Name="Codigo" />
-            </Principal>
-            <Dependent Role="Productos">
-              <PropertyRef Name="ProveedorId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__VentaDeta__Codig__286302EC">
           <End Role="Productos" Type="Self.Producto" Multiplicity="0..1" />
           <End Role="VentaDetalles" Type="Self.VentaDetalle" Multiplicity="*" />
@@ -570,7 +616,6 @@
           <EntitySet Name="PreventaDetalles" EntityType="Self.PreventaDetalle" />
           <EntitySet Name="Preventas" EntityType="Self.Preventa" />
           <EntitySet Name="Productos" EntityType="Self.Producto" />
-          <EntitySet Name="Proveedors" EntityType="disosadbModel.Proveedor" />
           <EntitySet Name="Vendedors" EntityType="disosadbModel.Vendedor" />
           <EntitySet Name="VentaDetalles" EntityType="Self.VentaDetalle" />
           <EntitySet Name="Ventas" EntityType="Self.Venta" />
@@ -598,10 +643,6 @@
             <End Role="Vendedores" EntitySet="Vendedors" />
             <End Role="Preventas" EntitySet="Preventas" />
           </AssociationSet>
-          <AssociationSet Name="FK__Productos__Prove__1367E606" Association="Self.FK__Productos__Prove__1367E606">
-            <End Role="Proveedores" EntitySet="Proveedors" />
-            <End Role="Productos" EntitySet="Productos" />
-          </AssociationSet>
           <AssociationSet Name="FK__VentaDeta__Codig__286302EC" Association="Self.FK__VentaDeta__Codig__286302EC">
             <End Role="Productos" EntitySet="Productos" />
             <End Role="VentaDetalles" EntitySet="VentaDetalles" />
@@ -625,13 +666,29 @@
             <End Role="Compra" EntitySet="Compras" />
             <End Role="CompraDetalle" EntitySet="CompraDetalles" />
           </AssociationSet>
-          <AssociationSet Name="FK__Compras__CodigoP__3C69FB99" Association="disosadbModel.FK__Compras__CodigoP__3C69FB99">
-            <End Role="Proveedor" EntitySet="Proveedors" />
-            <End Role="Compra" EntitySet="Compras" />
-          </AssociationSet>
           <AssociationSet Name="FK__CompraDet__Codig__403A8C7D" Association="disosadbModel.FK__CompraDet__Codig__403A8C7D">
             <End Role="Producto" EntitySet="Productos" />
             <End Role="CompraDetalle" EntitySet="CompraDetalles" />
+          </AssociationSet>
+          <EntitySet Name="ProveedoresDetalles" EntityType="disosadbModel.ProveedoresDetalle" />
+          <EntitySet Name="Proveedors" EntityType="disosadbModel.Proveedor" />
+          <AssociationSet Name="FK__Compras__CodigoP__5070F446" Association="disosadbModel.FK__Compras__CodigoP__5070F446">
+            <End Role="Proveedore" EntitySet="Proveedors" />
+            <End Role="Compra" EntitySet="Compras" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Productos__Prove__4F7CD00D" Association="disosadbModel.FK__Productos__Prove__4F7CD00D">
+            <End Role="Proveedore" EntitySet="Proveedors" />
+            <End Role="Producto" EntitySet="Productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Proveedor__Prove__5165187F" Association="disosadbModel.FK__Proveedor__Prove__5165187F">
+            <End Role="Proveedore" EntitySet="Proveedors" />
+            <End Role="ProveedoresDetalle" EntitySet="ProveedoresDetalles" />
+          </AssociationSet>
+          <EntitySet Name="DetalleGastos" EntityType="disosadbModel.DetalleGasto" />
+          <EntitySet Name="Gastos" EntityType="disosadbModel.Gasto" />
+          <AssociationSet Name="FK__DetalleGa__Gasto__5812160E" Association="disosadbModel.FK__DetalleGa__Gasto__5812160E">
+            <End Role="Gasto" EntitySet="Gastos" />
+            <End Role="DetalleGasto" EntitySet="DetalleGastos" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Ruta">
@@ -675,7 +732,8 @@
           <Property Name="Fecha" Type="DateTime" Precision="0" />
           <Property Name="Comentario" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="CompraDetalles" Relationship="disosadbModel.FK__CompraDet__Compr__3F466844" FromRole="Compra" ToRole="CompraDetalle" />
-          <NavigationProperty Name="Proveedor" Relationship="disosadbModel.FK__Compras__CodigoP__3C69FB99" FromRole="Compra" ToRole="Proveedor" />
+          <NavigationProperty Name="Proveedor" Relationship="disosadbModel.FK__Compras__CodigoP__5070F446" FromRole="Compra" ToRole="Proveedore" />
+          <Property Name="Credito" Type="Boolean" />
         </EntityType>
         <Association Name="FK__CompraDet__Compr__3F466844">
           <End Type="disosadbModel.Compra" Role="Compra" Multiplicity="0..1" />
@@ -689,18 +747,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Compras__CodigoP__3C69FB99">
-          <End Type="disosadbModel.Proveedor" Role="Proveedor" Multiplicity="0..1" />
-          <End Type="disosadbModel.Compra" Role="Compra" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Proveedor">
-              <PropertyRef Name="Codigo" />
-            </Principal>
-            <Dependent Role="Compra">
-              <PropertyRef Name="CodigoProveedor" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__CompraDet__Codig__403A8C7D">
           <End Type="disosadbModel.Producto" Role="Producto" Multiplicity="0..1" />
           <End Type="disosadbModel.CompraDetalle" Role="CompraDetalle" Multiplicity="*" />
@@ -710,6 +756,98 @@
             </Principal>
             <Dependent Role="CompraDetalle">
               <PropertyRef Name="CodigoProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ProveedoresDetalle">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProveedorId" Type="Int32" Nullable="false" />
+          <Property Name="Abono" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Credito" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Fecha" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Proveedor" Relationship="disosadbModel.FK__Proveedor__Prove__5165187F" FromRole="ProveedoresDetalle" ToRole="Proveedore" />
+          <Property Name="Referencia" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Proveedor">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Contacto" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="Saldo" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Compras" Relationship="disosadbModel.FK__Compras__CodigoP__5070F446" FromRole="Proveedore" ToRole="Compra" />
+          <NavigationProperty Name="Productos" Relationship="disosadbModel.FK__Productos__Prove__4F7CD00D" FromRole="Proveedore" ToRole="Producto" />
+          <NavigationProperty Name="ProveedoresDetalles" Relationship="disosadbModel.FK__Proveedor__Prove__5165187F" FromRole="Proveedore" ToRole="ProveedoresDetalle" />
+        </EntityType>
+        <Association Name="FK__Compras__CodigoP__5070F446">
+          <End Type="disosadbModel.Proveedor" Role="Proveedore" Multiplicity="0..1" />
+          <End Type="disosadbModel.Compra" Role="Compra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedore">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Compra">
+              <PropertyRef Name="CodigoProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Productos__Prove__4F7CD00D">
+          <End Type="disosadbModel.Proveedor" Role="Proveedore" Multiplicity="0..1" />
+          <End Type="disosadbModel.Producto" Role="Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedore">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="ProveedorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Proveedor__Prove__5165187F">
+          <End Type="disosadbModel.Proveedor" Role="Proveedore" Multiplicity="1" />
+          <End Type="disosadbModel.ProveedoresDetalle" Role="ProveedoresDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedore">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="ProveedoresDetalle">
+              <PropertyRef Name="ProveedorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="DetalleGasto">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GastoId" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Precision="3" />
+          <Property Name="Monto" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Comentario" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Gasto" Relationship="disosadbModel.FK__DetalleGa__Gasto__5812160E" FromRole="DetalleGasto" ToRole="Gasto" />
+        </EntityType>
+        <EntityType Name="Gasto">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DetalleGastos" Relationship="disosadbModel.FK__DetalleGa__Gasto__5812160E" FromRole="Gasto" ToRole="DetalleGasto" />
+        </EntityType>
+        <Association Name="FK__DetalleGa__Gasto__5812160E">
+          <End Type="disosadbModel.Gasto" Role="Gasto" Multiplicity="1" />
+          <End Type="disosadbModel.DetalleGasto" Role="DetalleGasto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gasto">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="DetalleGasto">
+              <PropertyRef Name="GastoId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -760,14 +898,6 @@
                 <ScalarProperty Name="Precio" ColumnName="Precio" />
                 <ScalarProperty Name="Existencia" ColumnName="Existencia" />
                 <ScalarProperty Name="ProveedorId" ColumnName="ProveedorId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Proveedors">
-            <EntityTypeMapping TypeName="disosadbModel.Proveedor">
-              <MappingFragment StoreEntitySet="Proveedores">
-                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -824,10 +954,53 @@
           <EntitySetMapping Name="Compras">
             <EntityTypeMapping TypeName="disosadbModel.Compra">
               <MappingFragment StoreEntitySet="Compras">
+                <ScalarProperty Name="Credito" ColumnName="Credito" />
                 <ScalarProperty Name="Comentario" ColumnName="Comentario" />
                 <ScalarProperty Name="Fecha" ColumnName="Fecha" />
                 <ScalarProperty Name="CodigoProveedor" ColumnName="CodigoProveedor" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProveedoresDetalles">
+            <EntityTypeMapping TypeName="disosadbModel.ProveedoresDetalle">
+              <MappingFragment StoreEntitySet="ProveedoresDetalles">
+                <ScalarProperty Name="Referencia" ColumnName="Referencia" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Credito" ColumnName="Credito" />
+                <ScalarProperty Name="Abono" ColumnName="Abono" />
+                <ScalarProperty Name="ProveedorId" ColumnName="ProveedorId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Proveedors">
+            <EntityTypeMapping TypeName="disosadbModel.Proveedor">
+              <MappingFragment StoreEntitySet="Proveedores">
+                <ScalarProperty Name="Saldo" ColumnName="Saldo" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Contacto" ColumnName="Contacto" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DetalleGastos">
+            <EntityTypeMapping TypeName="disosadbModel.DetalleGasto">
+              <MappingFragment StoreEntitySet="DetalleGastos">
+                <ScalarProperty Name="Comentario" ColumnName="Comentario" />
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="GastoId" ColumnName="GastoId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Gastos">
+            <EntityTypeMapping TypeName="disosadbModel.Gasto">
+              <MappingFragment StoreEntitySet="Gastos">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

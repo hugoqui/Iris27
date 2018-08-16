@@ -68,8 +68,8 @@
                             <i class="zmdi zmdi-accounts"></i> Clientes
                         </a>
                         <ul id="subMenuClientes">
-                            <li class=""><a href="@Url.Action("Index","Clientes")">Clientes</a></li>
-                            <li class=""><a href="@Url.Action("Index","Rutas")">Rutas</a></li>
+                            <li class="" id="menu-clientes-detalle"><a href="@Url.Action("Index","Clientes")">Clientes</a></li>
+                            <li class="" id="menu-rutas"><a href="@Url.Action("Index","Rutas")">Rutas</a></li>
                         </ul>
                     </li>
 
@@ -78,14 +78,27 @@
                     <li class="" id="menu-ventas"><a href="@Url.Action("Index","Ventas")"><i class="zmdi zmdi-money"></i> Ventas</a></li>
                     <li class="" id="menu-picking"><a href="@Url.Action("Index","Picking")"><i class="zmdi zmdi-assignment"></i> Picking</a></li>
 
+
+                    <li class="navigation__sub" id="menu-gastos">
+                        <a href="">
+                            <i class="zmdi zmdi-trending-down"></i> Gastos
+                        </a>
+                        <ul>
+                            <li class="" id="menu-gastos-rubros"><a href="@Url.Action("Index","Gastos")">Rubros</a></li>
+                            <li class="" id="menu-gastos-registrar"><a href="@Url.Action("Registrar","Gastos")">Registrar</a></li>
+                        </ul>
+                    </li>
+
+
                     <li class="navigation__sub" id="menu-reportes">
                         <a href="">
                             <i class="zmdi zmdi-chart"></i> Reportes
                         </a>
                         <ul>
-                            <li class="" id="menu-reporte-ventas"><a href="@Url.Action("Ventas","Reportes")">Ventas</a></li>                            
-                            <li class="" id="menu-reporte-ventas-dia"><a href="@Url.Action("VentasPorDia","Reportes")">Ventas por Día</a></li>                            
+                            <li class="" id="menu-reporte-ventas"><a href="@Url.Action("Ventas","Reportes")">Ventas</a></li>
+                            <li class="" id="menu-reporte-dia"><a href="@Url.Action("VentasPorDia","Reportes")">Ventas por Día</a></li>
                             <li class="" id="menu-reporte-compras"><a href="@Url.Action("Compras","Reportes")">Compras</a></li>
+                            <li class="" id="menu-reporte-gastos"><a href="@Url.Action("Gastos","Reportes")">Gastos</a></li>
                         </ul>
                     </li>
                 </ul>

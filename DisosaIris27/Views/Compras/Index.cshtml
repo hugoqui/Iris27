@@ -23,6 +23,9 @@
             Proveedor
         </th>
         <th>
+            Forma Pago
+        </th>
+        <th>
             Comentario
         </th>
 
@@ -42,6 +45,13 @@
                 @Html.DisplayFor(modelItem => item.Proveedor.Nombre)
             </td>
             <td>
+                @{ 
+                    var formaPago = "Crédito";
+                    if (item.Credito == false) { formaPago = "Contado"; }
+                }
+                <span>@formaPago</span>
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Comentario)
             </td>
 
@@ -59,7 +69,7 @@
 <div class="text-center">
 
     @Html.PagedListPager(Model, page => Url.Action("Index",
-                                new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+                                            new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 </div>
 
 <script src="~/Content/js/jquery.min.js"></script>

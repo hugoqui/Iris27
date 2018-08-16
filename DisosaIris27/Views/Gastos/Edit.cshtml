@@ -1,4 +1,4 @@
-﻿@model DisosaIris27.Models.Ruta
+﻿@model DisosaIris27.Models.Gasto
 
 @{
     ViewBag.Title = "Edit";
@@ -9,12 +9,12 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-
+    
     <div class="form-horizontal">
-        <h4>Ruta</h4>
+        <h4>Gasto</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.Codigo)
 
         <div class="form-group">
             @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -35,11 +35,3 @@
 <div>
     @Html.ActionLink("Regresar", "Index")
 </div>
-
-
-<script src="~/Content/js/jquery.min.js"></script>
-<script>
-    $("li").removeClass("navigation__active");
-    $("#menu-clientes").addClass("navigation__active").children("ul").slideDown();
-    $("#menu-rutas").addClass("navigation__active");
-</script>

@@ -17,16 +17,22 @@ namespace DisosaIris27.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Proveedor()
         {
-            this.Productos = new HashSet<Producto>();
             this.Compras = new HashSet<Compra>();
+            this.Productos = new HashSet<Producto>();
+            this.ProveedoresDetalles = new HashSet<ProveedoresDetalle>();
         }
     
         public int Codigo { get; set; }
         public string Nombre { get; set; }
+        public string Contacto { get; set; }
+        public string Telefono { get; set; }
+        public Nullable<decimal> Saldo { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Compra> Compras { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Producto> Productos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Compra> Compras { get; set; }
+        public virtual ICollection<ProveedoresDetalle> ProveedoresDetalles { get; set; }
     }
 }

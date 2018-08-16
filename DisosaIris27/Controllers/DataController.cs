@@ -93,21 +93,34 @@ namespace DisosaIris27.Controllers
         }
 
         [HttpPost]
-        [Route("PostCompra/{proveedor}/{comentario}/{fecha}")]
-        public string PostCompra(int proveedor, string comentario, DateTime fecha, [FromBody] ListaCompras listaCompras)
+        [Route("PostCompra/{proveedor}/{comentario}/{fecha}/{credito}")]
+        public string PostCompra(int proveedor, string comentario, DateTime fecha, bool credito , [FromBody] ListaCompras listaCompras)
         {
-            var compraNueva = new Compra() { CodigoProveedor = proveedor, Comentario = comentario, Fecha = fecha };
+            var compraNueva = new Compra() { CodigoProveedor = proveedor, Comentario = comentario, Fecha = fecha, Credito = credito };
             db.Compras.Add(compraNueva);
             db.SaveChanges();
             var compras = listaCompras.Listado; //array con productos
+            decimal total = 0;
             foreach (CompraDetalle compra in compras)
             {
                 var compraDetalle = new CompraDetalle() { CompraId = compraNueva.Id, CodigoProducto = compra.CodigoProducto, Cantidad = compra.Cantidad, Costo = compra.Costo };
+                total += compraDetalle.Costo.Value * compra.Cantidad.Value;
                 var producto = db.Productos.Find(compraDetalle.CodigoProducto);
                 producto.Existencia = producto.Existencia + int.Parse(compraDetalle.Cantidad.ToString());
                 db.Entry(producto).State = System.Data.Entity.EntityState.Modified;
                 db.CompraDetalles.Add(compraDetalle);
             }
+
+            if (credito == true)
+            {
+                var _proveedor = db.Proveedors.Find(proveedor);
+                _proveedor.Saldo = Convert.ToDecimal(_proveedor.Saldo) + total;
+                db.Entry(_proveedor).State = System.Data.Entity.EntityState.Modified;
+                
+                var proveedorDetalle = new ProveedoresDetalle() { Fecha =fecha, ProveedorId=proveedor, Credito = total, Referencia = "Compra # " + compraNueva.Id };
+                db.ProveedoresDetalles.Add(proveedorDetalle);
+            }
+
             db.SaveChanges();
             return compraNueva.Id.ToString();
         }

@@ -1,0 +1,66 @@
+﻿@model List<DisosaIris27.Models.DetalleGasto>
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Gastos";
+}
+
+<h2>Reporte de Gastos</h2>
+
+<hr />
+
+<form class="row">
+    
+    <div class="col-md-2">
+        <label class="label-control">Fecha Inicial </label>
+        <input class="form-control" type="date" name="fechaInicio" value="@ViewBag.FechaInicio" />
+    </div>
+
+    <div class="col-md-2">
+        <label class="label-control">Fecha Final</label>
+        <input class="form-control" type="date" name="fechaFinal" value="@ViewBag.FechaFinal" />
+    </div>
+
+    <div class="col-md-2">
+        <br />
+        <input class="btn btn-dark" type="submit" value="Mostrar" />
+    </div>
+</form>
+<br />
+
+
+<table class="table table-hover table-bordered table-sm table-inverse">
+    <thead class="thead-dark">
+        <tr>            
+            <td>Fecha</td>
+            <td>Rubro</td>
+            <td>Comentario</td>            
+            <td align="right">Monto</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>                
+                <td>@item.Fecha.Value.ToShortDateString()</td>
+                <td>@item.Gasto.Nombre</td>
+                <td>@item.Comentario</td>                
+                <td align="right"> @string.Format("{0:C}", item.Monto)</td>
+            </tr>
+        }
+        <tr>
+            <td colspan="3" align="right">TOTAL</td>
+            <td align="right">@string.Format("{0:C}", ViewBag.Total)</td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+<script src="~/Content/js/jquery.min.js"></script>
+<script>
+    $("li").removeClass("navigation__active");
+    $("#menu-reportes").addClass("navigation__active").children("ul").slideDown();
+    $("#menu-reporte-gastos").addClass("navigation__active");
+</script>

@@ -29,12 +29,15 @@ namespace DisosaIris27.Models
         public virtual DbSet<PreventaDetalle> PreventaDetalles { get; set; }
         public virtual DbSet<Preventa> Preventas { get; set; }
         public virtual DbSet<Producto> Productos { get; set; }
-        public virtual DbSet<Proveedor> Proveedors { get; set; }
         public virtual DbSet<Vendedor> Vendedors { get; set; }
         public virtual DbSet<VentaDetalle> VentaDetalles { get; set; }
         public virtual DbSet<Venta> Ventas { get; set; }
         public virtual DbSet<Ruta> Rutas { get; set; }
         public virtual DbSet<CompraDetalle> CompraDetalles { get; set; }
         public virtual DbSet<Compra> Compras { get; set; }
+        public virtual DbSet<ProveedoresDetalle> ProveedoresDetalles { get; set; }
+        public virtual DbSet<Proveedor> Proveedors { get; set; }
+        public virtual DbSet<DetalleGasto> DetalleGastos { get; set; }
+        public virtual DbSet<Gasto> Gastos { get; set; }
     }
 }

@@ -14,15 +14,13 @@ namespace DisosaIris27.Controllers
             return View();
         }
 
-        static List<string> miLista = new List<string>();
-        public ActionResult Hugo(string nombre, string miTexto)
+        
+        public ActionResult Hugo(string rmail, string rcompany, string raddress, string rpais, string rtel, string rhash, string ridpalpay, string rpriority, string idproduct)
         {
-            miLista.Add(nombre + " - " + miTexto);
-            if (nombre == "")
-            {
-                miLista = new List<string>();
-            }
-            return View(miLista);
+            var a = raddress;
+            var b = rpais;
+
+            return View();
         }
     }
 }

@@ -50,8 +50,10 @@ namespace DisosaIris27.Controllers
 
         // GET: Clientes/Create
         public ActionResult Create()
-        {            
-            ViewBag.Rutas = db.Rutas.ToList();
+        {
+            var lista = db.Rutas.ToList();
+            lista = lista.OrderBy(r => r.Nombre).ToList();
+            ViewBag.Rutas = lista;
             return View();
         }
 

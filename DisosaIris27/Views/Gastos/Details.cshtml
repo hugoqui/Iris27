@@ -1,0 +1,68 @@
+﻿@model DisosaIris27.Models.Gasto
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalle de Gasto</h2>
+<h4>@Model.Nombre</h4>
+<hr />
+<main class="container">
+    <form class="row">
+        <div class="col-md-4">
+            <label class="label-control">Fecha Inicial</label>
+            <input id="fechaInicial" name="fechaInicial" type="date" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label class="label-control">Fecha Inicial</label>
+            <input id="fechaFinal" name="fechaFinal" type="date" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <br />
+            <button type="submit" class="btn btn-dark">Mostrar</button>
+        </div>
+    </form>
+    <br />
+    <table class="table table-bordered">
+        <tr><td>Fecha</td><td>Rubro</td><td>Comentario</td><td>Monto</td></tr>
+        @foreach (var item in Model.DetalleGastos)
+        {
+            <tr>
+                <td>@item.Fecha.Value.ToShortDateString()</td>
+                <td>@item.Gasto.Nombre</td>
+                <td>@item.Comentario</td>
+                <td>@item.Monto</td>
+            </tr>
+        }
+    </table>
+</main>
+
+<br />
+<p>
+    @Html.ActionLink("Regresar", "Index")
+</p>
+
+
+<script src="~/Content/js/jquery.min.js"></script>
+<script>
+    $("li").removeClass("navigation__active");
+    $("#menu-gastos").addClass("navigation__active");
+
+    var fechaInicial = toDate('@ViewBag.fechaInicial');
+    var fechaFinal = toDate('@ViewBag.fechaFinal')
+
+    $("#fechaInicial").val(fechaInicial);
+    $("#fechaFinal").val(fechaFinal);
+
+    function toDate(data) {
+        var valores = data.split('/');
+        var fecha = new Date(valores[2].substring(0,4), valores[1], valores[0]);
+        var y = fecha.getFullYear();
+        var m = fecha.getMonth();
+        if (m < 10) { m = "0" + m; }
+        var d = fecha.getDate();
+        if (d < 10) { d = "0" + d; }
+        var result = y + "-" + m + "-" + d;
+        return result;
+    }
+</script>
