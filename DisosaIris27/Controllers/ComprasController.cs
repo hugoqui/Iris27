@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using DisosaIris27.Models;
 using PagedList;
@@ -18,6 +15,7 @@ namespace DisosaIris27.Controllers
         // GET: Compras
         public ActionResult Index(int? page)
         {
+            if (!(int.Parse(Session["nivel"].ToString()) > 1)) { return RedirectToAction("Index", "Login"); }
             var compras = db.Compras.Include(c => c.Proveedor);
             compras = compras.OrderByDescending(c => c.Id);
             int pageSize = 10;

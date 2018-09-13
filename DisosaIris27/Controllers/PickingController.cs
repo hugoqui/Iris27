@@ -1,8 +1,6 @@
 ﻿using DisosaIris27.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace DisosaIris27.Controllers
@@ -13,6 +11,7 @@ namespace DisosaIris27.Controllers
         private disosadbEntities db = new disosadbEntities();
         public ActionResult Index(string rutas)
         {
+            if (!(int.Parse(Session["nivel"].ToString()) > 0)) { return RedirectToAction("Index", "Login"); }
             var preventas = new List<Preventa>(); ;
             var nombreRutas = new List<string>();
 

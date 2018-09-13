@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using DisosaIris27.Models;
 using PagedList;
@@ -18,6 +16,7 @@ namespace DisosaIris27.Controllers
         // GET: Preventas
         public ActionResult Index(int? page)
         {
+            if (!(int.Parse(Session["nivel"].ToString()) > 1)) { return RedirectToAction("Index", "Login"); }
             var preventas = db.Preventas.Include(p => p.Cliente).Include(p => p.Vendedor);
             preventas = preventas.OrderByDescending(p => p.Id);
             int pageSize = 10;
@@ -43,6 +42,16 @@ namespace DisosaIris27.Controllers
         // GET: Preventas/Create
         public ActionResult Create()
         {
+            var productos = db.Productos.ToList();
+            var lista = new List<AutoComplete>();
+            productos.ForEach(p => lista.Add(new AutoComplete() { label = p.Nombre, value = p.Codigo.ToString() }));
+            ViewBag.productos = lista;
+
+            var clientes = db.Clientes.ToList();
+            lista = new List<AutoComplete>();
+            clientes.ForEach(c => lista.Add(new AutoComplete() { label = c.Nombre, value = c.Codigo.Trim() }));
+            ViewBag.clientes = lista;
+
             ViewBag.CodigoCliente = new SelectList(db.Clientes, "Codigo", "Nombre");
             ViewBag.VendedorId = new SelectList(db.Vendedors, "Id", "Nombre");
             return View();

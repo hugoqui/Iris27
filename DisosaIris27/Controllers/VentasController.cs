@@ -4,7 +4,6 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using DisosaIris27.Models;
 using PagedList;
@@ -18,6 +17,7 @@ namespace DisosaIris27.Controllers
         // GET: Ventas
         public ActionResult Index(int? page)
         {
+            if (!(int.Parse(Session["nivel"].ToString()) > 1)) { return RedirectToAction("Index", "Login"); }
             var ventas = db.Ventas.Include(v => v.Cliente).Include(v => v.Vendedor);
             ventas = ventas.OrderByDescending(v => v.Id);
 

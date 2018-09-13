@@ -4,14 +4,14 @@
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Rutas";
 }
 
 <h2>Detalles</h2>
 
 <div>
     <div class="row">
-        <div class="col-md-6"><h4><small>Ruta: </small><br />  @ViewBag.Ruta </h4></div>
+        <div class="col-md-6"><h4><small>Ruta: </small><br />@ViewBag.RutaId - @ViewBag.Ruta </h4></div>
         <div class="col-md-6"><h5 class="text-secondary">Número de Clientes: <strong style="left:10px; position:relative"> @ViewBag.NoClientes</strong></h5></div>
     </div>
     <hr />

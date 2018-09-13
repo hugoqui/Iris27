@@ -245,6 +245,8 @@
     <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\GastosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\PerfilController.cs" />
     <Compile Include="Controllers\PickingController.cs" />
     <Compile Include="Controllers\PreventasController.cs" />
     <Compile Include="Controllers\ProductosController.cs" />
@@ -257,6 +259,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AutoComplete.cs" />
     <Compile Include="Models\Cliente.cs">
       <DependentUpon>disosaModel.tt</DependentUpon>
     </Compile>
@@ -303,6 +306,9 @@
       <DependentUpon>disosaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Ruta.cs">
+      <DependentUpon>disosaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Usuario.cs">
       <DependentUpon>disosaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Vendedor.cs">
@@ -371,6 +377,8 @@
     <Content Include="Views\Ventas\Details.cshtml" />
     <Content Include="Views\Ventas\Edit.cshtml" />
     <Content Include="Views\Ventas\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\disosa - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\disosagt.com - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Views\Ventas\Preventa.cshtml" />
     <Content Include="Views\Rutas\Create.cshtml" />
@@ -397,6 +405,14 @@
     <Content Include="Views\Gastos\Index.cshtml" />
     <Content Include="Views\Gastos\Registrar.cshtml" />
     <Content Include="Views\Reportes\Gastos.cshtml" />
+    <Content Include="Views\Reportes\Financiero.cshtml" />
+    <Content Include="Views\Reportes\FinancieroPorRutas.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Perfil\Create.cshtml" />
+    <Content Include="Views\Perfil\Delete.cshtml" />
+    <Content Include="Views\Perfil\Details.cshtml" />
+    <Content Include="Views\Perfil\Edit.cshtml" />
+    <Content Include="Views\Perfil\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

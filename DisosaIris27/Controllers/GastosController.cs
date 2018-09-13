@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using DisosaIris27.Models;
 
@@ -17,6 +15,7 @@ namespace DisosaIris27.Controllers
         // GET: Gastos
         public ActionResult Index()
         {
+            if (!(int.Parse(Session["nivel"].ToString()) > 2)) { return RedirectToAction("Index", "Login"); }
             return View(db.Gastos.ToList());
         }
 
@@ -135,6 +134,7 @@ namespace DisosaIris27.Controllers
 
         public ActionResult Registrar(int? success)
         {
+            if (!(int.Parse(Session["nivel"].ToString()) > 1)) { return RedirectToAction("Index", "Login"); }
             ViewBag.Message = "";
             if (success != null) { ViewBag.Message = "El gasto fue registrado exitosamente."; }
 

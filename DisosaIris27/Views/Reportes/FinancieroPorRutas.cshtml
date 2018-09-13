@@ -1,0 +1,82 @@
+﻿@model IEnumerable<DisosaIris27.Models.Ruta>
+
+@{
+    ViewBag.Title = "Reporte Financiero";
+    decimal totalVenta = 0;
+    decimal totalCosto = 0;
+    decimal totalUtilidad = 0;
+
+    DateTime fechaInicio = new DateTime(ViewBag.FechaInicio);
+    DateTime fechaFinal= new DateTime(ViewBag.FechaFinal);
+}
+
+<h2>Financiero</h2>
+
+<form class="row">
+    <div class="col-md-4">
+        <label class="label-control">Fecha Inicial</label>
+        <input type="date" class="form-control" name="fechaInicio" value="@ViewBag.FechaInicio" />
+    </div>
+    <div class="col-md-4">
+        <label class="label-control">Fecha Final</label>
+        <input type="date" class="form-control" name="fechaFinal" value="@ViewBag.FechaFinal" />
+    </div>
+    <div class="col-md-4">
+        <br />
+        <input type="submit" class="btn btn-dark" name="fechaFinal" value="Mostrar" />
+    </div>
+</form>
+<br />
+<table class="table">
+    <tr>       
+        <th>
+            Ruta
+        </th>
+        <th>Venta</th>
+        <th>Costo</th>
+        <th>Utilidad</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.Nombre
+            </td>
+            <td>
+                @{ decimal venta = item.Clientes  ; }
+                @string.Format("{0:C}", venta)
+            </td>
+            <td>
+                @{decimal costo = item.VentaDetalles.Sum(v => v.Producto.Costo * v.Cantidad.Value);}
+                @string.Format("{0:C}", costo)
+            </td>
+            <td>
+                @{decimal utilidad = venta - costo; }
+                @string.Format("{0:C}", utilidad)
+            </td>
+        </tr>
+
+        totalVenta += venta;
+        totalCosto += costo;
+        totalUtilidad += utilidad;
+    }
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Totales</td>
+        <td>@string.Format("{0:C}", totalVenta)</td>
+        <td>@string.Format("{0:C}", totalCosto)</td>
+        <td>@string.Format("{0:C}", totalUtilidad)</td>
+    </tr>
+
+</table>
+
+
+<script src="~/Content/js/jquery.min.js"></script>
+<script>
+    $("li").removeClass("navigation__active");
+    $("#menu-reportes").addClass("navigation__active").children("ul").slideDown();
+    $("#menu-reporte-financiero").addClass("navigation__active");
+</script>

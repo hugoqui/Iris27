@@ -1,0 +1,126 @@
+﻿@model IEnumerable<DisosaIris27.Models.Gasto>
+
+@{
+    ViewBag.Title = "Reporte Financiero";
+    decimal totalVenta = 0;
+    decimal totalCosto = 0;
+    decimal totalUtilidad = 0;
+}
+
+<style>
+    table, tr, td {
+        border: none !important;
+    }
+
+    @@media print {
+        h1, h2, h3, h4, td, p, input {
+            color: gray !important
+        }
+
+        table {
+            border: solid 1px #eee !important;
+            border-bottom: solid 1px #eee !important;
+            color: #000 !important;
+            width: 50% !important;
+            margin: auto;
+        }
+
+        td {
+            padding: 4px !important;
+            color: #717171;
+            border-bottom: solid 1px #eee !important;
+            border-top: solid 1px #eee !important;
+        }
+
+        thead {
+            font-weight: bold;
+            background-color: #000 !important;
+        }
+
+        .sum {
+            border-top: solid 2px gray !important;
+        }
+
+        .final-sum {
+            border-top: solid 2px gray !important;
+            border-bottom: double 4px red !important;
+        }
+    }
+</style>
+
+<h1>Distribución Horizontal - DISOSA</h1>
+<h2>Reporte de Resultados</h2>
+
+<form class="row">
+    <div class="col-md-4">
+        <label class="label-control">Fecha Inicial</label>
+        <input type="date" class="form-control" name="fechaInicio" value="@ViewBag.FechaInicio" />
+    </div>
+    <div class="col-md-4">
+        <label class="label-control">Fecha Final</label>
+        <input type="date" class="form-control" name="fechaFinal" value="@ViewBag.FechaFinal" />
+    </div>
+    <div class="col-md-4 d-print-none">
+        <br />
+        <input type="submit" class="btn btn-dark" value="Mostrar" />
+    </div>
+</form>
+<br /><br />
+
+<h3 class="text-center">Ingresos de Operación</h3>
+<br />
+<div class="row">
+    <div class="col-md-3"></div>
+    <table class="table table-hover table-inverse col-md-6">
+        <tr>
+            <td>Ventas Netas</td>
+            <td align="right">@string.Format("{0:C}", ViewBag.VentasNetas)</td>
+            <td></td>
+        </tr>
+        <tr style="border-bottom:solid 1px rgba(255, 255, 255, 0.4) !important">
+            <td>( - ) Costo de Mercadería</td>
+            <td align="right">(@string.Format("{0:C}", ViewBag.CostoMercaderia))</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Utilidad Bruta</td>
+            <td class="sum"></td>
+            <td align="right">@string.Format("{0:C}", ViewBag.UtilidadBruta)</td>
+        </tr>
+        <tr>
+            <td><strong>Gastos de Operación</strong></td>
+            <td></td>
+            <td></td>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="padding-left:50px">
+                    <i>@item.Nombre</i>
+                </td>
+                <td align="right">
+                    <i>@string.Format("{0:C}", item.DetalleGastos.Sum(d => d.Monto))</i>
+                </td>
+                <td></td>
+            </tr>
+        }
+        <tr style="border-top:solid 1px rgba(255, 255, 255, 0.4) !important">
+            <td><strong>Total Gastos de Operación</strong></td>
+            <td class="sum"></td>
+            <td align="right">(@string.Format("{0:C}", Model.Sum(g => g.DetalleGastos.Sum(d => d.Monto))))</td>
+        </tr>
+        <tr style="border-top:solid 1px rgba(255, 255, 255, 0.4) !important; border-bottom:double rgba(255, 255, 255, 0.2) !important">
+            <td><strong>Utilidad Neta</strong></td>
+            <td> &emsp;</td>
+            <td align="right" class="final-sum">@string.Format("{0:C}", ViewBag.UtilidadNeta)</td>
+        </tr>        
+    </table>
+</div>
+
+
+<script src="~/Content/js/jquery.min.js"></script>
+<script>
+    $("li").removeClass("navigation__active");
+    $("#menu-reportes").addClass("navigation__active").children("ul").slideDown();
+    $("#menu-reporte-financiero").addClass("navigation__active");
+</script>

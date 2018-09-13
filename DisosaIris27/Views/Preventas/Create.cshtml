@@ -1,8 +1,13 @@
 ﻿@model DisosaIris27.Models.Preventa
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Pedidos";
 }
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+
+
 
 <h2>Crear</h2>
 
@@ -45,11 +50,18 @@
             Precio
             <input class="form-control text-right" type="number" min="1" value="1" id="Precio" onchange="CalcularSubTotal()" disabled />
         </div>
+
+        <div class="form-group col-md-1">
+            Descuento
+            <input class="form-control text-right" type="number" min="0" value="0" id="Descuento" onchange="CalcularSubTotal()" /> 
+            <span style="float: right;position: relative;top: -25px;">%</span>
+        </div>
+
         <div class="form-group col-md-2">
             Total
-            <input class="form-control text-right" type="number" min="1" value="1" id="Total" disabled />
+            <input class="form-control text-right" type="number" min="1" value="0" id="Total" disabled /> 
         </div>
-        <div class="form-group col-md-2">
+        <div class="form-group col-md-1">
             <br />
             <button type="button" class="btn btn-dark" id="BtnAgregar" onclick="AgregarItems()">Agregar</button>
         </div>
@@ -83,8 +95,9 @@
     @Html.ActionLink("Regresar", "Index")
 </div>
 
-<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 
+<script src="~/Content/js/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
     var n = 1; // Número de filas en la tala
     function AgregarItems() {
@@ -95,7 +108,7 @@
         var subtotal = $("#Total").val();
         var total = $("#TotalGlobal").text();
         total = Number(total) + Number(subtotal);
-        $("#TotalGlobal").text(total);
+        $("#TotalGlobal").text(total.toFixed(2));
 
         var fila = $('<tr class="bubble"><td id="c' + n + '">' + codigo + '</td><td id="n' + n + '">' + nombre + '</td><td id="q' + n + '">' + cantidad + '</td><td id="p' + n + '">' + precio + '</td><td id="t' + n + '">' + subtotal + '</td></tr>');
         $('#tableDetail').append(fila);
@@ -103,6 +116,7 @@
 
         $("#Codigo").val("");
         $("#Nombre").val("");
+        $("#Descuento").val(0);
         $("#Cantidad").val(1);
         $("#Precio").val(0);
         $("#Total").val(0);
@@ -112,7 +126,14 @@
     function CalcularSubTotal() {
         var cantidad = $("#Cantidad").val();
         var precio = $("#Precio").val();
-        $("#Total").val(precio * cantidad);
+        var descuento = $("#Descuento").val();
+        var subtotal = 0.0;
+        if (descuento > 0) {
+            subtotal = (precio * cantidad) - ((precio * cantidad) * descuento / 100);
+        } else {
+            subtotal = precio * cantidad;
+        }
+        $("#Total").val(subtotal.toFixed(2));    
     }
 
     function ObtenerNombreCliente(id) {
@@ -178,9 +199,13 @@
 </script>
 
 
-
-<script src="~/Content/js/jquery.min.js"></script>
 <script>
     $("li").removeClass("navigation__active");
     $("#menu-pedidos").addClass("navigation__active");
+
+    var productos = @Html.Raw(Json.Encode(@ViewBag.productos));
+    $("#Codigo").autocomplete({ source: productos });
+
+    var clientes = @Html.Raw(Json.Encode(@ViewBag.clientes));
+    $("#codigoCliente").autocomplete({ source: clientes });
 </script>

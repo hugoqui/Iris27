@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using DisosaIris27.Models;
 using PagedList;
@@ -18,6 +15,7 @@ namespace DisosaIris27.Controllers
         // GET: Rutas
         public ActionResult Index()
         {
+            if (!(int.Parse(Session["nivel"].ToString()) > 0)) { return RedirectToAction("Index", "Login"); }
             return View(db.Rutas.ToList());
         }
 
@@ -41,6 +39,7 @@ namespace DisosaIris27.Controllers
             int pageSize = 10;
             int pageNumber = (page ?? 1); //if null... set 1
             ViewBag.Ruta = ruta.Nombre;
+            ViewBag.RutaId = id;
             ViewBag.NoClientes = clientes.Count();
             return View(ruta.Clientes.ToPagedList(pageNumber, pageSize));
         }

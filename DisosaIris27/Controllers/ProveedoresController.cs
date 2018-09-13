@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using DisosaIris27.Models;
-using PagedList;
 
 namespace DisosaIris27.Controllers
 {
@@ -18,6 +14,7 @@ namespace DisosaIris27.Controllers
         // GET: Proveedores
         public ActionResult Index()
         {
+            if (!(int.Parse(Session["nivel"].ToString()) > 1)) { return RedirectToAction("Index", "Login"); }
             return View(db.Proveedors.ToList());
         }
 

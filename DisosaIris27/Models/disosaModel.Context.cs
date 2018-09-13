@@ -39,5 +39,6 @@ namespace DisosaIris27.Models
         public virtual DbSet<Proveedor> Proveedors { get; set; }
         public virtual DbSet<DetalleGasto> DetalleGastos { get; set; }
         public virtual DbSet<Gasto> Gastos { get; set; }
+        public virtual DbSet<Usuario> Usuarios { get; set; }
     }
 }
