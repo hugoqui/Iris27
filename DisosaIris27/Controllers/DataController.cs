@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using DisosaIris27.Models;
@@ -11,6 +13,16 @@ namespace DisosaIris27.Controllers
     public class DataController : ApiController
     {
         private disosadbEntities db = new disosadbEntities();
+
+        [HttpGet]
+        [Route("Productos/{pagina:int?}/{cantidad:int?}")]
+        public List<Producto> Productos(int pagina = 1, int cantidad =3 )
+        {
+            var productos = db.Productos.ToList();
+            var paginas = (productos.Count + cantidad - 1) / cantidad;
+            paginas = int.Parse(paginas.ToString());
+            return new List<Producto>();            
+        }
 
         [HttpGet]
         [Route("ObtenerNombreCliente/{codigo}")]

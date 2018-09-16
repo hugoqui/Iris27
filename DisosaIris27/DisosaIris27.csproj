@@ -240,6 +240,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CatalogoController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\ComprasController.cs" />
     <Compile Include="Controllers\DataController.cs" />
@@ -377,8 +378,7 @@
     <Content Include="Views\Ventas\Details.cshtml" />
     <Content Include="Views\Ventas\Edit.cshtml" />
     <Content Include="Views\Ventas\Index.cshtml" />
-    <None Include="Properties\PublishProfiles\disosa - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\disosagt.com - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Views\Ventas\Preventa.cshtml" />
     <Content Include="Views\Rutas\Create.cshtml" />

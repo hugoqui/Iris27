@@ -11,4 +11,10 @@ namespace DisosaIris27.Models
         public string Vendedor { get; set; }
         public decimal? Total { get; set; }
     }
+
+    public  class Catalogo
+    {
+        public int Codigo { get; set; }
+        public string Nombre { get; set; }        
+    }
 }
