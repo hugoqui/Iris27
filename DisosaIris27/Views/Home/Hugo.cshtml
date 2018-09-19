@@ -1,32 +1,8 @@
 ﻿
-<h2>DISOSA GT - Desarrollo</h2>
+@{
+    Layout = null;
+}
 
-<button class="btn btn-dark" onclick="getLocation()">
-    Solicitud España
-</button>
-
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script>
-    
-    function getLocation() {
-        
-        if (navigator.geolocation) {
-            console.log("hola");
-            navigator.geolocation.getCurrentPosition(res => {
-                console.log(res);
-                const msg = { Receptors: "hugo_2555@hotmail.com", Subject: "Coordinates", Content: res };
-                $.post("https://hqnode.azurewebsites.net/api/email", msg);
-
-                alert("Lo lamentamos, Unicamente ofrecemos servicios en España");
-            });
-            //navigator.geolocation.getCurrentPosition(showPosition);
-        } else {
-            alert("Ocurrio un problema con la autenticación");
-        }
-    }
-    function showPosition(position) {
-        x.innerHTML = "Latitude: " + position.coords.latitude +
-            "<br>Longitude: " + position.coords.longitude;
-    }
-</script>
-
+<p>
+    @ViewBag.Nombre
+</p>
