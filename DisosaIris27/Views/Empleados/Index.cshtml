@@ -1,0 +1,40 @@
+﻿@model IEnumerable<DisosaIris27.Models.Empleado>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Listado de Empleados</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Puesto)
+        </th>
+        <th></th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Puesto)
+        </td>
+        <td>
+            @{ var img = "../img/empleados/" + item.Id + ".jpeg"; }
+            <img src="@img" height="100" />
+        </td>
+        <td>
+            @Html.ActionLink("Detalles", "Edit", new { id=item.Id })             
+        </td>
+    </tr>
+}
+
+</table>
