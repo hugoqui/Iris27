@@ -725,10 +725,8 @@
           <End Type="disosadbModel.Cliente" Role="Cliente" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ruta">
-              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Cliente">
-              <PropertyRef Name="Ruta" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

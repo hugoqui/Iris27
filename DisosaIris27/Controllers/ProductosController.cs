@@ -16,13 +16,15 @@ namespace DisosaIris27.Controllers
         // GET: Productos
         public ActionResult Index(string searchString, int? page)
         {
-            var nivel = int.Parse(Session["nivel"].ToString());
-            if (!(int.Parse(Session["nivel"].ToString()) > 1)) { return RedirectToAction("Index", "Login"); }
+            if (!(int.Parse(Session["nivel"].ToString()) > 1))
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
             if (searchString != null)
             {
                 page = 1; //when searching something, go to first page
             }
-
             var productos = db.Productos.Include(p => p.Proveedor);
             if (!String.IsNullOrEmpty(searchString))
             {

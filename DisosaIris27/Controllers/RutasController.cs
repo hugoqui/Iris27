@@ -55,7 +55,8 @@ namespace DisosaIris27.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Nombre")] Ruta ruta)
+        //public ActionResult Create([Bind(Include = "Id,Nombre")] Ruta ruta)
+        public ActionResult Create(Ruta ruta)
         {
             if (ModelState.IsValid)
             {

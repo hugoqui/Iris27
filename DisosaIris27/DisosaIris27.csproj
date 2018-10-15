@@ -280,18 +280,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AutoComplete.cs" />
-    <Compile Include="Models\Cliente.cs">
-      <DependentUpon>disosaModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Compra.cs">
-      <DependentUpon>disosaModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\CompraDetalle.cs">
-      <DependentUpon>disosaModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DetalleGasto.cs">
-      <DependentUpon>disosaModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\disosaModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -306,42 +294,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>disosaModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Empleado.cs">
-      <DependentUpon>disosaModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Gasto.cs">
-      <DependentUpon>disosaModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Preventa.cs">
-      <DependentUpon>disosaModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\PreventaDetalle.cs">
-      <DependentUpon>disosaModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Producto.cs">
-      <DependentUpon>disosaModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Proveedor.cs">
-      <DependentUpon>disosaModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ProveedoresDetalle.cs">
-      <DependentUpon>disosaModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Ruta.cs">
-      <DependentUpon>disosaModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Usuario.cs">
-      <DependentUpon>disosaModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Vendedor.cs">
-      <DependentUpon>disosaModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Venta.cs">
-      <DependentUpon>disosaModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\VentaDetalle.cs">
-      <DependentUpon>disosaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VentaPorDia.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
