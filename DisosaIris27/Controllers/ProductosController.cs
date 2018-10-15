@@ -16,11 +16,15 @@ namespace DisosaIris27.Controllers
         // GET: Productos
         public ActionResult Index(string searchString, int? page)
         {
+<<<<<<< HEAD
             if (!(int.Parse(Session["nivel"].ToString()) > 1))
             {
                 return RedirectToAction("Index", "Login");
             }
 
+=======
+            if (!(int.Parse(Session["nivel"].ToString()) > 1)) { return RedirectToAction("Index", "Login"); }
+>>>>>>> parent of 8cf8485... empleados
             if (searchString != null)
             {
                 page = 1; //when searching something, go to first page

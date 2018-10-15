@@ -21,7 +21,7 @@ namespace DisosaIris27
             GlobalConfiguration.Configure(WebApiConfig.Register);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            //keepAliveThread.Start();
+            keepAliveThread.Start();
         }
 
 

@@ -221,24 +221,6 @@
     <Content Include="img\calendar\november.jpg" />
     <Content Include="img\calendar\october.jpg" />
     <Content Include="img\calendar\september.jpg" />
-    <Content Include="img\empleados\1.jpeg" />
-    <Content Include="img\empleados\10.jpeg" />
-    <Content Include="img\empleados\11.jpeg" />
-    <Content Include="img\empleados\12.jpeg" />
-    <Content Include="img\empleados\13.jpeg" />
-    <Content Include="img\empleados\14.jpeg" />
-    <Content Include="img\empleados\15.jpeg" />
-    <Content Include="img\empleados\16.jpeg" />
-    <Content Include="img\empleados\17.jpeg" />
-    <Content Include="img\empleados\18.jpeg" />
-    <Content Include="img\empleados\2.jpeg" />
-    <Content Include="img\empleados\3.jpeg" />
-    <Content Include="img\empleados\4.jpeg" />
-    <Content Include="img\empleados\5.jpeg" />
-    <Content Include="img\empleados\6.jpeg" />
-    <Content Include="img\empleados\7.jpeg" />
-    <Content Include="img\empleados\8.jpeg" />
-    <Content Include="img\empleados\9.jpeg" />
     <Content Include="img\logo.jpg" />
     <Content Include="img\logo.png" />
     <Content Include="img\sidebar\sidebar-bg.jpg" />
@@ -262,7 +244,6 @@
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\ComprasController.cs" />
     <Compile Include="Controllers\DataController.cs" />
-    <Compile Include="Controllers\EmpleadosController.cs" />
     <Compile Include="Controllers\GastosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -295,6 +276,42 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>disosaModel.edmx</DependentUpon>
     </Compile>
+<<<<<<< HEAD
+=======
+    <Compile Include="Models\Gasto.cs">
+      <DependentUpon>disosaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Preventa.cs">
+      <DependentUpon>disosaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PreventaDetalle.cs">
+      <DependentUpon>disosaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Producto.cs">
+      <DependentUpon>disosaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Proveedor.cs">
+      <DependentUpon>disosaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProveedoresDetalle.cs">
+      <DependentUpon>disosaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Ruta.cs">
+      <DependentUpon>disosaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Usuario.cs">
+      <DependentUpon>disosaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Vendedor.cs">
+      <DependentUpon>disosaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Venta.cs">
+      <DependentUpon>disosaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VentaDetalle.cs">
+      <DependentUpon>disosaModel.tt</DependentUpon>
+    </Compile>
+>>>>>>> parent of 8cf8485... empleados
     <Compile Include="Models\VentaPorDia.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -387,11 +404,6 @@
     <Content Include="Views\Perfil\Details.cshtml" />
     <Content Include="Views\Perfil\Edit.cshtml" />
     <Content Include="Views\Perfil\Index.cshtml" />
-    <Content Include="Views\Empleados\Create.cshtml" />
-    <Content Include="Views\Empleados\Delete.cshtml" />
-    <Content Include="Views\Empleados\Details.cshtml" />
-    <Content Include="Views\Empleados\Edit.cshtml" />
-    <Content Include="Views\Empleados\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -44,14 +44,6 @@
           <Property Name="Monto" Type="money" />
           <Property Name="Comentario" Type="text" />
         </EntityType>
-        <EntityType Name="Empleados">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Nombre" Type="text" />
-          <Property Name="Puesto" Type="text" />
-        </EntityType>
         <EntityType Name="Gastos">
           <Key>
             <PropertyRef Name="Codigo" />
@@ -122,7 +114,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Usuario" Type="nchar" MaxLength="25" />
           <Property Name="Password" Type="nchar" MaxLength="25" />
           <Property Name="Nivel" Type="int" />
@@ -352,7 +344,6 @@
           <EntitySet Name="CompraDetalles" EntityType="Self.CompraDetalles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Compras" EntityType="Self.Compras" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DetalleGastos" EntityType="Self.DetalleGastos" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Empleados" EntityType="Self.Empleados" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Gastos" EntityType="Self.Gastos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PreventaDetalles" EntityType="Self.PreventaDetalles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Preventas" EntityType="Self.Preventas" Schema="dbo" store:Type="Tables" />
@@ -710,7 +701,6 @@
             <End Role="DetalleGasto" EntitySet="DetalleGastos" />
           </AssociationSet>
           <EntitySet Name="Usuarios" EntityType="disosadbModel.Usuario" />
-          <EntitySet Name="Empleados" EntityType="disosadbModel.Empleado" />
         </EntityContainer>
         <EntityType Name="Ruta">
           <Key>
@@ -879,14 +869,6 @@
           <Property Name="Password" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
           <Property Name="Nivel" Type="Int32" />
         </EntityType>
-        <EntityType Name="Empleado">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Puesto" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1046,15 +1028,6 @@
                 <ScalarProperty Name="Nivel" ColumnName="Nivel" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Usuario1" ColumnName="Usuario" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Empleados">
-            <EntityTypeMapping TypeName="disosadbModel.Empleado">
-              <MappingFragment StoreEntitySet="Empleados">
-                <ScalarProperty Name="Puesto" ColumnName="Puesto" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

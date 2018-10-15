@@ -3,31 +3,6 @@
     Layout = null;
 }
 
-<p id="parrafo">
-
+<p>
+    @ViewBag.Nombre
 </p>
-
-<script>
-    var obj = {
-
-        template: `
-
-            Nombre | Edad <br>
-            ${this} <br>
- 
-  `,
-        names: {
-            name1: 'Emmett',
-            name2: 'Paola',
-            name3: 'Mushi'
-        },
-        age: {
-            age1: 8,
-            age2: 20,
-            age3: 3
-        }
-
-    }
-
-    document.getElementById("parrafo").innerHTML = obj;
-</script>
